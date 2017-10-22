@@ -1279,7 +1279,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
             self.showLoading({
               delay: 0,
-              template: "המתינו בסבלנות לפתיחת הקובץ",
+              template: '<div class="text-center">המתינו לפתיחת הקובץ' +
+                '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+                '</div>',
+              //     template: "המתינו בסבלנות לפתיחת הקובץ",
               duration: 2000
             });
             $cordovaFileTransfer.download(fileApiData.URI, targetPath, {}, true)
