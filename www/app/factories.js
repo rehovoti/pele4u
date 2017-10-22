@@ -1249,7 +1249,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
         var links = self.getDocApproveServiceUrl("GetFileURI");
         self.showLoading({
-          delay: 0
+          delay: 0,
+          template: '<div class="text-center">המתינו לפתיחת הקובץ' +
+            '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+            '</div>',
+          //     template: "המתינו בסבלנות לפתיחת הקובץ",
+          duration: 2000
         });
         var pinCode = self.pinState.get().code;
         var full_path = self.appSettings.shareFileDirectory + file.TARGET_PATH + "/" + file.TARGET_FILENAME;
