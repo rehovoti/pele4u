@@ -23,8 +23,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       cordovaInit: function() {
         //file in device file system
         var self = this;
-        this.isAndroid = ionic.Platform.isAndroid();
-        this.isIOS = ionic.Platform.isIOS();
+        self.isAndroid = ionic.Platform.isAndroid();
+        self.isIOS = ionic.Platform.isIOS();
         appSettings.config.network = $cordovaNetwork.getNetwork();
         appSettings.config.isOnline = $cordovaNetwork.isOnline();
         //$scope.$apply();
@@ -65,14 +65,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           $rootScope.$apply();
         })
 
-        this.lagger = $fileLogger;
+        self.lagger = $fileLogger;
 
         $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME)
-        this.lagger.deleteLogfile().then(function() {
+        self.lagger.deleteLogfile().then(function() {
           $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME)
-          this.lagger.info('Flush log ->  start new log');
+          self.lagger.info('Flush log ->  start new log');
         });
-        this.registerPushNotification();
+        self.registerPushNotification();
       },
 
       registerPushNotification: function() {
@@ -767,9 +767,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--                    GetServiceUrl                     --//
       //----------------------------------------------------------//
       getDocApproveServiceUrl: function(serviceName) {
+        var self = this;
         var serviceConf = appSettings.apiConfig.services[serviceName];
         if (!serviceConf || serviceConf == undefined) {
-          this.lagger.error("No service conf found : " + serviceName);
+
+          self.lagger.error("No service conf found : " + serviceName);
           return serviceConf;
         }
 

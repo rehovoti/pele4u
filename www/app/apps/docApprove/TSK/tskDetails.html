@@ -52,15 +52,21 @@
           </ion-scroll>
         </ion-slide>
         <ion-slide>
-          <div class="list list-inset text-finder">
-            <label class="item item-input">
-            <i class="icon ion-search placeholder-icon"></i>
-            <input class="pele_rtl text-right" type="text" placeholder="חיפוש בתיאור" ng-model="term">
-          </label>
-          </div>
-          <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
+          <ion-scroll style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
+            <a href="#" class="fab" ng-click="showSearch=!showSearch">
+                  <i class="icon ion-search icon-center"></i>
+              </a>
+            <div ng-class="{'show-search':showSearch,'hide-search':!showSearch}" class="row">
+              <div class="col col-80 col-offset-20">
+                <div class="list list-inset text-finder">
+                  <label class="item item-input">
+              <!--i class="icon ion-search placeholder-icon"></i-->
+              <input class="pele_rtl text-right" type="text" placeholder="חיפוש בתיאור" ng-model="term">
+            </label>
+                </div>
+              </div>
+            </div>
             <div class="card item-section pele_rtl item-text-wrap text-right" ng-repeat="description in docDetails.TASK_DESCRIPTION track by $index">
-
               <div class="row">
                 <div class="col-100">
                   <p><span class="label">תאריך עדכון: </span>
@@ -90,7 +96,6 @@
                   <span class="info" ng-bind-html="description.NOTES| highlight:term"></span>
                 </div>
               </div>
-            </div>
             </div>
           </ion-scroll>
         </ion-slide>
