@@ -887,7 +887,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //====================================================//
       showLoading: function(options) {
         // you can configure default ionicLoadingConfig in  config.js   file
-        $ionicLoading.show();
+        $ionicLoading.show(options);
       },
       hideLoading: function() {
         $ionicLoading.hide();
@@ -1248,7 +1248,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           return true;
         }
         var links = self.getDocApproveServiceUrl("GetFileURI");
-        self.showLoading();
+        self.showLoading({
+          delay: 0
+        });
         var pinCode = self.pinState.get().code;
         var full_path = self.appSettings.shareFileDirectory + file.TARGET_PATH + "/" + file.TARGET_FILENAME;
 
@@ -1270,7 +1272,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             window.open(fileApiData.URI, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
           } else if (self.isAndroid) {
             var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
-            self.showLoading();
+            self.showLoading({
+              delay: 0,
+              template: "המתינו בסבלנות לפתיחת הקובץ",
+              duration: 2000
+            });
             $cordovaFileTransfer.download(fileApiData.URI, targetPath, {}, true)
               .then(
                 //success
