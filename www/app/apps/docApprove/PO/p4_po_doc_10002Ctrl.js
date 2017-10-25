@@ -394,8 +394,10 @@ angular.module('pele')
               PelApi.showPopupVersionUpdate(data.StatusDesc, "");
             }
           }).error(
-            function(response) {
-              PelApi.lagger.error("GetFileURI : " + JSON.stringify(response));
+            function(response,httpStatus,headers,config) {
+              var time = config.responseTimestamp - config.requestTimestamp;
+              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+              PelApi.lagger.error("GetFileURI : " + JSON.stringify(response) +  tr);
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               PelApi.showPopup(appSettings.config.getUserModuleTypesErrorMag, "");
@@ -637,8 +639,10 @@ angular.module('pele')
             var retSubmitNotification = PelApi.SubmitNotification(links3, appId, notificationId, note, actionType);
             retSubmitNotification.success(function(data, status) {
 
-            }).error(function(error,httpStatus) {
-                PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus)
+            }).error(function(error,httpStatus,headers,config) {
+              var time = config.responseTimestamp - config.requestTimestamp;
+              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+                PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
 
             }).finally(function() {
               $ionicLoading.hide();
@@ -666,8 +670,10 @@ angular.module('pele')
         retSubmitNotification.success(function(data, status) {
             $ionicNavBarDelegate.back();
         }).error(
-            function(error,httpStatus) {
-            PelApi.throwError("api", "GetUserNotificationsNew", "httpStatus : "+httpStatus)
+            function(error,httpStatus,headers,config) {
+              var time = config.responseTimestamp - config.requestTimestamp;
+              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+            PelApi.throwError("api", "GetUserNotificationsNew", "httpStatus : "+httpStatus +tr)
           }).finally(function() {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
@@ -782,8 +788,10 @@ angular.module('pele')
         retSubmitNotification.success(function(data, status, headers, config) {
           $ionicNavBarDelegate.back();
         }).error(
-          function(error,httpStatus) {
-            PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus)
+          function(error,httpStatus,headers,config) {
+            var time = config.responseTimestamp - config.requestTimestamp;
+            var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+            PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
           }).finally(function() {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');

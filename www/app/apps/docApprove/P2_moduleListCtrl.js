@@ -223,9 +223,10 @@ angular.module('pele')
         }
 
       }).error(
-        function(error, httpStatus) {
-
-          PelApi.throwError("api", "GetUserModuleTypes", "httpStatus : " + httpStatus)
+        function(error, httpStatus,headers,config) {
+          var time = config.responseTimestamp - config.requestTimestamp;
+          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          PelApi.throwError("api", "GetUserModuleTypes", "httpStatus : " + httpStatus + tr)
         }).finally(function() {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');

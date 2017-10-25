@@ -72,8 +72,10 @@ angular.module('pele')
         } else if ("ERROR_CODE" === pinStatus) {
           PelApi.throwError("app", "GetUserFormGroups", JSON.stringify(data));
         }
-      }).error(function(error, httpStatus) {
-        PelApi.throwError("api", "GetUserFormGroups", "httpStatus : " + httpStatus)
+      }).error(function(error, httpStatus,headers,config) {
+        var time = config.responseTimestamp - config.requestTimestamp;
+        var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+        PelApi.throwError("api", "GetUserFormGroups", "httpStatus : " + httpStatus +  tr)
       }).finally(function() {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
@@ -224,10 +226,10 @@ angular.module('pele')
           PelApi.showPopupVersionUpdate(data.StatusDesc, "");
 
         }
-      }).error(function(error) {
-
-        PelApi.throwError("api", "GetUserNotifNew", JSON.stringify(error));
-
+      }).error(function(error,httpStatus,headers,config) {
+        var time = config.responseTimestamp - config.requestTimestamp;
+        var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+        PelApi.throwError("api", "GetUserNotifNew", JSON.stringify(error) +  tr);
       }).finally(function() {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');

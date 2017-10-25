@@ -49,8 +49,10 @@ angular.module('pele')
             $scope.title = $scope.docsGroups[0].DOC_TYPE;
           }
         })
-        .error(function(error, httpStatus) {
-          PelApi.throwError("api", "GetUserNotifNew", "httpStatus : " + httpStatus)
+        .error(function(error, httpStatus,headers,config) {
+          var time = config.responseTimestamp - config.requestTimestamp;
+          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          PelApi.throwError("api", "GetUserNotifNew", "httpStatus : " + httpStatus +tr)
         })
         .finally(function(skip) {
           $ionicLoading.hide();

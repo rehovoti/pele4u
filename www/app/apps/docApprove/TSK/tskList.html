@@ -33,7 +33,7 @@
         </ion-item>
         <ion-item class="docs-menu-details item-icon-left pele_rtl" ng-repeat="item in docsGroup.DOCUMENTS.DOCUMENTS_ROW | filter:searchText as filtered" ng-show="docsGroup.active" ng-click="forwardToDoc(docsGroup.DOC_ID, item.DOC_INIT_ID,item.TASK.NOTIFICATION_ID)">
           <img class="icon doc-redirect" ng-src="img/DocApprove/document_redirect.png">
-          <div class=""> משימה {{item.TASK.TASK_ID}}</div>
+          <div class=""> משימה {{item.TASK.TASK_NUMBER}}</div>
           <div><strong>{{item.TASK.BAN_NAME}}</strong></div>
           <div>סיום משוער לטיפול בלקוח
             <span class="peldate">{{item.TASK.PLANNED_END_DATE|peldate | date : 'hh:ss dd-MM-yyyy'}}</span> </div>

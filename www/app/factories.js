@@ -1233,7 +1233,19 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
       },
       openAttachment: function(file, appId) {
-        appId = appId || "123456";
+
+       var spinOptions = {
+           delay: 0,
+           template: '<div class="text-center">המתינו לפתיחת הקובץ' +
+             '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+             '</div>',
+         };
+
+      appId = appId || "123456";
+        openDoc = function(url,target,propsStr) {
+            var myPopup = window.open(url,target,propsStr);
+            myPopup.addEventListener('loadend', function(){self.hideLoading();}, false);
+        }
         var self = this;
         self.appSettings.config.ATTACHMENT_TIME_OUT = 1000;
 
@@ -1248,69 +1260,57 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           return true;
         }
         var links = self.getDocApproveServiceUrl("GetFileURI");
-        self.showLoading({
-          delay: 0,
-          template: '<div class="text-center">המתינו לפתיחת הקובץ' +
-            '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
-            '</div>',
-          //     template: "המתינו בסבלנות לפתיחת הקובץ",
-          duration: 2000
-        });
+        self.showLoading(spinOptions);
+
         var pinCode = self.pinState.get().code;
         var full_path = self.appSettings.shareFileDirectory + file.TARGET_PATH + "/" + file.TARGET_FILENAME;
 
         var getFilePromise = self.GetFileURI(links, appId, self.pinState.get().code, full_path);
         getFilePromise.success(function(data) {
+          self.showLoading(spinOptions);
           var fileApiData = self.checkApiResponse(data);
 
           if (typeof fileApiData.URI === "undefined" || !fileApiData.URI) {
+            self.hideLoading();
             self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
             return false;
           }
 
           targetPath = self.getAttchDirectory() + '/' + file.TARGET_FILENAME;
-
+          var docWindow ;
           if (!window.cordova) {
             self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
-            window.open(fileApiData.URI, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+             openDoc(fileApiData.URI, "_system", "location=yes,enableViewportScale=yes,hidden=no");
           } else if (self.isIOS) {
-            window.open(fileApiData.URI, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
+             openDoc(fileApiData.URI, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
           } else if (self.isAndroid) {
             var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
-            self.showLoading({
-              delay: 0,
-              template: '<div class="text-center">המתינו לפתיחת הקובץ' +
-                '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
-                '</div>',
-              //     template: "המתינו בסבלנות לפתיחת הקובץ",
-              duration: 2000
-            });
+
             $cordovaFileTransfer.download(fileApiData.URI, targetPath, {}, true)
               .then(
                 //success
                 function(result) {
                   $timeout.cancel(filetimeout);
                   if (!result.nativeURL) {
+                    self.hideLoading();
                     self.throwError("api", "cordovaFileTransfer.download", JSON.stringify(result), false);
                   } else {
-                    window.open(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+                    openDoc(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
                   }
                 },
-                //error
                 function(error) {
+                  self.hideLoading()
                   self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
                 },
-                // in progress
                 function(progress) {
-                  //  $timeout(function() {
-                  //    $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-                  //  });
+                  //  self.showLoading(spinOptions);
                 })
           }
         }).error(function(error) {
+          self.hideLoading();
           self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
         }).finally(function() {
-          self.hideLoading();
+           self.hideLoading();
         });
 
       },

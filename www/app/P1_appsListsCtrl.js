@@ -159,9 +159,11 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         PelApi.showPopupVersionUpdate(data.StatusDesc, "");
       }
     }).error(
-      function(errorStr, httpStatus) {
+      function(errorStr, httpStatus,headers,config) {
+        var time = config.responseTimestamp - config.requestTimestamp;
+        var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
 
-        PelApi.throwError("api-400", "GetUserMenu", "httpStatus : " + httpStatus)
+        PelApi.throwError("api-400", "GetUserMenu", "httpStatus : " + httpStatus  + tr)
         //PelApi.showPopup(appSettings.config.getUserModuleTypesErrorMag, "");
       }
     ).finally(function() {

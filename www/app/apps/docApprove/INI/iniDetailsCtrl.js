@@ -37,8 +37,10 @@ angular.module('pele')
           PelApi.extendActionHistory($scope.docDetails);
           $scope.buttonsArr = $scope.docDetails.BUTTONS || [];
           //PelApi.lagger.info("scope.docDetails", JSON.stringify($scope.docDetails))
-        }).error(function(error, httpStatus) {
-          PelApi.throwError("api", "GetUserNotifNew", "httpStatus : " + httpStatus)
+        }).error(function(error, httpStatus,headers,config) {
+          var time = config.responseTimestamp - config.requestTimestamp;
+          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          PelApi.throwError("api", "GetUserNotifNew", "httpStatus : " + httpStatus + tr)
         }).finally(function() {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
@@ -86,8 +88,10 @@ angular.module('pele')
             if (apiData.error) return false;
             $ionicHistory.goBack();
           }).error(
-            function(error, httpStatus) {
-              PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus)
+            function(error, httpStatus,headers,config) {
+              var time = config.responseTimestamp - config.requestTimestamp;
+              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+              PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
             }).finally(function() {
             $ionicLoading.hide();
             $scope.$broadcast('scroll.refreshComplete');

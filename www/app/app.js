@@ -247,7 +247,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
 
     return {
       request: function(config) {
-
+        config.requestTimestamp = new Date().getTime();
         config.headers = config.headers || {};
         if (config.url.match(/^http/)) {
           var PelApi = $injector.get('PelApi');
@@ -264,6 +264,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
         return config;
       },
       response: function(response) {
+        response.config.responseTimestamp = new Date().getTime();
         if (response.config.url.match(/^http/)) {
           var PelApi = $injector.get('PelApi');
           PelApi.hideLoading();
@@ -278,7 +279,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       responseError: function(rejection) {
         // Retry
         var PelApi = $injector.get('PelApi');
-
+        rejection.config.responseTimestamp = new Date().getTime();
         if (retries < (rejection.config.retry || 0)) {
           PelApi.lagger.error("Reject & Retry . number :  " + retries, "on Config : ", rejection.config)
           retries++;
