@@ -62,7 +62,26 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
    */
   $scope.GetUserMenuMain = function() {
 
-    var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
+  var Rendred = false ;
+  var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
+  if(appSettings.config.IS_TOKEN_VALID !== 'Y')
+    delete $sessionStorage.mainMenu ;
+
+  if(appSettings.config.mainMenuKeepAlive && $sessionStorage.mainMenu) {
+    var now = new Date().getTime()
+    var mm = $sessionStorage.mainMenu  ;
+     if(mm && mm.timeStamp && mm.menuItems ) {
+            if((now - mm.timeStamp) <  (appSettings.config.mainMenuKeepAlive)*1000 ) {
+            $scope.feeds_categories =  mm.menuItems;
+            $scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
+            $ionicLoading.hide();
+            $scope.$broadcast('scroll.refreshComplete');
+            Rendred = true ;
+        }
+    } else {
+       delete $sessionStorage.mainMenu ;
+    }
+  }
 
     try {
       var reMenu = PelApi.getMenu(links);
@@ -73,6 +92,10 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         $scope.$broadcast('scroll.refreshComplete');
         window.location = "./index.html";
       }
+    }
+
+    if(Rendred) {
+        $ionicLoading.hide();
     }
 
     reMenu.success(function(data, status, headers, config) {
@@ -101,7 +124,13 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         appSettings.config.GetUserMenu = JSON.parse(strData);
         $scope.feeds_categories = appSettings.config.GetUserMenu;
         $scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
-
+        $sessionStorage.mainMenu = {
+          token : appSettings.config.token,
+          user : appSettings.config.GetUserMenu.user,
+          userName : appSettings.config.GetUserMenu.userName,
+          menuItems : appSettings.config.GetUserMenu,
+          timeStamp :  new Date().getTime()
+        };
         //---------------------------------------------
         //-- Send User Tag for push notifications
         //---------------------------------------------
