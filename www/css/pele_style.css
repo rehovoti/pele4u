@@ -680,10 +680,11 @@ div.hide-search {height:0px;min-height: 0px;display:none}
    left: 10px;
    top: 5px;
    z-index: 199999;
-} 
+}
 
 .fab .icon { color:white}
 .fab:hover {
    box-shadow: 0 6px 14px 0 #666;
    transform: scale(1.05);
 }
+.push-top-20 {margin-top:20px}

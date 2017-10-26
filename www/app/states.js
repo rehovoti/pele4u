@@ -47,6 +47,31 @@ angular.module('pele.states', [])
     },
     src: ["app/apps/dev/devCtrl.js"]
   }, {
+    state: "app.phonebook",
+    url: '/phonebook/',
+    views: {
+      'menuContent': {
+        templateUrl: function() {
+
+          return 'app/apps/phonebook/list.html';
+        },
+        controller: 'phonebookListCtrl',
+      }
+    },
+    src: ["app/apps/phonebook/listCtrl.js"]
+  },{
+    state: "app.phonebook/:username",
+    url: '/phonebook/:username',
+    views: {
+      'menuContent@': {
+        templateUrl: function() {
+          return 'app/apps/phonebook/details.html';
+        },
+        controller: 'phonebookDetailsCtrl',
+      }
+    },
+    src: ["app/apps/phonebook/detailsCtrl.js"]
+  },{
     state: "app.p2_moduleList",
     url: '/p2_moduleList/:AppId/:Title/:Pin',
     views: {

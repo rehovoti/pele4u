@@ -12,7 +12,7 @@ angular.module('pele')
     $scope.goHome = function() {
       PelApi.goHome();
     }
-    //---------------------------------------------------------------------------
+    //-------------- -------------------------------------------------------------
     //--                         openExistText
     //---------------------------------------------------------------------------
     $scope.openExistText = function(text) {
@@ -364,11 +364,11 @@ angular.module('pele')
                   PelApi.showPopupVersionUpdate(data.StatusDesc, "");
                 }
 
-              }).error(function(error,httpStatus,headers,config) {
+              }).error(function(error, httpStatus, headers, config) {
                 var time = config.responseTimestamp - config.requestTimestamp;
-                var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-                  PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
-                }).finally(function() {
+                var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+                PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
+              }).finally(function() {
                 $ionicLoading.hide();
                 $scope.$broadcast('scroll.refreshComplete');
                 //$ionicNavBarDelegate.back();
@@ -394,10 +394,10 @@ angular.module('pele')
 
             }
 
-          }).error(function(error,httpStatus,headers,config) {
+          }).error(function(error, httpStatus, headers, config) {
             var time = config.responseTimestamp - config.requestTimestamp;
-            var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-              PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
+            var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+            PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
           }).finally(function() {
             $ionicLoading.hide();
             $scope.$broadcast('scroll.refreshComplete');
@@ -436,10 +436,10 @@ angular.module('pele')
           $ionicHistory.goBack();
         }
       }).error(
-        function(error,httpStatus,headers,config) {
+        function(error, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-            PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+          PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
         }).finally(function() {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
@@ -521,10 +521,10 @@ angular.module('pele')
 
           $ionicHistory.goBack();
         }
-      }).error(function(error,httpStatus,headers,config) {
+      }).error(function(error, httpStatus, headers, config) {
         var time = config.responseTimestamp - config.requestTimestamp;
-        var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-          PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
+        var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+        PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
       }).finally(function() {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');

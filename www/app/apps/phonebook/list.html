@@ -1,0 +1,109 @@
+<ion-view class="feed-entries-view " cache-view="false" ng-controller="SettingsListCtrl">
+  <ion-nav-buttons side="right">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">
+        אלפון
+      </div>
+    </div>
+  </ion-nav-title>
+
+  <ion-content class="pele-background">
+    <a href="#" class="fab" ng-click="showSearch=!showSearch">
+          <i class="icon ion-search icon-center"></i>
+    </a>
+    <div ng-class="{'show-search':!showSearch,'hide-search':showSearch}" class="row">
+      <div class="col">
+        <ion-item class="item item-input">
+          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי שם פרטי/משפחה/שלוחה" ng-model="term">
+          <i class="icon ion-funnel placeholder-icon"></i>
+        </ion-item>
+      </div>
+      <div class="col">
+        <ion-item class="item item-input">
+          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי יחידה ארגונית" ng-model="org">
+          <i class="icon ion-arrow-down-b placeholder-icon"></i>
+        </ion-item>
+      </div>
+      <div class="col push-top-20">
+        <div class="text-center">
+          <button class="button icon-left ion-search button-positive">חיפוש</button>
+        </div>
+      </div>
+      <div class="col push-top-20">
+        <div class="text-center push-top-20">
+          <button class="button button-clear icon-right button-light ion-gear-b">
+           פעולות
+        </button>
+        </div>
+      </div>
+      <div class="col">
+        <div class="text-center">
+          <button class="button button-clear icon-right button-light ion-alert">
+            יחידות תפעוליות
+        </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="list">
+          <a class="item item-avatar" href="#">
+            <img src="venkman.jpg">
+            <h2>Venkman</h2>
+            <p>Back off, man. I'm a scientist.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-content class="pele-background">
+    <div ng-class="{'show-search':!showSearch,'hide-search':showSearch}" class="row">
+      <div class="col">
+        <ion-item class="item item-input">
+          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי שם פרטי/משפחה/שלוחה" ng-model="term">
+          <i class="icon ion-funnel placeholder-icon"></i>
+        </ion-item>
+      </div>
+      <div class="col">
+        <ion-item class="item item-input">
+          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי יחידה ארגונית" ng-model="org">
+          <i class="icon ion-arrow-down-b placeholder-icon"></i>
+        </ion-item>
+      </div>
+      <div class="col push-top-20">
+        <div class="text-center">
+          <button class="button icon-left ion-search button-positive">חיפוש</button>
+        </div>
+      </div>
+      <div class="col push-top-20">
+        <div class="text-center push-top-20">
+          <button class="button button-clear icon-right button-light ion-gear-b">
+           פעולות
+        </button>
+        </div>
+      </div>
+      <div class="col">
+        <div class="text-center">
+          <button class="button button-clear icon-right button-light ion-alert">
+            יחידות תפעוליות
+        </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="list">
+          <a class="item item-avatar" href="#">
+            <img src="venkman.jpg">
+            <h2>Venkman</h2>
+            <p>Back off, man. I'm a scientist.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
