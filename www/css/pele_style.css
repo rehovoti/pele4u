@@ -688,3 +688,13 @@ div.hide-search {height:0px;min-height: 0px;display:none}
    transform: scale(1.05);
 }
 .push-top-20 {margin-top:20px}
+.show  { display:block}
+.hide { display:none}
+.color_white {color:White}
+ .bar.footer50 { height:50px;line-height: 30px}
+
+.ionic-scroll.scroll-with-footer  .scroll {margin-bottom: 75px}
+
+.swal-modal {
+    width: calc(100% - 50px);
+}

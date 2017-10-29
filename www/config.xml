@@ -114,4 +114,5 @@
     <plugin name="cordova-plugin-badge" spec="~0.8.1" />
     <plugin name="cordova-plugin-x-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git" />
     <plugin name="onesignal-cordova-plugin" spec="^2.1.1" source="npm" />
+    <plugin name="cordova-plugin-contacts" spec="^2.3.1" />
 </widget>

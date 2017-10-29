@@ -11,99 +11,80 @@
     </div>
   </ion-nav-title>
 
-  <ion-content class="pele-background">
-    <a href="#" class="fab" ng-click="showSearch=!showSearch">
-          <i class="icon ion-search icon-center"></i>
-    </a>
-    <div ng-class="{'show-search':!showSearch,'hide-search':showSearch}" class="row">
-      <div class="col">
-        <ion-item class="item item-input">
-          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי שם פרטי/משפחה/שלוחה" ng-model="term">
-          <i class="icon ion-funnel placeholder-icon"></i>
-        </ion-item>
-      </div>
-      <div class="col">
-        <ion-item class="item item-input">
-          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי יחידה ארגונית" ng-model="org">
-          <i class="icon ion-arrow-down-b placeholder-icon"></i>
-        </ion-item>
-      </div>
-      <div class="col push-top-20">
-        <div class="text-center">
-          <button class="button icon-left ion-search button-positive">חיפוש</button>
+  <ion-slides slider="data.slider" options="{pagination: false}">
+    <ion-slide-page>
+      <ion-content class="pele-background">
+        <div class="row">
+          <div class="col">
+            <ion-item class="item item-input">
+              <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי שם פרטי/משפחה/שלוחה" ng-model="term">
+              <i class="icon ion-funnel placeholder-icon"></i>
+            </ion-item>
+          </div>
         </div>
-      </div>
-      <div class="col push-top-20">
-        <div class="text-center push-top-20">
-          <button class="button button-clear icon-right button-light ion-gear-b">
+        <div class="row">
+
+          <div class="col">
+            <ion-item class="item item-input">
+              <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי יחידה ארגונית" ng-model="org">
+              <i class="icon ion-arrow-down-b placeholder-icon"></i>
+            </ion-item>
+          </div>
+        </div>
+        <div class="col push-top-20">
+          <div class="text-center">
+            <button class="button icon-left ion-search button-positive">חיפוש</button>
+          </div>
+        </div>
+        <div class="col push-top-20">
+          <div class="text-center push-top-20">
+            <button class="button button-clear icon-right button-light ion-gear-b">
            פעולות
         </button>
+          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="text-center">
-          <button class="button button-clear icon-right button-light ion-alert">
+        <div class="col">
+          <div class="text-center">
+            <button ng-click="displayElement='useful';slideNext()" class="button button-clear icon-right button-light ion-information-circled">
             יחידות תפעוליות
         </button>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="list">
-          <a class="item item-avatar" href="#">
-            <img src="venkman.jpg">
-            <h2>Venkman</h2>
-            <p>Back off, man. I'm a scientist.</p>
-          </a>
+      </ion-content>
+    </ion-slide-page>
+    <ion-slide-page>
+      <ion-content class="pele-background" scroll="true">
+        <h2 class="text-center color_white">יחידות תפעוליות</h2>
+        <div class="card">
+          <ion-list>
+            <ion-item ng-repeat="u in useful">
+              <div class="row">
+                <div class="col col-40">
+                  {{u.displayName}} </div>
+                <div class="col col-40">{{u.phoneNumber}}</div>
+                <div class="col col-10"> <a href="tel:{{u.phoneNumber}}"><i class="ion-ios-telephone"></i></a></div>
+                <div class="col col-10"> <a ng-click="createContact(u)"><i class="ion-android-person-add"></i></a></div>
+              </div>
+            </ion-item>
+          </ion-list>
         </div>
-      </div>
-    </div>
-  </ion-content>
-  <ion-content class="pele-background">
-    <div ng-class="{'show-search':!showSearch,'hide-search':showSearch}" class="row">
-      <div class="col">
-        <ion-item class="item item-input">
-          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי שם פרטי/משפחה/שלוחה" ng-model="term">
-          <i class="icon ion-funnel placeholder-icon"></i>
-        </ion-item>
-      </div>
-      <div class="col">
-        <ion-item class="item item-input">
-          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי יחידה ארגונית" ng-model="org">
-          <i class="icon ion-arrow-down-b placeholder-icon"></i>
-        </ion-item>
-      </div>
-      <div class="col push-top-20">
-        <div class="text-center">
-          <button class="button icon-left ion-search button-positive">חיפוש</button>
+      </ion-content>
+      <ion-footer-bar class="footer50">
+        <div class="row">
+          <div class="col col-50 text-center">
+            <button class="button button-clear button-positive">
+                <i class="ion-home "></i> תפריט ראשי
+              </button>
+          </div>
+          <div class="col col-50 text-center ">
+            <button class="button button-clear button-positive" ng-click="slideTo(0)">
+            <i class=" ion-search "></i> חיפוש חדש
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="col push-top-20">
-        <div class="text-center push-top-20">
-          <button class="button button-clear icon-right button-light ion-gear-b">
-           פעולות
-        </button>
-        </div>
-      </div>
-      <div class="col">
-        <div class="text-center">
-          <button class="button button-clear icon-right button-light ion-alert">
-            יחידות תפעוליות
-        </button>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="list">
-          <a class="item item-avatar" href="#">
-            <img src="venkman.jpg">
-            <h2>Venkman</h2>
-            <p>Back off, man. I'm a scientist.</p>
-          </a>
-        </div>
-      </div>
-    </div>
+      </ion-footer-bar>
+    </ion-slide-page>
+  </ion-slides>
+
   </ion-content>
 </ion-view>
