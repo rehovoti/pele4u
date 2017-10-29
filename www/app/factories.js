@@ -16,6 +16,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
         this.sessionStorage = $sessionStorage;
         this.localStorage = $localStorage;
+        this.network = {
+          isOnline: true,
+          network: "wifi"
+        };
         //appSettings.config.network = "wifi"
 
         //this.lagger = { info :function(){},error:function(){}};
@@ -27,6 +31,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         self.isIOS = ionic.Platform.isIOS();
         appSettings.config.network = $cordovaNetwork.getNetwork();
         appSettings.config.isOnline = $cordovaNetwork.isOnline();
+        self.network = {
+          isOnline: $cordovaNetwork.isOnline(),
+          network: $cordovaNetwork.getNetwork()
+        };
+
         //$scope.$apply();
 
 
@@ -229,13 +238,18 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //                    GetUserMenu PAGE 1                              //
       //--------------------------------------------------------------------//
       getMenu: function(links) {
-
+        var self = this;
         // LOADING
+
+        var retry = links.retry || 0;
+        if (self.network === "wifi") {
+          retry = 0;
+        }
         return $http({
           url: links.url,
           method: "GET",
           timeout: links.timeout || appSettings.menuTimeout,
-          retry: links.retry || 0,
+          retry: retry,
           headers: links.headers
         });
 
@@ -266,6 +280,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           method: "POST",
           data: data,
           timeout: links.timeout || appSettings.defaultHttpTimeout,
+          retry: links.retry || 0,
           headers: links.headers
         });
       },
@@ -296,6 +311,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           url: links.url,
           method: "POST",
           data: data,
+          retry: links.retry || 0,
           timeout: links.timeout || appSettings.defaultHttpTimeout,
           headers: links.headers
         });
@@ -326,6 +342,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return $http({
           url: links.url,
           method: "POST",
+          retry: links.retry || 0,
           data: data,
           timeout: links.timeout || appSettings.defaultHttpTimeout,
           headers: links.headers
@@ -356,6 +373,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           url: links.url,
           method: "POST",
           data: data,
+          retry: links.retry || 0,
           timeout: links.timeout || appSettings.defaultHttpTimeout,
           headers: links.headers
         });
@@ -426,6 +444,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           url: links.url,
           method: "POST",
           data: data,
+          retry: links.retry || 0,
           timeout: links.timeout || appSettings.defaultHttpTimeout,
           headers: links.headers
         });
@@ -459,6 +478,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           url: links.url,
           method: "POST",
           data: data,
+          retry: links.retry || 0,
           timeout: links.timeout || appSettings.defaultHttpTimeout,
           headers: links.headers
         });
@@ -779,6 +799,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           "Content-Type": "application/json; charset=utf-8",
           "VERSION": appSettings.config.APP_VERSION
         };
+
 
         if ("wifi" === appSettings.config.network) {
           headers.msisdn = appSettings.config.MSISDN_VALUE;
@@ -1234,17 +1255,19 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       openAttachment: function(file, appId) {
 
-       var spinOptions = {
-           delay: 0,
-           template: '<div class="text-center">המתינו לפתיחת הקובץ' +
-             '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
-             '</div>',
-         };
+        var spinOptions = {
+          delay: 0,
+          template: '<div class="text-center">המתינו לפתיחת הקובץ' +
+            '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+            '</div>',
+        };
 
-      appId = appId || "123456";
-        openDoc = function(url,target,propsStr) {
-            var myPopup = window.open(url,target,propsStr);
-            myPopup.addEventListener('loadend', function(){self.hideLoading();}, false);
+        appId = appId || "123456";
+        openDoc = function(url, target, propsStr) {
+          var myPopup = window.open(url, target, propsStr);
+          myPopup.addEventListener('loadend', function() {
+            self.hideLoading();
+          }, false);
         }
         var self = this;
         self.appSettings.config.ATTACHMENT_TIME_OUT = 1000;
@@ -1277,12 +1300,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
 
           targetPath = self.getAttchDirectory() + '/' + file.TARGET_FILENAME;
-          var docWindow ;
+          var docWindow;
           if (!window.cordova) {
             self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
-             openDoc(fileApiData.URI, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+            openDoc(fileApiData.URI, "_system", "location=yes,enableViewportScale=yes,hidden=no");
           } else if (self.isIOS) {
-             openDoc(fileApiData.URI, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
+            openDoc(fileApiData.URI, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
           } else if (self.isAndroid) {
             var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
 
@@ -1310,7 +1333,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           self.hideLoading();
           self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
         }).finally(function() {
-           self.hideLoading();
+          self.hideLoading();
         });
 
       },

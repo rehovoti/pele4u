@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.intpele.pele4u" version="116.8" versionCode="116.8" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-  <name>QA_PELE4U</name>
-  <description>
+<widget id="com.int-pele.pele4u" version="117.2" versionCode="117.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>
+      PELE4U</name>
+    <description>
     Work form anywhere
   </description>
-  <author email="oren@pelephone.co.il" href="http://www.pelephone.co.il">
+    <author email="oren@pelephone.co.il" href="http://www.pelephone.co.il">
     Pelephone IT
   </author>
 
@@ -101,7 +102,7 @@
     <splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
     <splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
     <gap:config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>117.1</string>
+        <string>117.2</string>
     </gap:config-file>
     <access origin="*" />
     <allow-intent href="http://*/*" />

@@ -279,7 +279,9 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       responseError: function(rejection) {
         // Retry
         var PelApi = $injector.get('PelApi');
+        console.log(JSON.stringify(rejection.config))
         rejection.config.responseTimestamp = new Date().getTime();
+
         if (retries < (rejection.config.retry || 0)) {
           PelApi.lagger.error("Reject & Retry . number :  " + retries, "on Config : ", rejection.config)
           retries++;
