@@ -27,28 +27,15 @@ angular.module('pele')
       },
     ]
 
-    $scope.createContact = function(c) {
-      if (window.plugins) {
+    $scope.saveInDevice = function(c) {
+      console.log(c)
+      if (!window.plugins) {
         swal({
           text: "תכונה זאת נתמכת במכשיר בלבד!",
-          icon: "success",
-          button: "סגור!",
-        });
-        return false;
-        $ionicPopup.alert({
-          template: '<div class="text-center">' +
-            'תכונה זאת נתמכת במכשיר בלבד' +
-            '</div>'
+          button: "סגור",
         });
         return false;
       }
-      swal({
-          text: "האם לשמור את איש הקשר במכשירכם ?",
-          buttons: ["סגור!", "ביטול"]
-        })
-        .then((value) => {
-          swal(`The returned value is: ${value}`);
-        });
 
       $cordovaContacts.save({
         "displayName": c.displayName,
@@ -63,9 +50,33 @@ angular.module('pele')
         swal({
           text: "! התרחשה שגיאה",
           icon: "error",
-          button: "סגור!",
+          timer: 2000
         });
       });
+
+    }
+
+    $scope.createContact = function(c) {
+
+      swal({
+          text: "האם לשמור את איש הקשר במכשירכם ?",
+          buttons: {
+            "cancel": {
+              text: "ביטול",
+              value: "cancel",
+              visible: true
+            },
+            approve: {
+              text: "אישור",
+              value: "ok",
+            }
+          }
+        })
+        .then((value) => {
+
+          if (value === 'ok')
+            $scope.saveInDevice(c)
+        });
     }
 
     $scope.slideNext = function() {

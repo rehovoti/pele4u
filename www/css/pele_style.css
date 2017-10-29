@@ -698,3 +698,7 @@ div.hide-search {height:0px;min-height: 0px;display:none}
 .swal-modal {
     width: calc(100% - 50px);
 }
+
+.swal-text:first-child {
+    margin-top: 25px;
+}
