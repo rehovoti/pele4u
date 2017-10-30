@@ -113,6 +113,6 @@
     <allow-intent href="geo:*" />
 
     <plugin name="cordova-plugin-badge" spec="~0.8.1" />
-    <plugin name="cordova-plugin-x-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git" />
-    <plugin name="onesignal-cordova-plugin" spec="^2.1.1" source="npm" />
+    <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
+    <gap:plugin name="onesignal-cordova-plugin" spec="^2.1.1" source="npm" />
 </widget>

@@ -4,7 +4,7 @@
 angular.module('pele')
   .controller('iniListCtrl', function($scope, $stateParams, $http, $q, $ionicLoading, $state, PelApi, appSettings) {
 
-
+    $scope.appId = $stateParams.AppId;
     $scope.parse = function(data) {
       var mapped = [];
       data.forEach(function(item) {
@@ -28,7 +28,7 @@ angular.module('pele')
     $scope.doRefresh = function() {
 
       PelApi.showLoading();
-      $scope.appId = $stateParams.AppId;
+
       $scope.formType = $stateParams.FormType;
       $state.pin = $stateParams.Pin;
 
@@ -52,9 +52,9 @@ angular.module('pele')
             $scope.title = $scope.docsGroups[0].DOC_TYPE;
           }
         })
-        .error(function(error, httpStatus,headers,config) {
+        .error(function(error, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
           PelApi.throwError("api", "GetUserNotifNew", "httpStatus : " + httpStatus + tr)
         })
         .finally(function(skip) {

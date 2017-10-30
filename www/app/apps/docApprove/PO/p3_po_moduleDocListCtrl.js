@@ -104,9 +104,9 @@ angular.module('pele')
           PelApi.showPopupVersionUpdate(data.StatusDesc, "");
         }
       }).error(
-        function(error, httpStatus,headers,config) {
+        function(error, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
           PelApi.throwError("api", "GetUserPoOrdGroupGroup", "httpStatus : " + httpStatus + tr)
         }
       ).finally(function() {

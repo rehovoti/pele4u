@@ -19,6 +19,7 @@ angular.module('pele')
     srvShareData
   ) {
     //----------------------- LOGIN --------------------------//
+    $scope.appId = $stateParams.AppId;
 
     // Form data for the login modal
     $scope.loginData = {};
@@ -74,7 +75,7 @@ angular.module('pele')
     // Perform the login action when the user submits the login form
     $scope.doLogin = function() {
 
-      var appId = appSettings.config.appId;
+      var appId = $scope.appId;
       var pin = $scope.loginData.pin;
       var titleDisp = $sessionStorage.title;
       $state.go("app.p2_moduleList", {
@@ -93,7 +94,7 @@ angular.module('pele')
       if (0 < docQty) {
 
         var params = {
-          AppId: $stateParams.AppId,
+          AppId: $scope.appId,
           FormType: formType,
           Pin: appSettings.config.Pin
         };
@@ -187,14 +188,14 @@ angular.module('pele')
         } else if ("PWA" === pinCodeStatus) {
           var errordesc = appSettings.PIN_STATUS.PWA;
           //var appId = $stateParams.AppId;
-          var appId = appSettings.config.appId;
+          var appId = $scope.appId;
           var titleDisp = $stateParams.title;
           appSettings.config.IS_TOKEN_VALID = "N";
           PelApi.goHome();
 
         } else if ("PCR" === pinCodeStatus) {
           $scope.loginData.error = appSettings.PIN_STATUS.PAD;
-          var appId = appSettings.config.appId;
+          var appId = $scope.appId;;
           var titleDisp = $stateParams.title;
           appSettings.config.IS_TOKEN_VALID = "N";
           PelApi.goHome();
@@ -223,9 +224,9 @@ angular.module('pele')
         }
 
       }).error(
-        function(error, httpStatus,headers,config) {
+        function(error, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
           PelApi.throwError("api", "GetUserModuleTypes", "httpStatus : " + httpStatus + tr)
         }).finally(function() {
         $ionicLoading.hide();

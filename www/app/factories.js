@@ -89,38 +89,38 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         //--   Registration for Push Notification
         //-----------------------------------------
         var self = this;
-        if (window.plugins !== undefined) {
+        if (window.plugins && window.plugins.notification && cordova.plugins.notification.badge) {
           cordova.plugins.notification.badge.configure({
             autoClear: true
           });
 
           cordova.plugins.notification.badge.clear();
-
-          var oneSignalConf = appSettings.apiConfig.OneSignal[appSettings.apiConfig.env] || "notfound";
-          if (oneSignalConf === "notfound") {
-            self.throwError("client", "registerPushNotification", "Onesignal conf not found !", false);
-          }
-
-          self.lagger.info('Open Notification Event');
-          window.plugins.OneSignal.setLogLevel({
-            logLevel: oneSignalConf.logLevel || 0,
-            visualLevel: oneSignalConf.visualLevel || 0
-          });
-          var notificationOpenedCallback = function(jsonData) {
-            self.lagger.info('notificationOpenedCallback: ', jsonData);
-          };
-          window.plugins.OneSignal
-            //.startInit(conf.appId, conf.googleProjectNumber)
-            .startInit(oneSignalConf.appId)
-            .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
-            .handleNotificationOpened(notificationOpenedCallback)
-            .endInit();
-
-          window.plugins.OneSignal.getIds(function(ids) {
-            appSettings.config.PLAYER_ID = ids.userId;
-            self.lagger.info('window.plugins.OneSignal.getIds :' + ids.userId);
-          });
         }
+        var oneSignalConf = appSettings.apiConfig.OneSignal[appSettings.apiConfig.env] || "notfound";
+        if (oneSignalConf === "notfound") {
+          self.throwError("client", "registerPushNotification", "Onesignal conf not found !", false);
+        }
+
+        self.lagger.info('Open Notification Event');
+        window.plugins.OneSignal.setLogLevel({
+          logLevel: oneSignalConf.logLevel || 0,
+          visualLevel: oneSignalConf.visualLevel || 0
+        });
+        var notificationOpenedCallback = function(jsonData) {
+          self.lagger.info('notificationOpenedCallback: ', jsonData);
+        };
+        window.plugins.OneSignal
+          //.startInit(conf.appId, conf.googleProjectNumber)
+          .startInit(oneSignalConf.appId)
+          .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
+          .handleNotificationOpened(notificationOpenedCallback)
+          .endInit();
+
+        window.plugins.OneSignal.getIds(function(ids) {
+          appSettings.config.PLAYER_ID = ids.userId;
+          self.lagger.info('window.plugins.OneSignal.getIds :' + ids.userId);
+        });
+
       },
 
       sendPincode: function(pincode) {

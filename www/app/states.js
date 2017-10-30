@@ -109,7 +109,7 @@ angular.module('pele.states', [])
     src: ["app/apps/docApprove/TSK/tskListCtrl.js"]
   }, {
     state: 'app.tsk_details',
-    url: "/task_details/:formType/:appId/:docId/:docInitId",
+    url: "/task_details/:formType/:AppId/:docId/:docInitId",
     views: {
       'menuContent': {
         templateUrl: function() {
@@ -133,7 +133,7 @@ angular.module('pele.states', [])
     src: ["app/apps/docApprove/INI/iniListCtrl.js"]
   }, {
     state: 'app.ini_details',
-    url: "/ini_details/:formType/:appId/:docId/:docInitId",
+    url: "/ini_details/:formType/:AppId/:docId/:docInitId",
     views: {
       'menuContent': {
         templateUrl: function() {
@@ -145,7 +145,7 @@ angular.module('pele.states', [])
     src: ["app/apps/docApprove/INI/iniDetailsCtrl.js"]
   }, {
     state: 'app.doc_10002',
-    url: "/doc_10002/:DocId/:DocInitId",
+    url: "/doc_10002/:AppId/:DocId/:DocInitId",
     views: {
       'menuContent': {
         templateUrl: function() {
@@ -193,7 +193,7 @@ angular.module('pele.states', [])
     src: ["app/apps/docApprove/HR/p4_hr_docCtrl.js"]
   }, {
     state: 'app.doc_20002',
-    url: "/doc_20002/:DocId/:DocInitId",
+    url: "/doc_20002/:AppId/:DocId/:DocInitId",
     views: {
       'menuContent': {
         templateUrl: function() {
@@ -206,7 +206,7 @@ angular.module('pele.states', [])
 
   }, {
     state: 'app.doc_30002',
-    url: "/doc_30002/:IniDocId/:IniDocInitId/:DocId/:Mode",
+    url: "/doc_30002/:AppId/:IniDocId/:IniDocInitId/:DocId/:Mode",
     views: {
       'menuContent': {
         templateUrl: function() {

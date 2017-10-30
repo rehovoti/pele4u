@@ -62,26 +62,33 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
    */
   $scope.GetUserMenuMain = function() {
 
-  var Rendred = false ;
-  var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
-  if(appSettings.config.IS_TOKEN_VALID !== 'Y')
-    delete $sessionStorage.mainMenu ;
+    var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
-  if(appSettings.config.mainMenuKeepAlive && $sessionStorage.mainMenu) {
-    var now = new Date().getTime()
-    var mm = $sessionStorage.mainMenu  ;
-     if(mm && mm.timeStamp && mm.menuItems ) {
-            if((now - mm.timeStamp) <  (appSettings.config.mainMenuKeepAlive)*1000 ) {
-            $scope.feeds_categories =  mm.menuItems;
-            $scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            Rendred = true ;
+    if (appSettings.config.IS_TOKEN_VALID !== 'Y')
+      delete $sessionStorage.mainMenu;
+    // get Main menu from cache
+    //    console.log("appSettings.config.mainMenuKeepAlive:",appSettings.config.mainMenuKeepAlive)
+    if (appSettings.config.mainMenuKeepAlive && $sessionStorage.mainMenu) {
+      var now = new Date().getTime()
+      var mm = $sessionStorage.mainMenu;
+      if (mm && mm.timeStamp && mm.menuItems) {
+        //      console.log("mm",mm)
+        //      console.log("now",now)
+        //      console.log("mm.timeStamp",mm.timeStamp)
+        //      console.log("mm.menuItems",mm.menuItems)
+        //      console.log("(now - mm.timeStamp) :",(now - mm.timeStamp) )
+        if ((now - mm.timeStamp) < (appSettings.config.mainMenuKeepAlive) * 1000) {
+          $scope.feeds_categories = mm.menuItems;
+          $scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
+          $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
+          return false;
         }
-    } else {
-       delete $sessionStorage.mainMenu ;
+      } else {
+        delete $sessionStorage.mainMenu;
+      }
     }
-  }
+
 
     try {
       var reMenu = PelApi.getMenu(links);
@@ -92,10 +99,6 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         $scope.$broadcast('scroll.refreshComplete');
         window.location = "./index.html";
       }
-    }
-
-    if(Rendred) {
-        $ionicLoading.hide();
     }
 
     reMenu.success(function(data, status, headers, config) {
@@ -125,16 +128,18 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         $scope.feeds_categories = appSettings.config.GetUserMenu;
         $scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
         $sessionStorage.mainMenu = {
-          token : appSettings.config.token,
-          user : appSettings.config.GetUserMenu.user,
-          userName : appSettings.config.GetUserMenu.userName,
-          menuItems : appSettings.config.GetUserMenu,
-          timeStamp :  new Date().getTime()
+          token: appSettings.config.token,
+          user: appSettings.config.GetUserMenu.user,
+          userName: appSettings.config.GetUserMenu.userName,
+          menuItems: appSettings.config.GetUserMenu,
+          timeStamp: new Date().getTime()
         };
+
+
         //---------------------------------------------
         //-- Send User Tag for push notifications
         //---------------------------------------------
-        if (window.plugins !== undefined) {
+        if (window.plugins && window.plugins.OneSignal) {
           window.plugins.OneSignal.sendTags({
             "User": data.userName,
             "Env": appSettings.env
@@ -188,11 +193,11 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         PelApi.showPopupVersionUpdate(data.StatusDesc, "");
       }
     }).error(
-      function(errorStr, httpStatus,headers,config) {
+      function(errorStr, httpStatus, headers, config) {
         var time = config.responseTimestamp - config.requestTimestamp;
-        var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+        var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
 
-        PelApi.throwError("api-400", "GetUserMenu", "httpStatus : " + httpStatus  + tr)
+        PelApi.throwError("api-400", "GetUserMenu", "httpStatus : " + httpStatus + tr)
         //PelApi.showPopup(appSettings.config.getUserModuleTypesErrorMag, "");
       }
     ).finally(function() {

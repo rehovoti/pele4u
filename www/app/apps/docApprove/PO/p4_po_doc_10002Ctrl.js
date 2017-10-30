@@ -6,6 +6,8 @@ angular.module('pele')
       /* rem by R.W 07/11/2016 , $cordovaFileOpener2 */
     ) {
 
+      $scope.appId = $stateParams.AppId;
+
       //---------------------------------
       //--       goHome
       //---------------------------------
@@ -252,7 +254,7 @@ angular.module('pele')
 
         var links = PelApi.getDocApproveServiceUrl("GetFileURI");
 
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
 
         if ("Y" === isOpened) {
           var l_fileName = "";
@@ -394,10 +396,10 @@ angular.module('pele')
               PelApi.showPopupVersionUpdate(data.StatusDesc, "");
             }
           }).error(
-            function(response,httpStatus,headers,config) {
+            function(response, httpStatus, headers, config) {
               var time = config.responseTimestamp - config.requestTimestamp;
-              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-              PelApi.lagger.error("GetFileURI : " + JSON.stringify(response) +  tr);
+              var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+              PelApi.lagger.error("GetFileURI : " + JSON.stringify(response) + tr);
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               PelApi.showPopup(appSettings.config.getUserModuleTypesErrorMag, "");
@@ -434,7 +436,7 @@ angular.module('pele')
           color: 'red'
         };
 
-        var appId = appSettings.config.appId,
+        var appId = $scope.appId,
           docId = $stateParams.DocId,
           docInitId = $stateParams.DocInitId,
           orgName = $stateParams.orgName;
@@ -551,7 +553,7 @@ angular.module('pele')
 
         //PelApi.showLoading();
 
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = 'APPROVE';
         var note = '';
@@ -639,10 +641,10 @@ angular.module('pele')
             var retSubmitNotification = PelApi.SubmitNotification(links3, appId, notificationId, note, actionType);
             retSubmitNotification.success(function(data, status) {
 
-            }).error(function(error,httpStatus,headers,config) {
+            }).error(function(error, httpStatus, headers, config) {
               var time = config.responseTimestamp - config.requestTimestamp;
-              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-                PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
+              var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+              PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
 
             }).finally(function() {
               $ionicLoading.hide();
@@ -658,7 +660,7 @@ angular.module('pele')
 
         //PelApi.showLoading();
 
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = 'OK';
         var note = '';
@@ -668,12 +670,12 @@ angular.module('pele')
         var retSubmitNotification = PelApi.SubmitNotification(links3, appId, notificationId, note, actionType);
 
         retSubmitNotification.success(function(data, status) {
-            $ionicNavBarDelegate.back();
+          $ionicNavBarDelegate.back();
         }).error(
-            function(error,httpStatus,headers,config) {
-              var time = config.responseTimestamp - config.requestTimestamp;
-              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-            PelApi.throwError("api", "GetUserNotificationsNew", "httpStatus : "+httpStatus +tr)
+          function(error, httpStatus, headers, config) {
+            var time = config.responseTimestamp - config.requestTimestamp;
+            var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+            PelApi.throwError("api", "GetUserNotificationsNew", "httpStatus : " + httpStatus + tr)
           }).finally(function() {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
@@ -683,7 +685,7 @@ angular.module('pele')
       //--         REJECT                     --
       //----------------------------------------
       $scope.docReject = function() {
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = "REJECT";
         if ($scope.data.note !== undefined) {
@@ -728,7 +730,7 @@ angular.module('pele')
       //==============================================================
       //==============================================================
       $scope.docApproveWitnNote = function() {
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = "APPROVE";
         var note = "";
@@ -776,7 +778,7 @@ angular.module('pele')
       //
       //--------------------------------------------------------------
       $scope.submitNotif = function(action, note) {
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = action;
 
@@ -788,10 +790,10 @@ angular.module('pele')
         retSubmitNotification.success(function(data, status, headers, config) {
           $ionicNavBarDelegate.back();
         }).error(
-          function(error,httpStatus,headers,config) {
+          function(error, httpStatus, headers, config) {
             var time = config.responseTimestamp - config.requestTimestamp;
-            var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-            PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
+            var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+            PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
           }).finally(function() {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');

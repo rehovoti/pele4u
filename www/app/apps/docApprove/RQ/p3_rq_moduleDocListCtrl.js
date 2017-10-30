@@ -17,6 +17,7 @@ angular.module('pele')
     appSettings) {
 
     $scope.appId = $stateParams.AppId;
+
     //---------------------------------
     //--       goHome
     //---------------------------------
@@ -33,7 +34,7 @@ angular.module('pele')
 
       $scope.shownGroup = appSettings.config.PO_ORG_NAME;
 
-      var appId = $stateParams.AppId,
+      var appId = $scope.appId,
         formType = $stateParams.FormType,
         pin = $stateParams.Pin;
 
@@ -73,7 +74,7 @@ angular.module('pele')
             } else {
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
-              var appId = $stateParams.AppId,
+              var appId = $scope.appId,
                 formType = $stateParams.FormType,
                 pin = $stateParams.Pin;
 
@@ -127,9 +128,9 @@ angular.module('pele')
           PelApi.showPopupVersionUpdate(data.StatusDesc, "");
         }
       }).error(
-        function(error, httpStatus,headers,config) {
+        function(error, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
           PelApi.throwError("api", "GetUserPoOrdGroupGroup", "httpStatus : " + httpStatus + tr)
         }).finally(function() {
         $ionicLoading.hide();
@@ -265,10 +266,10 @@ angular.module('pele')
           PelApi.showPopupVersionUpdate(data.StatusDesc, "");
         }
       }).error(
-        function(error, httpStatus,headers,config) {
+        function(error, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-          PelApi.throwError("api", "GetUserNotificationsNew", "httpStatus : " + httpStatus +tr)
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+          PelApi.throwError("api", "GetUserNotificationsNew", "httpStatus : " + httpStatus + tr)
         }).finally(function() {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');

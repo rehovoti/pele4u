@@ -17,6 +17,7 @@ angular.module('pele')
         "text": "תוכן הייזום"
       }];
 
+      $scope.appId = $stateParams.AppId;
       $scope.notifLinks = PelApi.getDocApproveServiceUrl("SubmitNotif");
 
       $scope.getData = function() {
@@ -28,7 +29,7 @@ angular.module('pele')
         PelApi.deleteAttachDirecoty();
 
         var links = PelApi.getDocApproveServiceUrl("GetUserNotifNew");
-        var retGetUserNotifications = PelApi.GetUserNotifications(links, $stateParams.appId, $stateParams.docId, $stateParams.docInitId);
+        var retGetUserNotifications = PelApi.GetUserNotifications(links, $scope.appId, $stateParams.docId, $stateParams.docInitId);
         retGetUserNotifications.success(function(data) {
           var apiData = PelApi.checkApiResponse(data);
           if (apiData.error) return false;
@@ -37,9 +38,9 @@ angular.module('pele')
           PelApi.extendActionHistory($scope.docDetails);
           $scope.buttonsArr = $scope.docDetails.BUTTONS || [];
           //PelApi.lagger.info("scope.docDetails", JSON.stringify($scope.docDetails))
-        }).error(function(error, httpStatus,headers,config) {
+        }).error(function(error, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
           PelApi.throwError("api", "GetUserNotifNew", "httpStatus : " + httpStatus + tr)
         }).finally(function() {
           $ionicLoading.hide();
@@ -59,7 +60,7 @@ angular.module('pele')
       };
 
       $scope.openAttachment = function(file) {
-        PelApi.openAttachment(file, $scope.params.appId);
+        PelApi.openAttachment(file, $scope.appId);
       }
 
       $scope.toggleActionItem = function(action) {
@@ -82,15 +83,15 @@ angular.module('pele')
 
       $scope.submitUpdateInfo = function(btn, note) {
         PelApi.showLoading();
-        PelApi.SubmitNotification($scope.notifLinks, $scope.params.appId, $scope.docDetails.NOTIFICATION_ID, note, btn.action)
+        PelApi.SubmitNotification($scope.notifLinks, $scope.appId, $scope.docDetails.NOTIFICATION_ID, note, btn.action)
           .success(function(data) {
             var apiData = PelApi.checkApiResponse(data);
             if (apiData.error) return false;
             $ionicHistory.goBack();
           }).error(
-            function(error, httpStatus,headers,config) {
+            function(error, httpStatus, headers, config) {
               var time = config.responseTimestamp - config.requestTimestamp;
-              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+              var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
               PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
             }).finally(function() {
             $ionicLoading.hide();
