@@ -1,8 +1,9 @@
 /**
  * Created by User on 25/08/2016.
  */
-angular.module('pele')
+angular.module('pele', [])
   .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup) {
+
     $scope.aaaa = "11111"
     $scope.displayElement = 'search';
     $scope.useful = [{
@@ -26,35 +27,61 @@ angular.module('pele')
         phoneNumber: "050-707-8501"
       },
     ]
+    console.log(ContactField('work', '768-555-1234', false));
 
+    console.log("navigator.contacts.fieldType", navigator.contacts.fieldType)
     $scope.saveInDevice = function(c) {
-      console.log(c)
-      if (!window.plugins) {
+      var opts = { //search options
+        filter: c.phoneNumber, // 'Bob'
+        multiple: true, // Yes, return any contact that matches criteria
+        fields: ["phoneNumbers", "displayName"], // These are the fields to search for 'bob'.
+        desiredFields: ["phoneNumbers", "displayName"],
+        hasPhoneNumber: true //return fields.
+      };
+
+      $cordovaContacts.find(opts).then(function(allContacts) {
+        swal({
+          text: "Search number :" + JSON.stringify(allContacts),
+          icon: "success",
+          button: "סגור!",
+        });
+      });
+
+      if (!navigator.contacts) {
         swal({
           text: "תכונה זאת נתמכת במכשיר בלבד!",
           button: "סגור",
         });
-        return false;
+        //  return false;
       }
 
       $cordovaContacts.save({
+        phoneNumbers: [{
+          "type": "Number",
+          "value": c.phoneNumber,
+          "pref": true
+        }],
         "displayName": c.displayName,
-        "phoneNumbers": c.phoneNumber
+        organizations: {
+          name: "פלאפון"
+        }
       }).then(function(result) {
-        swal({
-          text: "! איש הקשר   עודכן במכשירך",
-          icon: "success",
-          button: "סגור!",
-        });
-      }, function(error) {
-        swal({
-          text: "! התרחשה שגיאה",
-          icon: "error",
-          timer: 2000
-        });
-      });
+          swal({
+            text: "! איש הקשר   עודכן במכשירך",
+            icon: "success",
+            button: "סגור!",
+          });
 
-    }
+        },
+        function(err) {
+          swal({
+            text: "! התרחשה שגיאה" + JSON.stringify(err),
+            icon: "error",
+            timer: 2000
+          });
+
+        });
+    };
 
     $scope.createContact = function(c) {
 
