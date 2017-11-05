@@ -71,7 +71,7 @@ angular.module('pele')
 
       $state.go(statePath, {
         formType: $scope.formType,
-        appId: $scope.appId,
+        AppId: $scope.appId,
         docId: docId,
         docInitId: notificationId
       });

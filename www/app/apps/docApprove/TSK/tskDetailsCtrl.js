@@ -8,7 +8,6 @@ angular.module('pele')
   .controller('tskDetailsCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaFileTransfer',
     function($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaFileTransfer) {
       $scope.actionNote = {};
-
       $scope.appId = $stateParams.AppId;
 
       //    $scope.tabs = appSettings.tabs;
@@ -31,7 +30,7 @@ angular.module('pele')
         PelApi.deleteAttachDirecoty();
 
         var links = PelApi.getDocApproveServiceUrl("GetUserNotifNew");
-        var retGetUserNotifications = PelApi.GetUserNotifications(links, $stateParams.appId, $stateParams.docId, $stateParams.docInitId);
+        var retGetUserNotifications = PelApi.GetUserNotifications(links, $scope.appId, $stateParams.docId, $stateParams.docInitId);
         retGetUserNotifications.success(function(data) {
           var apiData = PelApi.checkApiResponse(data);
           if (apiData.error) return false;
