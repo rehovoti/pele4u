@@ -9,7 +9,6 @@ angular.module('pele')
     function($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup) {
       $scope.actionNote = {};
       $scope.params = $stateParams;
-      $scope.title = "אישור ייזום " + $stateParams.docInitId
       //    $scope.tabs = appSettings.tabs;
       $scope.tabs = [{
         "text": "סבב מאשרים"
@@ -34,6 +33,7 @@ angular.module('pele')
           var apiData = PelApi.checkApiResponse(data);
           if (apiData.error) return false;
           $scope.docDetails = PelApi.getJsonString(apiData.Result, "JSON[0]", true);
+          $scope.title = "אישור ייזום " + $scope.docDetails.DOC_INIT_NUMBER;
           $scope.docDetails.attachments = $scope.docDetails.ATTACHMENT_FILES || [];
           PelApi.extendActionHistory($scope.docDetails);
           $scope.buttonsArr = $scope.docDetails.BUTTONS || [];
