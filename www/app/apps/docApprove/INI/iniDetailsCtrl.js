@@ -17,6 +17,7 @@ angular.module('pele')
         "text": "תוכן הייזום"
       }];
 
+      $scope.appId = $stateParams.AppId;
       $scope.notifLinks = PelApi.getDocApproveServiceUrl("SubmitNotif");
 
       $scope.getData = function() {
@@ -28,13 +29,11 @@ angular.module('pele')
         PelApi.deleteAttachDirecoty();
 
         var links = PelApi.getDocApproveServiceUrl("GetUserNotifNew");
-        var retGetUserNotifications = PelApi.GetUserNotifications(links, $stateParams.appId, $stateParams.docId, $stateParams.docInitId);
+        var retGetUserNotifications = PelApi.GetUserNotifications(links, $scope.appId, $stateParams.docId, $stateParams.docInitId);
         retGetUserNotifications.success(function(data) {
           var apiData = PelApi.checkApiResponse(data);
-
           if (apiData.error) return false;
           $scope.docDetails = PelApi.getJsonString(apiData.Result, "JSON[0]", true);
-          console.log(JSON.stringify($scope.docDetails))
           $scope.title = "אישור ייזום " + $scope.docDetails.DOC_INIT_NUMBER;
           $scope.docDetails.attachments = $scope.docDetails.ATTACHMENT_FILES || [];
           PelApi.extendActionHistory($scope.docDetails);
@@ -62,7 +61,7 @@ angular.module('pele')
       };
 
       $scope.openAttachment = function(file) {
-        PelApi.openAttachment(file, $scope.params.appId);
+        PelApi.openAttachment(file, $scope.appId);
       }
 
       $scope.toggleActionItem = function(action) {
@@ -85,7 +84,7 @@ angular.module('pele')
 
       $scope.submitUpdateInfo = function(btn, note) {
         PelApi.showLoading();
-        PelApi.SubmitNotification($scope.notifLinks, $scope.params.appId, $scope.docDetails.NOTIFICATION_ID, note, btn.action)
+        PelApi.SubmitNotification($scope.notifLinks, $scope.appId, $scope.docDetails.NOTIFICATION_ID, note, btn.action)
           .success(function(data) {
             var apiData = PelApi.checkApiResponse(data);
             if (apiData.error) return false;
