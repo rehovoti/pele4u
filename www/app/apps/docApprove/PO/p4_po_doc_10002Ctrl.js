@@ -250,7 +250,13 @@ angular.module('pele')
       //---------------------------------------------------------------------------
       $scope.openAttachedFile = function(p_openFileName, p_fullFileName, p_fileType, p_fileMaofType, p_shortText, p_longText, isOpened, p_iosOpenfileName) {
 
-        PelApi.showLoading();
+        var spinOptions = {
+          delay: 0,
+          template: '<div class="text-center">המתינו לפתיחת הקובץ' +
+            '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+            '</div>',
+        };
+        PelApi.showLoading(spinOptions);
 
         var links = PelApi.getDocApproveServiceUrl("GetFileURI");
 
