@@ -248,7 +248,13 @@ angular.module('pele')
       //---------------------------------------------------------------------------
       $scope.openAttachedFile = function(p_openFileName, p_fullFileName, p_fileType, p_fileMaofType, p_shortText, p_longText, isOpened, p_iosOpenfileName) {
 
-        PelApi.showLoading();
+        var spinOptions = {
+          delay: 0,
+          template: '<div class="text-center">המתינו לפתיחת הקובץ' +
+            '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+            '</div>',
+        };
+        PelApi.showLoading(spinOptions);
 
         var links = PelApi.getDocApproveServiceUrl("GetFileURI");
 
@@ -394,10 +400,10 @@ angular.module('pele')
               PelApi.showPopupVersionUpdate(data.StatusDesc, "");
             }
           }).error(
-            function(response,httpStatus,headers,config) {
+            function(response, httpStatus, headers, config) {
               var time = config.responseTimestamp - config.requestTimestamp;
-              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-              PelApi.lagger.error("GetFileURI : " + JSON.stringify(response) +  tr);
+              var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+              PelApi.lagger.error("GetFileURI : " + JSON.stringify(response) + tr);
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               PelApi.showPopup(appSettings.config.getUserModuleTypesErrorMag, "");
@@ -639,10 +645,10 @@ angular.module('pele')
             var retSubmitNotification = PelApi.SubmitNotification(links3, appId, notificationId, note, actionType);
             retSubmitNotification.success(function(data, status) {
 
-            }).error(function(error,httpStatus,headers,config) {
+            }).error(function(error, httpStatus, headers, config) {
               var time = config.responseTimestamp - config.requestTimestamp;
-              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-                PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
+              var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+              PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
 
             }).finally(function() {
               $ionicLoading.hide();
@@ -668,12 +674,12 @@ angular.module('pele')
         var retSubmitNotification = PelApi.SubmitNotification(links3, appId, notificationId, note, actionType);
 
         retSubmitNotification.success(function(data, status) {
-            $ionicNavBarDelegate.back();
+          $ionicNavBarDelegate.back();
         }).error(
-            function(error,httpStatus,headers,config) {
-              var time = config.responseTimestamp - config.requestTimestamp;
-              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-            PelApi.throwError("api", "GetUserNotificationsNew", "httpStatus : "+httpStatus +tr)
+          function(error, httpStatus, headers, config) {
+            var time = config.responseTimestamp - config.requestTimestamp;
+            var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+            PelApi.throwError("api", "GetUserNotificationsNew", "httpStatus : " + httpStatus + tr)
           }).finally(function() {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
@@ -788,10 +794,10 @@ angular.module('pele')
         retSubmitNotification.success(function(data, status, headers, config) {
           $ionicNavBarDelegate.back();
         }).error(
-          function(error,httpStatus,headers,config) {
+          function(error, httpStatus, headers, config) {
             var time = config.responseTimestamp - config.requestTimestamp;
-            var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-            PelApi.throwError("api", "SubmitNotif", "httpStatus : "+httpStatus +tr)
+            var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+            PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
           }).finally(function() {
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');

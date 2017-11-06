@@ -9,7 +9,7 @@ angular.module('pele')
     function($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup) {
       $scope.actionNote = {};
       $scope.params = $stateParams;
-      $scope.title = "אישור ייזום " + $stateParams.docInitId
+
       //    $scope.tabs = appSettings.tabs;
       $scope.tabs = [{
         "text": "סבב מאשרים"
@@ -31,15 +31,18 @@ angular.module('pele')
         var retGetUserNotifications = PelApi.GetUserNotifications(links, $stateParams.appId, $stateParams.docId, $stateParams.docInitId);
         retGetUserNotifications.success(function(data) {
           var apiData = PelApi.checkApiResponse(data);
+
           if (apiData.error) return false;
           $scope.docDetails = PelApi.getJsonString(apiData.Result, "JSON[0]", true);
+          console.log(JSON.stringify($scope.docDetails))
+          $scope.title = "אישור ייזום " + $scope.docDetails.DOC_INIT_NUMBER;
           $scope.docDetails.attachments = $scope.docDetails.ATTACHMENT_FILES || [];
           PelApi.extendActionHistory($scope.docDetails);
           $scope.buttonsArr = $scope.docDetails.BUTTONS || [];
           //PelApi.lagger.info("scope.docDetails", JSON.stringify($scope.docDetails))
-        }).error(function(error, httpStatus,headers,config) {
+        }).error(function(error, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
           PelApi.throwError("api", "GetUserNotifNew", "httpStatus : " + httpStatus + tr)
         }).finally(function() {
           $ionicLoading.hide();
@@ -88,9 +91,9 @@ angular.module('pele')
             if (apiData.error) return false;
             $ionicHistory.goBack();
           }).error(
-            function(error, httpStatus,headers,config) {
+            function(error, httpStatus, headers, config) {
               var time = config.responseTimestamp - config.requestTimestamp;
-              var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
+              var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
               PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
             }).finally(function() {
             $ionicLoading.hide();
