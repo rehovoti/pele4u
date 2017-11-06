@@ -702,3 +702,7 @@ div.hide-search {height:0px;min-height: 0px;display:none}
 .swal-text:first-child {
     margin-top: 25px;
 }
+
+img.pel_icon {height:28px}
+.col.col-input { padding:15px 30px}
+button.round {border-radius: 10px}

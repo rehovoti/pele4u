@@ -15,7 +15,7 @@
     <ion-slide-page>
       <ion-content class="pele-background">
         <div class="row">
-          <div class="col">
+          <div class="col col-input">
             <ion-item class="item item-input">
               <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי שם פרטי/משפחה/שלוחה" ng-model="term">
               <i class="icon ion-funnel placeholder-icon"></i>
@@ -24,7 +24,7 @@
         </div>
         <div class="row">
 
-          <div class="col">
+          <div class="col col-input">
             <ion-item class="item item-input">
               <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי יחידה ארגונית" ng-model="org">
               <i class="icon ion-arrow-down-b placeholder-icon"></i>
@@ -33,7 +33,7 @@
         </div>
         <div class="col push-top-20">
           <div class="text-center">
-            <button class="button icon-left ion-search button-positive">חיפוש</button>
+            <button class="round button icon-left ion-search button-positive">חיפוש</button>
           </div>
         </div>
         <div class="col push-top-20">
@@ -59,11 +59,14 @@
           <ion-list>
             <ion-item ng-repeat="u in useful">
               <div class="row">
-                <div class="col col-40">
+                <div class="col col-35 item-text-wrap">
                   {{u.displayName}} </div>
-                <div class="col col-40">{{u.phoneNumber}}</div>
-                <div class="col col-10"> <a href="tel:{{u.phoneNumber}}"><i class="ion-ios-telephone"></i></a></div>
-                <div class="col col-10"> <a ng-click="createContact(u)"><i class="ion-android-person-add"></i></a></div>
+                <div class="col col-35">{{u.phoneNumber}}</div>
+                <div class="col col-30 text-left">
+                  <a href="tel:{{u.phoneNumber}}"><img class="pel_icon" src="img/phone.png" \></a>
+                  <a ng-click="createContact(u)"><img class="pel_icon" src="img/add_contact.png" \></a>
+                </div>
+
               </div>
             </ion-item>
           </ion-list>
@@ -72,7 +75,7 @@
       <ion-footer-bar class="footer50">
         <div class="row">
           <div class="col col-50 text-center">
-            <button class="button button-clear button-positive">
+            <button class="button button-clear button-positive" ng-click="goHome()">
                 <i class="ion-home "></i> תפריט ראשי
               </button>
           </div>

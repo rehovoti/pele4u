@@ -3,6 +3,9 @@
  */
 angular.module('pele', [])
   .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup) {
+    $scope.goHome = function() {
+      PelApi.goHome();
+    }
 
     $scope.aaaa = "11111"
     $scope.displayElement = 'search';
@@ -27,9 +30,9 @@ angular.module('pele', [])
         phoneNumber: "050-707-8501"
       },
     ]
-    console.log(ContactField('work', '768-555-1234', false));
+    console.log($cordovaContacts);
 
-    console.log("navigator.contacts.fieldType", navigator.contacts.fieldType)
+
     $scope.saveInDevice = function(c) {
       var opts = { //search options
         filter: c.phoneNumber, // 'Bob'
@@ -121,7 +124,6 @@ angular.module('pele', [])
       // data.slider is the instance of Swiper
       $scope.slider = data.slider;
 
-      console.log(data.slider)
     });
 
   });
