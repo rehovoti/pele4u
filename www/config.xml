@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.int-pele.pele4u" version="117.2" versionCode="117.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name> PELE4U</name>
+<widget id="com.int-pele.pele4u_lp" version="117.2" versionCode="117.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name> PELE4U_LP</name>
     <description>
     Work form anywhere
   </description>
