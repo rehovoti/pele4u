@@ -2,11 +2,19 @@
  * Created by User on 25/08/2016.
  */
 angular.module('pele', [])
-  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup) {
+  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup, $ionicSlideBoxDelegate) {
     $scope.goHome = function() {
       PelApi.goHome();
     }
 
+    $scope.options = {
+      loop: false,
+      effect: 'fade',
+      speed: 500,
+      pagination: false
+    }
+
+    $scope.data = {}
     $scope.aaaa = "11111"
     $scope.displayElement = 'search';
     $scope.useful = [{
@@ -30,8 +38,16 @@ angular.module('pele', [])
         phoneNumber: "050-707-8501"
       },
     ]
-    console.log($cordovaContacts);
 
+    $scope.search = function() {
+      PelApi.getLocalJson("mocks/phonebook.json")
+        .success((data, status, headers, config) => {
+          console.log(JSON.stringify(data))
+          $scope.searchResult = data;
+          $scope.slideTo(2, 0)
+        })
+        .error((errorStr, httpStatus, headers, config) => {})
+    }
 
     $scope.saveInDevice = function(c) {
       var opts = { //search options
@@ -117,7 +133,8 @@ angular.module('pele', [])
       $scope.slider.slidePrev()
     }
     $scope.slideTo = function(index) {
-      $scope.slider.slideTo(index)
+      console.log($scope.slider)
+      $scope.slider.slideTo(index, 500)
     }
 
     $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {

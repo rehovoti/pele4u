@@ -11,7 +11,7 @@
     </div>
   </ion-nav-title>
 
-  <ion-slides slider="data.slider" options="{pagination: false}">
+  <ion-slides slider="data.slider" options="options">
     <ion-slide-page>
       <ion-content class="pele-background">
         <div class="row">
@@ -33,7 +33,7 @@
         </div>
         <div class="col push-top-20">
           <div class="text-center">
-            <button class="round button icon-left ion-search button-positive">חיפוש</button>
+            <button ng-click="search()" class="round button icon-left ion-search button-positive">חיפוש</button>
           </div>
         </div>
         <div class="col push-top-20">
@@ -87,7 +87,42 @@
         </div>
       </ion-footer-bar>
     </ion-slide-page>
-  </ion-slides>
 
+    <ion-slide-page>
+      <ion-content class="pele-background" scroll="true">
+        <h2 class="text-center color_white">תוצאות חיפוש</h2>
+        <div class="card">
+          <ion-list>
+            <ion-item ng-repeat="item in searchResult">
+              <div class="row">
+                <div class="col col-35 item-text-wrap">{{item}}
+                </div>
+                <div class="col col-35">{{item.phone}}</div>
+                <div class="col col-30 text-left">
+                  <a href="tel:{{u.phoneNumber}}"><img class="pel_icon" src="img/phone.png" \></a>
+                  <a ng-click="createContact(u)"><img class="pel_icon" src="img/add_contact.png" \></a>
+                </div>
+
+              </div>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-content>
+      <ion-footer-bar class="footer50">
+        <div class="row">
+          <div class="col col-50 text-center">
+            <button class="button button-clear button-positive" ng-click="goHome()">
+              <i class="ion-home "></i> תפריט ראשי
+            </button>
+          </div>
+          <div class="col col-50 text-center ">
+            <button class="button button-clear button-positive" ng-click="slideTo(0)">
+          <i class=" ion-search "></i> חיפוש חדש
+          </button>
+          </div>
+        </div>
+      </ion-footer-bar>
+    </ion-slide-page>
+  </ion-slides>
   </ion-content>
 </ion-view>

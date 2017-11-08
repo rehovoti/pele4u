@@ -2,6 +2,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
   .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages) {
     var self = this;
     self._global = {};
+
     return {
       init: function() {
         this.global.set('debugFlag', appSettings.debug, true)
@@ -1218,6 +1219,16 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           delete $localStorage[varname]
           return true;
         }
+      },
+
+      getLocalJson: function(jsonfile) {
+        return $http.get(jsonfile, {
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": 0
+          }
+        });
       },
       pinState: {
         get: function() {
