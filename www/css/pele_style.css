@@ -635,6 +635,8 @@ img.spinner-svg {height:60px}
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.ellipsis_90 {max-width: 90%}
+
 .bar.app-top-bar { background-color: #0160a0 !important}
 
 .icon.pel_icon {
