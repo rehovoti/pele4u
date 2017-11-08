@@ -155,12 +155,12 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
         if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
           //Golan
-          PelApi.pinState.set({
+          $state.go('app.login');
+          /*PelApi.pinState.set({
             valid: false,
             code: appSettings.config.Pin,
             apiCode: pinCodeStatus
-          })
-          $state.go('app.login');
+          })*/
         } else {
           appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
           appSettings.config.IS_TOKEN_VALID = "Y";
