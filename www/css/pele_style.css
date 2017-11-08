@@ -635,6 +635,8 @@ img.spinner-svg {height:60px}
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.ellipsis_90 {max-width:90%}
+
 .bar.app-top-bar { background-color: #0160a0 !important}
 
 .icon.pel_icon {
@@ -680,7 +682,7 @@ div.hide-search {height:0px;min-height: 0px;display:none}
    left: 10px;
    top: 5px;
    z-index: 199999;
-} 
+}
 
 .fab .icon { color:white}
 .fab:hover {

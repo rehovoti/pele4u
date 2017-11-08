@@ -32,7 +32,9 @@ angular.module('pele')
         var links = PelApi.getDocApproveServiceUrl("GetUserNotifNew");
         var retGetUserNotifications = PelApi.GetUserNotifications(links, $scope.appId, $stateParams.docId, $stateParams.docInitId);
         retGetUserNotifications.success(function(data) {
+
           var apiData = PelApi.checkApiResponse(data);
+
           if (apiData.error) return false;
           $scope.docDetails = PelApi.getJsonString(apiData.Result, "JSON[0]", true);
           $scope.docDetails.attachments = $scope.docDetails.TASK_ATTACHMENTS_CUR || [];
