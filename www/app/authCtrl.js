@@ -62,12 +62,18 @@ app.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootSc
               $scope.$broadcast('scroll.refreshComplete');
               appSettings.config.Pin = pin;
               appSettings.config.IS_TOKEN_VALID = "Y";
+              PelApi.pinState.set({
+                valid: true,
+                code: appSettings.config.Pin,
+                apiCode: pinStatus
+              })
               $state.go('app.p1_appsLists');
             } else if ("PWA" === pinStatus) {
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               $scope.user.message = appSettings.config.pinCodeSubTitlePWA;
               $scope.user.pin = "";
+
             } else if ("PAD" === pinStatus) {
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
