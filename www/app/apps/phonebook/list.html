@@ -95,10 +95,12 @@
           <ion-list>
             <ion-item ng-repeat="item in searchResult">
               <div class="row">
-                <div class="col col-35 item-text-wrap">{{item}}
+                <div class="col col-20 item-text-wrap">
+                  {{item.lastName}} {{item.firstName}}
                 </div>
-                <div class="col col-35">{{item.phone}}</div>
+                <div class="col col-35">{{item.sector}}</div>
                 <div class="col col-30 text-left">
+                  <a ng-click="moreinfo(item)"><img class="pel_icon" src="img/info.png" \></a>
                   <a href="tel:{{u.phoneNumber}}"><img class="pel_icon" src="img/phone.png" \></a>
                   <a ng-click="createContact(u)"><img class="pel_icon" src="img/add_contact.png" \></a>
                 </div>

@@ -2,7 +2,7 @@
  * Created by User on 25/08/2016.
  */
 angular.module('pele', [])
-  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup, $ionicSlideBoxDelegate) {
+  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup, $ionicSlideBoxDelegate, $compile) {
     $scope.goHome = function() {
       PelApi.goHome();
     }
@@ -12,6 +12,23 @@ angular.module('pele', [])
       effect: 'fade',
       speed: 500,
       pagination: false
+    }
+
+    $scope.moreinfo = function(c) {
+      swal({
+        title: '<i>HTML</i> <u>example</u>',
+        type: 'info',
+        html: 'You can use <b>bold text</b>, ' +
+          '<a href="//github.com">links</a> ' +
+          'and other HTML tags',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: 'Thumbs down',
+      })
     }
 
     $scope.data = {}
@@ -40,7 +57,7 @@ angular.module('pele', [])
     ]
 
     $scope.search = function() {
-      PelApi.getLocalJson("mocks/phonebook.json")
+      PelApi.getLocalJson("mocks/phonebook_list.json")
         .success((data, status, headers, config) => {
           console.log(JSON.stringify(data))
           $scope.searchResult = data;
