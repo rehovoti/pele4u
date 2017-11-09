@@ -120,6 +120,31 @@ angular.module('pele.states', [])
     },
     src: ["app/apps/docApprove/TSK/tskDetailsCtrl.js"]
   }, {
+    state: 'app.inv_list',
+    url: "/inv_list/:AppId/:FormType/:Pin",
+    views: {
+      'menuContent': {
+        templateUrl: function() {
+          return "app/apps/docApprove/INV/invList.html";
+        },
+        controller: 'invListCtrl',
+        controllerAs: "vm",
+      }
+    },
+    src: ["app/apps/docApprove/INV/invListCtrl.js"]
+  }, {
+    state: 'app.inv_details',
+    url: "/inv_details/:formType/:AppId/:docId/:docInitId",
+    views: {
+      'menuContent': {
+        templateUrl: function() {
+          return "app/apps/docApprove/INV/invDetails.html";
+        },
+        controller: 'invDetailsCtrl'
+      }
+    },
+    src: ["app/apps/docApprove/INV/invDetailsCtrl.js"]
+  }, {
     state: 'app.ini_list',
     url: "/ini_list/:AppId/:FormType/:Pin",
     views: {
