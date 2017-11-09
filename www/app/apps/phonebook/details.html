@@ -5,7 +5,7 @@
   </ion-nav-buttons>
   <ion-nav-title>
     <div class="bar bar-header bar-positive">
-      <div class="title">{{title}}</div>
+      <div class="title">{{title}} </div>
     </div>
   </ion-nav-title>
   <ion-content scroll="false">
@@ -13,8 +13,11 @@
       <div class="tsb-icons">
         <div class="tsb-ic-wrp">
           <ion-scroll has-bouncing="false" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
-            <a class="triangle-isosceles {{tab.icon}}" ng-repeat="tab in tabs" on-finish-render="test()">
-              {{tab.text}}
+            <a class="triangle-isosceles" on-finish-render="test()">
+            עץ ארגוני
+            </a>
+            <a class="triangle-isosceles" on-finish-render="test()">
+            פרטי העובד
             </a>
           </ion-scroll>
         </div>
@@ -26,85 +29,6 @@
         <!-------------------------------------------------------------------------------->
         <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
           <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
-            <div class="list">
-              <div ng-repeat="action in docDetails.ACTION_HISTORY" class="pele_rtl">
-                <div ng-click="action.left_icon && toggleActionItem(action)" class="item item-divider item-icon-left item-icon-right text-right action-history-item">
-                  <i class="icon pel_icon icon-sm" ng-class="action.left_icon"></i> {{action.APPROVAL_SEQ}}. {{action.USER_NAME}}
-                  <i class="icon pel_icon icon-sm" ng-class="action.right_icon"></i>
-                </div>
-                <div class="item bo-border pele_rtl text-right item-icon-left item-icon-right text-right" ng-show="action.display">
-                  <div class="row">
-                    <div class="col">פעולה:</div>
-                    <div class="col col-75">{{action.ACTION}}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col">תאריך:</div>
-                    <div class="col col-75">{{action.ACTION_DATE}}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col">הערות:</div>
-                    <div class="col col-75 pele-item item-text-wrap">{{action.NOTE}}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </ion-scroll>
-        </ion-slide>
-        <ion-slide>
-          <ion-scroll style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
-            <a href="#" class="fab" ng-click="showSearch=!showSearch">
-                  <i class="icon ion-search icon-center"></i>
-              </a>
-            <div ng-class="{'show-search':showSearch,'hide-search':!showSearch}" class="row">
-              <div class="col col-80 col-offset-20">
-                <div class="list list-inset text-finder">
-                  <label class="item item-input">
-              <!--i class="icon ion-search placeholder-icon"></i-->
-              <input class="pele_rtl text-right" type="text" placeholder="חיפוש בתיאור" ng-model="term">
-            </label>
-                </div>
-              </div>
-            </div>
-            <div class="card item-section pele_rtl item-text-wrap text-right" ng-repeat="description in docDetails.TASK_DESCRIPTION track by $index">
-              <div class="row">
-                <div class="col-100">
-                  <p><span class="label">תאריך עדכון: </span>
-                    <span class="info" ng-bind-html="description.UPDATE_DATE|date:'dd-MM-yyyy HH:mm'| highlight:term"></span>
-                    <p>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-100">
-                  <p>
-                    <span class="label">כותב התיאור :</span>
-                    <span class="info" ng-bind-html="description.USER_NAME +' - '+ description.ORG_HIERARCHY| highlight:term"></span>
-                  </p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-100">
-                  <p>
-                    <span class="label" ng-bind-html="description.SUBJECT| highlight:term"> </span>
-                  </p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-100">
-                  <span class="label">פירוט: </span>
-                  <span class="info" ng-bind-html="description.NOTES| highlight:term"></span>
-                </div>
-              </div>
-            </div>
-          </ion-scroll>
-        </ion-slide>
-        <!------------------------------------------------------------------------------->
-        <!----------------------------- Doc Details Slide ------------------------------->
-        <!------------------------------------------------------------------------------->
-        <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
-          <ion-scroll class="pele_rtl text-right" scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
-            <!-- Refresh to get the new posts -->
             <ul class="list">
               <li class="item item-info no-border">
                 <div class="item item-divider item-icon-right item-icon-left" ng-init="info_elm=true" ng-click="info_elm=!info_elm">
@@ -199,40 +123,108 @@
                 </div>
               </li>
             </ul>
+          </ion-scroll>
+        </ion-slide>
+        <!------------------------------------------------------------------------------->
+        <!----------------------------- Doc Details Slide ------------------------------->
+        <!------------------------------------------------------------------------------->
+        <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
+          <ion-scroll class="pele_rtl text-right" scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+            <!-- Refresh to get the new posts -->
+            <ul class="list">
+              <li class="item item-info no-border item-thumbnail-left item-avatar">
+                <img src="data:image/JPEG;base64,{{contact.pic}}">
+                <div class="item-section">
+                  <table class="pele_rtl text-right">
+                    <tbody>
+                      <tr>
+                        <td class="label">שם פרטי: </td>
+                        <td class="info"> {{contact.firstName}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">שם משפחה: </td>
+                        <td class="info"> {{contact.lastName}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">פלאפון: </td>
+                        <td class="info"> {{contact.mobilePhone}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">שלוחה: </td>
+                        <td class="info"> {{contact.workPhone}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">דוא"ל: </td>
+                        <td class="info"> {{contact.emailAddress}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">מיקום: </td>
+                        <td class="info"> {{contact.orgLocation}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">ת.לידה: </td>
+                        <td class="info"> {{contact.birthday}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">חטיבה: </td>
+                        <td class="info"> {{contact.sector}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">אגף: </td>
+                        <td class="info"> {{contact.section}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">מחלקה: </td>
+                        <td class="info"> {{contact.department}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">צוות </td>
+                        <td class="info"> {{contact.team}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+
+
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-right item-icon-left" ng-init="attach_elm=true" ng-click="attach_elm=!attach_elm">
+                  <i class="icon pel_icon icon-sm" ng-class="attach_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
+                  <h2 class="text-right pele_rtl">עץ ארגוני</h2>
+                  <i class="icon pel_icon icon-md ion-paperclip"></i>
+                </div>
+                <div class="item-section" ng-show="attach_elm">
+                  <table class="pele_rtl attachments-table text-right">
+                    <tbody>
+                      <tr class="pele_rtl" ng-repeat="file in docDetails.attachments | filter:{ DISPLAY: 'Y' }">
+                        <td class="num_index"> {{$index+1}} . </td>
+                        <td class="info pele_ltr">
+                          <span ng-click="openAttachment(file)" ng-class="'show_content_'+file.SHOW_CONTENT"> {{file.DISPLAY_NAME}}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+            </ul>
 
           </ion-scroll>
         </ion-slide>
       </ion-slide-box>
   </ion-content>
   <!-- Footer Actions -->
-  <ion-footer-bar align-title="right">
-
-    <div class="row">
-      <div class="col">
-        <button class="button button-block button-large button-positive  icon-right ion-paper-airplane" ng-click="showBtnActions()">פעולות</button>
+  <ion-footer-bar class="footer50 ">
+    <div class="row ">
+      <div class="col col-50 text-center ">
+        <button class="button button-clear button-positive" ui-sref="app.p1_appsLists">
+          <i class="ion-home "></i> תפריט ראשי
+        </button>
       </div>
-
-      <div class="col">
-        <button class="button button-block button-large button-balanced icon-right ion-document-text" ng-click="displayNotePopup()">הערה</button>
+      <div class="col col-50 text-center ">
+        <button class="button button-clear button-positive" ui-sref="app.phonebook">
+      <i class=" ion-search "></i> חיפוש חדש
+      </button>
       </div>
-
     </div>
-
   </ion-footer-bar>
-  <script id="templates/modal.html" type="text/ng-template">
-    <ion-modal-view>
-      <ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">הערה חדשה</h1>
-        <button class="button button-clear button-primary" ng-click="modal.hide()">ביטול</button>
-      </ion-header-bar>
-      <ion-content class="padding">
-        <div class="list" dir="RTL">
-          <label class="item item-input">
-            <textarea rows="8" ng-model="newNote.Note" type="text"></textarea>
-          </label>
-          <button class="button button-full button-positive" ng-click="createNote(newNote)">שמירה</button>
-        </div>
-      </ion-content>
-    </ion-modal-view>
-  </script>
 </ion-view>

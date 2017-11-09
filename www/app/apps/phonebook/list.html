@@ -1,4 +1,4 @@
-<ion-view class="feed-entries-view " cache-view="false" ng-controller="SettingsListCtrl">
+<ion-view cache-view="true">
   <ion-nav-buttons side="right">
     <button menu-toggle="left" class="button button-icon icon ion-navicon">
     </button>
@@ -93,16 +93,20 @@
         <h2 class="text-center color_white">תוצאות חיפוש</h2>
         <div class="card">
           <ion-list>
-            <ion-item ng-repeat="item in searchResult">
+            <ion-item ng-repeat="contact in searchResult" class="">
               <div class="row">
-                <div class="col col-20 item-text-wrap">
-                  {{item.lastName}} {{item.firstName}}
+                <div class="col col-20">
+                  <img src="data:image/JPEG;base64,{{contact.pic}}">
+
                 </div>
-                <div class="col col-35">{{item.sector}}</div>
+                <div class="col col-45">
+                  <a ui-sref="app.phonebook.details({personId:contact.personId})">  {{contact.lastName}} {{contact.firstName}}</a>
+                  <br /> {{contact.sector}}
+                </div>
                 <div class="col col-30 text-left">
-                  <a ng-click="moreinfo(item)"><img class="pel_icon" src="img/info.png" \></a>
-                  <a href="tel:{{u.phoneNumber}}"><img class="pel_icon" src="img/phone.png" \></a>
-                  <a ng-click="createContact(u)"><img class="pel_icon" src="img/add_contact.png" \></a>
+
+                  <a href="tel:{{contact.phoneNumber}} "><img class="pel_icon " src="img/phone.png " \></a>
+                  <a ng-click="createContact(contact) "><img class="pel_icon " src="img/add_contact.png " \></a>
                 </div>
 
               </div>
@@ -110,15 +114,15 @@
           </ion-list>
         </div>
       </ion-content>
-      <ion-footer-bar class="footer50">
-        <div class="row">
-          <div class="col col-50 text-center">
-            <button class="button button-clear button-positive" ng-click="goHome()">
+      <ion-footer-bar class="footer50 ">
+        <div class="row ">
+          <div class="col col-50 text-center ">
+            <button class="button button-clear button-positive " ng-click="goHome() ">
               <i class="ion-home "></i> תפריט ראשי
             </button>
           </div>
           <div class="col col-50 text-center ">
-            <button class="button button-clear button-positive" ng-click="slideTo(0)">
+            <button class="button button-clear button-positive " ng-click="slideTo(0) ">
           <i class=" ion-search "></i> חיפוש חדש
           </button>
           </div>
