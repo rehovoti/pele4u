@@ -70,31 +70,31 @@
                 <div class="item-section" ng-show="info_elm">
                   <table class="pele_rtl text-right">
                     <tbody>
-                    <tr>
-                      <td class="label">תיאור: </td>
-                      <td class="info"> {{docDetails.INV_DESCRIPTION}}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">ספק: </td>
-                      <td class="info"> {{docDetails.VENDOR_NAME}}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">סכום: </td>
-                      <td class="info">{{docDetails.AMOUNT}}{{docDetails.MINUS_SIGN}} {{docDetails.CURRENCY_CODE}}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">תנאי תשלום: </td>
-                      <td class="info"> {{docDetails.TERMS_NAME}}</td>
-                    </tr>
-                    <tr>
-                      <td class="label">תאריך חשבונית: </td>
-                      <td class="info pele_rtl"> {{docDetails.INVOICE_DATE| date:'dd-MM-yyyy HH:mm'}}</td>
-                    </tr>
+                      <tr>
+                        <td class="label">תיאור: </td>
+                        <td class="info"> {{docDetails.INV_DESCRIPTION}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">ספק: </td>
+                        <td class="info"> {{docDetails.VENDOR_NAME}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">סכום: </td>
+                        <td class="info">{{docDetails.AMOUNT}}{{docDetails.MINUS_SIGN}} {{docDetails.CURRENCY_CODE}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">תנאי תשלום: </td>
+                        <td class="info"> {{docDetails.TERMS_NAME}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">תאריך חשבונית: </td>
+                        <td class="info pele_rtl"> {{docDetails.INVOICE_DATE| date:'dd-MM-yyyy HH:mm'}}</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </li>
-<!--
+              <!--
               <li class="item item-info no-border">
                 <div class="item item-divider item-icon-right item-icon-left" ng-init="sys_data=false" ng-click="sys_data=!sys_data">
                   <i class="icon pel_icon icon-sm" ng-class="sys_data ? 'ion-chevron-down' :'ion-chevron-left'"></i>
@@ -179,15 +179,19 @@
                       </tr>
                       <tr class="pele_rtl">
                         <td class="label">מתאריך: </td>
-                        <td class="info"> {{item.FROM_DATE}}</td>
+                        <td class="info"> {{item.FROM_DATE| date:'dd-MM-yyyy HH:mm'}}</td>
                       </tr>
                       <tr>
                         <td class="label">עד תאריך: </td>
-                        <td class="info"> {{item.TO_DATE}}</td>
+                        <td class="info"> {{item.TO_DATE| date:'dd-MM-yyyy HH:mm'}}</td>
                       </tr>
                       <tr>
                         <td class="label">הזמנה: </td>
-                        <td class="info"> {{item.ORDER_NUMBER}}</td>
+                        <td class="info">
+                          <div ng-repeat="of in item.ORDER_FILE| filter :of.DISPLAY">
+                            <span ng-click="openAttachment(of)" ng-class="'show_content_'+of.SHOW_CONTENT"> {{of.DISPLAY_NAME}}</span>
+                          </div>
+                        </td>
                       </tr>
                       <tr>
                         <td class="label">קבלה: </td>
