@@ -29,100 +29,16 @@
         <!-------------------------------------------------------------------------------->
         <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
           <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
-            <ul class="list">
-              <li class="item item-info no-border">
-                <div class="item item-divider item-icon-right item-icon-left" ng-init="info_elm=true" ng-click="info_elm=!info_elm">
-
-                  <i class="pel_icon icon icon-sm" ng-class="info_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
-                  <i class="icon pel_icon icon-md ion-clipboard"></i>
-                  <h2 class="text-right pele_rtl">פרטי המשימה</h2>
-                </div>
-                <div class="item-section" ng-show="info_elm">
-                  <table class="pele_rtl text-right">
-                    <tbody>
-                      <tr>
-                        <td class="label">שם: </td>
-                        <td class="info"> {{docDetails.BAN_NAME}}</td>
-                      </tr>
-                      <tr>
-                        <td class="label">מספר לקוח: </td>
-                        <td class="info"> {{docDetails.BAN}}</td>
-                      </tr>
-                      <tr>
-                        <td class="label">נושא משימה: </td>
-                        <td class="info"> {{docDetails.TASK_TYPE}}</td>
-                      </tr>
-                      <tr>
-                        <td class="label">תת נושא: </td>
-                        <td class="info"> {{docDetails.SUB_TASK_TYPE}}</td>
-                      </tr>
-                      <tr>
-                        <td class="label">תאריך יצירה: </td>
-                        <td class="info pele_rtl"> {{docDetails.CREATION_DATE| date:'dd-MM-yyyy HH:mm'}}</td>
-                      </tr>
-                      <tr>
-                        <td class="label">האם משימה חוזרת: </td>
-                        <td class="info"> {{docDetails.RETURN_TASK}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </li>
-              <li class="item item-info no-border">
-                <div class="item item-divider item-icon-right item-icon-left" ng-init="sys_data=false" ng-click="sys_data=!sys_data">
-                  <i class="icon pel_icon icon-sm" ng-class="sys_data ? 'ion-chevron-down' :'ion-chevron-left'"></i>
-                  <h2 class="text-right pele_rtl">נתוני מערכת</h2>
-                  <i class="icon pel_icon icon-md ion-clipboard"></i>
-                </div>
-                <div class="item-section" ng-show="sys_data">
-                  <table class="pele_rtl text-right">
-                    <tbody>
-                      <tr class="pele_rtl" ng-repeat="item in docDetails.SYSTEM_INFORMATION">
-                        <td class="label">{{item.PROMPT}}: </td>
-                        <td class="info"> {{item.VALUE}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </li>
-              <li class="item item-info no-border">
-                <div class="item item-divider item-icon-right item-icon-left" ng-init="extra_elm=false" ng-click="extra_elm=!extra_elm">
-                  <i class="icon pel_icon icon-sm" ng-class="extra_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
-                  <h2 class="text-right pele_rtl">נתונים נוספים</h2>
-                  <i class="icon pel_icon icon-md ion-clipboard"></i>
-                </div>
-                <div class="item-section" ng-show="extra_elm">
-                  <table class="pele_rtl text-right">
-                    <tbody>
-                      <tr class="pele_rtl" ng-repeat="item in docDetails.EXTRA_INFORMATION">
-                        <td class="label">{{item.PROMPT}}: </td>
-                        <td class="info"> {{item.VALUE}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </li>
-
-              <li class="item item-info no-border">
-                <div class="item item-divider item-icon-right item-icon-left" ng-init="attach_elm=true" ng-click="attach_elm=!attach_elm">
-                  <i class="icon pel_icon icon-sm" ng-class="attach_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
-                  <h2 class="text-right pele_rtl">נספחי משימה</h2>
-                  <i class="icon pel_icon icon-md ion-paperclip"></i>
-                </div>
-                <div class="item-section" ng-show="attach_elm">
-                  <table class="pele_rtl attachments-table text-right">
-                    <tbody>
-                      <tr class="pele_rtl" ng-repeat="file in docDetails.attachments | filter:{ DISPLAY: 'Y' }">
-                        <td class="num_index"> {{$index+1}} . </td>
-                        <td class="info pele_ltr">
-                          <span ng-click="openAttachment(file)" ng-class="'show_content_'+file.SHOW_CONTENT"> {{file.DISPLAY_NAME}}</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </li>
-            </ul>
+            <div class="item-section">
+              <ul class="list pele_rtl text-right treeview">
+                <li class="direct_admin">
+                  <div class="links"></div>
+                  <a ui-sref="app.phonebook.details({personId:member.personId})"> {{contact.directManagerName}} - {{contact.directManagerNumber}}</a> </li>
+                <li class="{{member.relation}}" ng-repeat="member in contact.membersTree">
+                  <div class="links"></div>
+                  <a ui-sref="app.phonebook.details({personId:member.personId})">{{member.fullName}} - {{member.relation}}</a></li>
+              </ul>
+            </div>
           </ion-scroll>
         </ion-slide>
         <!------------------------------------------------------------------------------->
@@ -185,25 +101,12 @@
                   </table>
                 </div>
               </li>
-
-
               <li class="item item-info no-border">
-                <div class="item item-divider item-icon-right item-icon-left" ng-init="attach_elm=true" ng-click="attach_elm=!attach_elm">
-                  <i class="icon pel_icon icon-sm" ng-class="attach_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
-                  <h2 class="text-right pele_rtl">עץ ארגוני</h2>
-                  <i class="icon pel_icon icon-md ion-paperclip"></i>
-                </div>
-                <div class="item-section" ng-show="attach_elm">
-                  <table class="pele_rtl attachments-table text-right">
-                    <tbody>
-                      <tr class="pele_rtl" ng-repeat="file in docDetails.attachments | filter:{ DISPLAY: 'Y' }">
-                        <td class="num_index"> {{$index+1}} . </td>
-                        <td class="info pele_ltr">
-                          <span ng-click="openAttachment(file)" ng-class="'show_content_'+file.SHOW_CONTENT"> {{file.DISPLAY_NAME}}</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div class="item-section">
+                  <a href="sms:{{contact.mobilePhone}}"> <img  class="pel_icon medium" src="img/sms.png"></a>
+                  <a href="tel:{{contact.mobilePhone}}"> <img class="pel_icon medium" src="img/smartphone.png"></a>
+                  <a href="sms:{{contact.mobilePhone}}"> <img  class="pel_icon medium" src="img/whatsapp.png"></a>
+
                 </div>
               </li>
             </ul>

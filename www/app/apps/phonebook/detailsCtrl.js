@@ -28,6 +28,7 @@ angular.module('pele')
           .success((data, status, headers, config) => {
             console.log(JSON.stringify(data))
             $scope.contact = data;
+
             $scope.title = "פרטי עובד : " + data.lastName + " " + data.firstName;
 
           })

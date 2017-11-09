@@ -91,27 +91,18 @@
     <ion-slide-page>
       <ion-content class="pele-background" scroll="true">
         <h2 class="text-center color_white">תוצאות חיפוש</h2>
-        <div class="card">
-          <ion-list>
-            <ion-item ng-repeat="contact in searchResult" class="">
-              <div class="row">
-                <div class="col col-20">
-                  <img src="data:image/JPEG;base64,{{contact.pic}}">
-
-                </div>
-                <div class="col col-45">
-                  <a ui-sref="app.phonebook.details({personId:contact.personId})">  {{contact.lastName}} {{contact.firstName}}</a>
-                  <br /> {{contact.sector}}
-                </div>
-                <div class="col col-30 text-left">
-
-                  <a href="tel:{{contact.phoneNumber}} "><img class="pel_icon " src="img/phone.png " \></a>
-                  <a ng-click="createContact(contact) "><img class="pel_icon " src="img/add_contact.png " \></a>
-                </div>
-
-              </div>
-            </ion-item>
-          </ion-list>
+        <div class="list">
+          <a class="item item-avatar item-avatar-right item-icon-left" href="#" ng-repeat="contact in searchResult">
+            <img ui-sref="app.phonebook.details({personId:contact.personId})" src="data:image/JPEG;base64,{{contact.pic}}">
+            <div ui-sref="app.phonebook.details({personId:contact.personId})">
+              <h2> {{contact.lastName}} {{contact.firstName}}</h2>
+              <p>{{contact.sector}} </p>
+            </div>
+            <div class="icon">
+             <i href="tel:{{contact.mobilePhone}} "><img class="pel_icon" src="img/phone.png " \></i>
+             <i ng-click="createContact(contact) "><img class="pel_icon" src="img/add_contact.png " \></i>
+           </div>
+          </a>
         </div>
       </ion-content>
       <ion-footer-bar class="footer50 ">
