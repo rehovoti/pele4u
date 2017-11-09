@@ -12,9 +12,12 @@ angular.module('pele')
       $scope.goHome = function() {
         PelApi.goHome();
       }
+
+      $scope.appId = $stateParams.AppId;
       //------------------------------------------
       //--      getApproveListActionIcon
       //------------------------------------------
+
       $scope.getApproveListActionIcon = function(actionCode, date, note) {
 
         var icon_class;
@@ -269,7 +272,7 @@ angular.module('pele')
 
         var links = PelApi.getDocApproveServiceUrl("GetFileURI");
 
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
 
         if ("Y" === isOpened) {
           var l_fileName = "";
@@ -487,7 +490,7 @@ angular.module('pele')
           color: 'red'
         };
 
-        var appId = appSettings.config.appId,
+        var appId = $scope.appId,
           IniDocId = $stateParams.IniDocId,
           IniDocInitId = $stateParams.IniDocInitId,
           docId = $stateParams.DocId,
@@ -602,7 +605,7 @@ angular.module('pele')
 
         //PelApi.showLoading();
 
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = 'APPROVE';
         var note = '';
@@ -719,7 +722,7 @@ angular.module('pele')
 
         //PelApi.showLoading();
 
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = 'OK';
         var note = '';
@@ -742,7 +745,7 @@ angular.module('pele')
       //--         REJECT                     --
       //----------------------------------------
       $scope.docReject = function() {
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = "REJECT";
         if ($scope.data.note !== undefined) {
@@ -787,7 +790,7 @@ angular.module('pele')
       //==============================================================
       //==============================================================
       $scope.docApproveWitnNote = function() {
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = "APPROVE";
         var note = "";
@@ -835,7 +838,7 @@ angular.module('pele')
       //
       //--------------------------------------------------------------
       $scope.submitNotif = function(action, note) {
-        var appId = appSettings.config.appId;
+        var appId = $scope.appId;
         var notificationId = $scope.NOTIFICATION_ID;
         var actionType = action;
 
