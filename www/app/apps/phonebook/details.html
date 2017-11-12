@@ -31,10 +31,10 @@
           <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
             <div class="item-section">
               <ul class="list pele_rtl text-right treeview">
-                <li class="direct_admin">
+                <li class="direct_admin tree-item">
                   <div class="links"></div>
                   <a ui-sref="app.phonebook.details({personId:member.personId})"> {{contact.directManagerName}} - {{contact.directManagerNumber}}</a> </li>
-                <li class="{{member.relation}}" ng-repeat="member in contact.membersTree">
+                <li class="{{member.relation}} tree-item" ng-repeat="member in contact.membersTree">
                   <div class="links"></div>
                   <a ui-sref="app.phonebook.details({personId:member.personId})">{{member.fullName}} - {{member.relation}}</a></li>
               </ul>
