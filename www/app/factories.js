@@ -1158,9 +1158,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               action.right_icon = 'ion-close-circled';
             }
           }
-
           if (action.ACTION_CODE === "FORWARD" || action.ACTION_CODE === "APPROVE") {
-
             action.left_icon = 'ion-chevron-left';
             action.right_icon = 'ion-checkmark-circled'
           }
@@ -1168,7 +1166,15 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             action.left_icon = 'ion-chevron-left';
             action.right_icon = 'ion-minus-circled';
           }
-          if (!action.ACTION_CODE) {
+          if (action.ACTION_CODE === "WAITING") {
+            action.short_text = 'ממתין';
+          }
+          if (!action.ACTION_CODE && action.NOTE) {
+            action.display = false;
+            action.left_icon = 'ion-chevron-left';
+            action.short_text = action.NOTE;
+          }
+          if (!action.ACTION_CODE && !action.NOTE) {
             action.display = false;
             action.right_icon = "";
             action.left_icon = "";

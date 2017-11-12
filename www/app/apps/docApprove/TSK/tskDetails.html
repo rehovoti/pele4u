@@ -30,6 +30,7 @@
               <div ng-repeat="action in docDetails.ACTION_HISTORY" class="pele_rtl">
                 <div ng-click="action.left_icon && toggleActionItem(action)" class="item item-divider item-icon-left item-icon-right text-right action-history-item">
                   <i class="icon pel_icon icon-sm" ng-class="action.left_icon"></i> {{action.APPROVAL_SEQ}}. {{action.USER_NAME}}
+                  <div class="short_text" ng-show="action.short_text">{{action.short_text}}</div>
                   <i class="icon pel_icon icon-sm" ng-class="action.right_icon"></i>
                 </div>
                 <div class="item bo-border pele_rtl text-right item-icon-left item-icon-right text-right" ng-show="action.display">
