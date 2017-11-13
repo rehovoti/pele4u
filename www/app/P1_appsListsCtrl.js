@@ -64,32 +64,6 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
 
     var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
-    if (appSettings.config.IS_TOKEN_VALID !== 'Y')
-      delete $sessionStorage.mainMenu;
-    // get Main menu from cache
-    //    console.log("appSettings.config.mainMenuKeepAlive:",appSettings.config.mainMenuKeepAlive)
-    if (appSettings.config.mainMenuKeepAlive && $sessionStorage.mainMenu) {
-      var now = new Date().getTime()
-      var mm = $sessionStorage.mainMenu;
-      if (mm && mm.timeStamp && mm.menuItems) {
-        //      console.log("mm",mm)
-        //      console.log("now",now)
-        //      console.log("mm.timeStamp",mm.timeStamp)
-        //      console.log("mm.menuItems",mm.menuItems)
-        //      console.log("(now - mm.timeStamp) :",(now - mm.timeStamp) )
-        if ((now - mm.timeStamp) < (appSettings.config.mainMenuKeepAlive) * 1000) {
-          $scope.feeds_categories = mm.menuItems;
-          $scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
-          $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
-          return false;
-        }
-      } else {
-        delete $sessionStorage.mainMenu;
-      }
-    }
-
-
     try {
       var reMenu = PelApi.getMenu(links);
     } catch (e) {
@@ -153,6 +127,7 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         $sessionStorage.userName = appSettings.config.GetUserMenu.userName;
 
         appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
+
         if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
           $state.go('app.login');
         } else {

@@ -36,7 +36,7 @@ angular.module('pele')
           if (apiData.error) return false;
           $scope.docDetails = PelApi.getJsonString(apiData.Result, "JSON[0]", true);
           //var orderAttachment = _.get($scope.docDetails, "INVOICE_ROWS[0].ORDER_FILE", []);
-          console.log("orderAttachment", )
+
           $scope.docDetails.attachments = $scope.docDetails.TASK_ATTACHMENTS_CUR || [];
           PelApi.extendActionHistory($scope.docDetails);
           $scope.buttonsArr = $scope.docDetails.BUTTONS || [];

@@ -16,13 +16,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
         this.sessionStorage = $sessionStorage;
         this.localStorage = $localStorage;
-        this.network = {
-          isOnline: true,
-          network: "wifi"
-        };
-        //appSettings.config.network = "wifi"
 
-        //this.lagger = { info :function(){},error:function(){}};
       },
       cordovaInit: function() {
         //file in device file system
@@ -620,7 +614,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           self.throwError("app", "checkApiResponse", apiStat.description)
         }
 
-
         apiStat.error = true;
         return apiStat;
       },
@@ -1137,12 +1130,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if (redirect)
             self.throwError("api", "jsonParse", "Failed to parse  JSON  string :" + str, redirect)
           else
-            PelApi.lagger.error("Failed to parse  JSON  string   : " + str)
+            self.lagger.error("Failed to parse  JSON  string   : " + str)
           return undefined;
         }
         return jsVar;
       },
-
 
       extendActionHistory: function(doc) {
         if (!doc.ACTION_HISTORY) return [];
@@ -1155,7 +1147,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             action.display = true;
             action.left_icon = 'ion-chevron-down';
             if (action.ACTION_CODE == "REJECT") {
-              action.right_icon = 'ion-close-circled';
+              action.right_icon = 'ion-close-circled red';
             }
           }
           if (action.ACTION_CODE === "FORWARD" || action.ACTION_CODE === "APPROVE") {
@@ -1168,6 +1160,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
           if (action.ACTION_CODE === "WAITING") {
             action.short_text = 'ממתין';
+            action.right_icon = 'ion-clock navy';
           }
           if (!action.ACTION_CODE && action.NOTE) {
             action.display = false;
@@ -1181,7 +1174,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
         })
       },
-
       showBtnActions: function(scope, butttons) {
         var self = this;
         var buttons = self.getButtons(butttons);
@@ -1281,7 +1273,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         var timeoutFunction = function() {
           $ionicLoading.hide();
           $rootScope.$broadcast('scroll.refreshComplete');
-          PelApi.showPopup(self.appSettings.config.FILE_TIMEOUT, "");
+          self.showPopup(self.appSettings.config.FILE_TIMEOUT, "");
         };
 
         if (file.SHOW_CONTENT !== 'Y') {

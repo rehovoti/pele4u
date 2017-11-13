@@ -40,7 +40,7 @@ angular.module('pele')
 
           if (data.Response.OutParams.ROW[0].DOC_NAME === null) {
             //$state.go("app.p1_appsLists");
-            appSettings.config.IS_TOKEN_VALID = "N";
+            //appSettings.config.IS_TOKEN_VALID = "N";
             PelApi.goHome();
           } else {
             $scope.docsGroups = data.Response.OutParams.ROW;
