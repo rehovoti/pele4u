@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.int-pele.pele4u_qa" version="117.2" versionCode="117.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name> PELE4U_QA</name>
+<widget id="com.int-pele.pele4u" version="117.6" versionCode="117.6" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name> PELE4U</name>
     <description>
     Work form anywhere
   </description>
@@ -13,8 +13,6 @@
   <preference name="android-minSdkVersion" value="15" />
       <!--   <preference name="android-maxSdkVersion" value="15" /> -->
   <preference name="android-targetSdkVersion" value="23" />
-
-
     <preference name="permissions" value="none" />
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
@@ -101,7 +99,7 @@
     <splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
     <splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
     <gap:config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>117.2</string>
+        <string>117.6</string>
     </gap:config-file>
     <access origin="*" />
     <allow-intent href="http://*/*" />
