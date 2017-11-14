@@ -638,7 +638,7 @@ img.spinner-svg {height:60px}
 .ellipsis_90 {max-width: 90%}
 
 .bar.app-top-bar { background-color: #0160a0 !important}
-
+.
 .icon.pel_icon {
     font-size: 1.3em;
 }
@@ -710,10 +710,13 @@ img.pel_icon.medium {height:50px}
 .col.col-input { padding:15px 30px}
 button.round {border-radius: 10px}
 
-ul.treeview li{ font-size: 16px;border-right:0px solid black;}
-ul.treeview li.direct_admin {padding-right:10px ;line-height:24px;}
-ul.treeview li.manager {padding-right:20px;line-height:24px}
-ul.treeview li.member {padding-right:30px;line-height:24px}
+ul.treeview.level1 {margin-left:10px}
+ul.treeview.level2 {margin-left:20px}
+ul.treeview li{ font-size: 16px;border-right:2px solid black;line-height:26px;padding:0;margin:0}
+ul.treeview li.direct_admin {padding-right:10px }
+ul.treeview li.manager {padding-right:20px;}
+ul.treeview li.member {padding-right:30px;}
+ul.treeview li.member.active {font-weight:bold}
 ul.treeview li a  {text-decoration: none}
 
 ul.treeview li a { padding-right:5px}
@@ -744,3 +747,15 @@ ul.treeview li.member   div.links {
   width:28px;
   position:relative;
   right:-31px;top:12px}
+
+  ul.treeview li.direct_admin::before {content: "עץ ארגוני";border:2px dotted navy;
+  padding:3px;
+}
+ul.treeview li:last-child {border:0}
+ul.treeview li:last-child::after {color:"Navy";content: "";border:3px solid white;
+background-color: #FFBA10;
+width:15px;
+position:relative;
+top:-15px;
+right:-3px;
+}

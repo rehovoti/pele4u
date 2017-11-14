@@ -110,6 +110,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="whatsapp:*" />
 
     <plugin name="cordova-plugin-badge" spec="~0.8.1" />
 

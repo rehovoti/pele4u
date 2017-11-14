@@ -30,13 +30,27 @@
         <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
           <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
             <div class="item-section">
-              <ul class="list pele_rtl text-right treeview">
+              <ul class="list pele_rtl text-right treeview level1">
                 <li class="direct_admin tree-item">
                   <div class="links"></div>
-                  <a ui-sref="app.phonebook.details({personId:member.personId})"> {{contact.directManagerName}} - {{contact.directManagerNumber}}</a> </li>
-                <li class="{{member.relation}} tree-item" ng-repeat="member in contact.membersTree">
+                  <a ui-sref="app.phonebook.details({personId:member.personId})">
+                       {{contact.directManagerName}} - {{contact.directManagerNumber}}</a>
+                </li>
+                <li class="{{member.relation}} tree-item" ng-repeat="(k,v) in contact.tree">
                   <div class="links"></div>
-                  <a ui-sref="app.phonebook.details({personId:member.personId})">{{member.fullName}} - {{member.relation}}</a></li>
+                  <a ui-sref="app.phonebook.details({personId:k})">
+                  <i ng-if="contact.personId==k" class="ion-arrow-left-c blue"></i>
+                  {{v.fullName}} - {{v.relation}}</a>
+                  <ul ng-if="v.members.length" class="list pele_rtl text-right treeview level2">
+                    <li class="{{member.relation}} tree-item level3" ng-repeat="member in v.members">
+                      <div class="links"></div>
+                      <a ui-sref="app.phonebook.details({personId:k})">
+                      <i ng-if="contact.personId==k" class="ion-arrow-left-c blue"></i>
+                      {{member.fullName}} - {{member.relation}}</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="last-item"></li>
               </ul>
             </div>
           </ion-scroll>
@@ -103,10 +117,9 @@
               </li>
               <li class="item item-info no-border">
                 <div class="item-section">
-                  <a href="sms:{{contact.mobilePhone}}"> <img  class="pel_icon medium" src="img/sms.png"></a>
-                  <a href="tel:{{contact.mobilePhone}}"> <img class="pel_icon medium" src="img/smartphone.png"></a>
-                  <a href="sms:{{contact.mobilePhone}}"> <img  class="pel_icon medium" src="img/whatsapp.png"></a>
-
+                  <a ng-href="sms:{{contact.mobilePhone}}"> <img  class="pel_icon medium" src="img/sms.png"></a>
+                  <a ng-href="tel:{{contact.mobilePhone}}"> <img class="pel_icon medium" src="img/smartphone.png"></a>
+                  <a ng-href="whatsapp://send?text=my message&phone=+{{contact.mobilePhone}}"><img  class="pel_icon medium" src="img/whatsapp.png"></a>
                 </div>
               </li>
             </ul>

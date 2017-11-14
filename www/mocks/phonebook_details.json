@@ -1,23 +1,23 @@
 {
-   "orgName" : "מחלקת פיתוח ויישום ERP",
+   "orgName" : "צוות פיתוח ERP",
    "department" : "מחלקת פיתוח ויישום ERP",
-   "emailAddress" : "yaellaud@pelephone.co.il",
+   "emailAddress" : "orida@pelephone.co.il",
    "directManagerNumber" : 43103,
    "section" : "אגף יישום ופיתוח מערכות מידע",
    "vendorName" : null,
    "directManagerName" : "גוטמן, לינה",
-   "personId" : 326280,
-   "midragName" : "עובד",
-   "lastName" : "לאודן",
-   "birthday" : "22/05",
-   "firstName" : "יעל",
-   "jobName" : "מיחשוב.מיישם ERP.בכיר..",
+   "personId" : 19345,
+   "midragName" : "מנהלי צוותים",
+   "lastName" : "דגן",
+   "birthday" : "24/06",
+   "firstName" : "אורי",
+   "jobName" : "מיחשוב.מנתחי מערכות.מנהל_צוות..",
    "sector" : "חטיבת מערכות מידע",
-   "mobilePhone" : "050-2118998",
-   "workPhone" : "050-7078647",
-   "sex" : "F",
-   "pic" : "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\r\nAw0Jo5H6eGIoUtho/9k=\r\n",
-   "login" : "YAELLAUD",
+   "mobilePhone" : "050-5907227",
+   "workPhone" : "050-7078326",
+   "sex" : "M",
+   "pic" : null,
+   "login" : "ORIDA",
    "userPersonType" : "עובד",
    "knownAs" : null,
    "membersTree" : [
@@ -54,7 +54,83 @@
          "relation" : "member",
          "birthday" : "23/08"
       },
-
+      {
+         "fullName" : "נוף, אורנה",
+         "directManagerNumber" : 19345,
+         "sector" : "חטיבת מערכות מידע",
+         "workPhone" : "050-7075834",
+         "mobilePhone" : "050-6938620",
+         "section" : "אגף יישום ופיתוח מערכות מידע",
+         "personId" : 18555,
+         "relation" : "manager",
+         "birthday" : "21/08"
+      },
+      {
+         "fullName" : "זקש, מיטל",
+         "directManagerNumber" : 19345,
+         "sector" : "חטיבת מערכות מידע",
+         "workPhone" : "050-7077028",
+         "mobilePhone" : "050-6538343",
+         "section" : "אגף יישום ופיתוח מערכות מידע",
+         "personId" : 118328,
+         "relation" : "manager",
+         "birthday" : "01/02"
+      },
+      {
+         "fullName" : "לייבזון, ילנה",
+         "directManagerNumber" : 19345,
+         "sector" : "חטיבת מערכות מידע",
+         "workPhone" : "050-7078325",
+         "mobilePhone" : "050-7641341",
+         "section" : "אגף יישום ופיתוח מערכות מידע",
+         "personId" : 73970,
+         "relation" : "manager",
+         "birthday" : "10/10"
+      },
+      {
+         "fullName" : "שטרן אפריאט, ליאת",
+         "directManagerNumber" : 19345,
+         "sector" : "חטיבת מערכות מידע",
+         "workPhone" : "050-7078624",
+         "mobilePhone" : "050-6962360",
+         "section" : "אגף יישום ופיתוח מערכות מידע",
+         "personId" : 1191,
+         "relation" : "manager",
+         "birthday" : "20/09"
+      },
+      {
+         "fullName" : "בכר, טלי",
+         "directManagerNumber" : 19345,
+         "sector" : "חטיבת מערכות מידע",
+         "workPhone" : "050-7077079",
+         "mobilePhone" : "054-6780251",
+         "section" : "אגף יישום ופיתוח מערכות מידע",
+         "personId" : 167203,
+         "relation" : "manager",
+         "birthday" : "07/02"
+      },
+      {
+         "fullName" : "מדלג, אמין",
+         "directManagerNumber" : 19345,
+         "sector" : "חטיבת מערכות מידע",
+         "workPhone" : "050-7077090",
+         "mobilePhone" : "052-6173183",
+         "section" : "אגף יישום ופיתוח מערכות מידע",
+         "personId" : 452450,
+         "relation" : "manager",
+         "birthday" : "25/11"
+      },
+      {
+         "fullName" : "שפרן, יאניס",
+         "directManagerNumber" : 19345,
+         "sector" : "חטיבת מערכות מידע",
+         "workPhone" : "050-7078521",
+         "mobilePhone" : "052-6560692",
+         "section" : "אגף יישום ופיתוח מערכות מידע",
+         "personId" : 368936,
+         "relation" : "manager",
+         "birthday" : "09/01"
+      },
       {
          "fullName" : "קרטוז, אלכסנדר",
          "directManagerNumber" : 43103,
@@ -65,9 +141,19 @@
          "personId" : 1476,
          "relation" : "member",
          "birthday" : "26/01"
-      }   
-
+      },
+      {
+         "fullName" : "גרונר, איתי",
+         "directManagerNumber" : 43103,
+         "sector" : "חטיבת מערכות מידע",
+         "workPhone" : null,
+         "mobilePhone" : "050-7343728",
+         "section" : "אגף יישום ופיתוח מערכות מידע",
+         "personId" : 71403,
+         "relation" : "member",
+         "birthday" : "14/07"
+      }
    ],
-   "team" : "no sector",
+   "team" : "צוות פיתוח ERP",
    "orgLocation" : "בנין ורד"
 }
