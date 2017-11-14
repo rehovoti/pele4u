@@ -2,6 +2,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
   .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages) {
     var self = this;
     var _global = {};
+    var network = {};
     return {
 
       getLocalStorageUsage: function() {
@@ -33,7 +34,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       init: function() {
         this.global.set('debugFlag', appSettings.debug, true)
-        this.network = {};
+
         this.messages = messages;
         this.appSettings = appSettings;
         this.topconfig = appSettings.apiConfig;
@@ -53,7 +54,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         self.isIOS = ionic.Platform.isIOS();
         appSettings.config.network = $cordovaNetwork.getNetwork();
         appSettings.config.isOnline = $cordovaNetwork.isOnline();
-        self.network = {
+        network = {
           isOnline: $cordovaNetwork.isOnline(),
           network: $cordovaNetwork.getNetwork()
         };
@@ -65,7 +66,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
           appSettings.config.isOnline = true;
           appSettings.config.network = $cordovaNetwork.getNetwork();
-          self.network = {
+          network = {
             isOnline: true,
             network: $cordovaNetwork.getNetwork()
           };
@@ -83,7 +84,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
           appSettings.config.isOnline = false;
           appSettings.config.network = $cordovaNetwork.getNetwork();
-          self.network = {
+          network = {
             isOnline: false,
             network: $cordovaNetwork.getNetwork()
           };
@@ -207,7 +208,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         //{"Content-Type": "application/json; charset=utf-8"};
         var envUrl = links + "&UserName=" + appSettings.config.userName + "&ID=" + appSettings.config.user;
 
-        if ("wifi" === appSettings.config.network) {
+        if ("wifi" === network.network) {
           var msisdn = appSettings.config.MSISDN_VALUE || $localStorage.PELE4U_MSISDN;
           if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
           if (!msisdn) {
@@ -242,7 +243,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         var headers = "";
         var version = appSettings.config.APP_VERSION
         var parameters = "/" + appSettings.config.token + "/" + appId + "/" + pin;
-        if ("wifi" === appSettings.config.network) {
+        if ("wifi" === network.network) {
           var msisdn = appSettings.config.MSISDN_VALUE || $localStorage.PELE4U_MSISDN;
           if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
           if (!msisdn) {
@@ -279,7 +280,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         // LOADING
 
         var retry = links.retry || 0;
-        if (self.network === "wifi") {
+        if (network.network === "wifi") {
           retry = 0;
         }
         return $http({
@@ -532,7 +533,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         var lastError = {
           state: $state.current.name,
           created: new Date(),
-          network: self.network,
+          network: network.network,
           category: category,
           from: from,
           description: errorString,
