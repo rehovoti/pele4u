@@ -87,7 +87,10 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         }
       }
 
-      $scope.setMSISDN(appSettings.config.MSISDN_VALUE);
+      $sessionStorage.PELE4U_MSISDN = appSettings.config.MSISDN_VALUE;
+      $localStorage.PELE4U_MSISDN = appSettings.config.MSISDN_VALUE;
+
+      //$scope.setMSISDN(appSettings.config.MSISDN_VALUE);
 
       var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
       if ("Valid" === pinCodeStatus) {
@@ -219,7 +222,9 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
     var continueFlag = "Y";
 
     if ("wifi" === appSettings.config.network) {
-      appSettings.config.MSISDN_VALUE = $scope.getMSISDN();
+      appSettings.config.MSISDN_VALUE = $localStorage.MSISDN_VALUE;
+
+      //appSettings.config.MSISDN_VALUE = $scope.getMSISDN();
 
       if (appSettings.config.MSISDN_VALUE === null) {
         PelApi.showPopup(appSettings.config.TITLE_WIFI_FIRST_CONNECTION_1, appSettings.config.TITLE_WIFI_FIRST_CONNECTION_2);

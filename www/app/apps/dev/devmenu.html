@@ -8,9 +8,14 @@
       <div class="title"> תפריט מפתחים </div>
     </div>
   </ion-nav-title>
-  <ion-content class="pele-background">
+  <ion-content class="pele-background" scroll="false">
 
     <div class="list">
+      <a class="item pele_rtl">LocalStorage usage :  {{getLocalStorageUsage().mb}} MB  <br \>
+      largest - {{getLocalStorageUsage().largetKey}} :  {{getLocalStorageUsage().maxSize}}</a>
+      <a class="item  pele_rtl">PELE4U_MSISDN  <br \>
+         config:{{config_PELE4U_MSISDN}} <br \>storage :{{storage_PELE4U_MSISDN}}</a>
+
       <a class="item item-icon-left item-icon-right" ng-click="setDebug(!appDebug)">
           Debug <span ng-show="appDebug"> ON </span><span ng-show="!appDebug"> OFF </span>
         <i class="icon ion-ios-pulse-strong"></i>

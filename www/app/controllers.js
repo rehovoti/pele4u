@@ -5,6 +5,9 @@ angular.module('pele.controllers', ['ngStorage'])
       PelApi.hideLoading()
     }
 
+    $scope.getLocalStorageUsage = function() {
+      return PelApi.getLocalStorageUsage();
+    }
 
 
     $scope.appDebug = PelApi.appSettings.debug;
@@ -13,6 +16,9 @@ angular.module('pele.controllers', ['ngStorage'])
       $scope.appDebug = flag;
     }
 
+
+    $scope.storage_PELE4U_MSISDN = window.localStorage.getItem('PELE4U_MSISDN');
+    $scope.config_PELE4U_MSISDN = PelApi.appSettings.config.MSISDN_VALUE;
 
     $scope.clearLogFile = function() {
       PelApi.lagger.deleteLogfile().then(function() {

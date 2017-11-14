@@ -3,6 +3,34 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
     var self = this;
     self._global = {};
     return {
+
+      getLocalStorageUsage: function() {
+        var _lsTotal = 0,
+          maxLen = 0,
+          _xLen, _x, largestX;
+        var localStorageKeys = {};
+        for (var i = 0; i < localStorage.length; i++) {
+          localStorageKeys[localStorage.key(i)] = 1;
+        }
+
+        for (_x in localStorageKeys) {
+          _xLen = ((localStorage.getItem(_x).length + _x.length) * 2);
+          if (_xLen > maxLen) {
+            largestX = _x;
+            maxLen = _xLen;
+          }
+          _lsTotal += _xLen;
+
+        };
+        var kb = (_lsTotal / 1024).toFixed(2);
+        var mb = (kb / 1024).toFixed(2);
+        return {
+          kb: kb,
+          mb: mb,
+          largetKey: largestX,
+          maxSize: (maxLen / (1024 * 1024)).toFixed(2)
+        }
+      },
       init: function() {
         this.global.set('debugFlag', appSettings.debug, true)
         this.network = {};
@@ -70,7 +98,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
         self.lagger = $fileLogger;
 
-        $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME)
+        $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME);
+        self.lagger.info('start new log');
         self.lagger.deleteLogfile().then(function() {
           $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME)
           self.lagger.info('Flush log ->  start new log');
@@ -179,10 +208,18 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         var envUrl = links + "&UserName=" + appSettings.config.userName + "&ID=" + appSettings.config.user;
 
         if ("wifi" === appSettings.config.network) {
+          var msisdn = appSettings.config.MSISDN_VALUE || $localStorage.PELE4U_MSISDN;
+          if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
+          if (!msisdn) {
+            self.lagger.error("Service:ScanPrint cant find msisdn ! not in config or localStorage or sessionStorage")
+
+          }
+
+
           headers = {
             "Content-Type": "application/json; charset=utf-8",
             "VERSION": version,
-            "msisdn": appSettings.config.MSISDN_VALUE
+            "msisdn": msisdn
           }
         } else {
           headers = {
@@ -207,11 +244,18 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         var version = appSettings.config.APP_VERSION
         var parameters = "/" + appSettings.config.token + "/" + appId + "/" + pin;
         if ("wifi" === appSettings.config.network) {
+          var msisdn = appSettings.config.MSISDN_VALUE || $localStorage.PELE4U_MSISDN;
+          if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
+          if (!msisdn) {
+            self.lagger.error("Service:ScanPrint cant find msisdn ! not in config or localStorage or sessionStorage")
+
+          }
+
           envUrl = links.url + parameters;
           headers = {
             "Content-Type": "application/json; charset=utf-8",
             "VERSION": version,
-            "msisdn": appSettings.config.MSISDN_VALUE
+            "msisdn": msisdn
           }
         } else {
           envUrl = links.URL + parameters;
@@ -795,7 +839,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
 
         if ("wifi" === appSettings.config.network) {
-          headers.msisdn = appSettings.config.MSISDN_VALUE;
+          var msisdn = appSettings.config.MSISDN_VALUE || $localStorage.PELE4U_MSISDN;
+          if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
+          if (!msisdn) {
+            self.lagger.error("Service:" + serviceName + " cant find msisdn ! not in config or localStorage or sessionStorage")
+
+          }
+
+          headers.msisdn = msisdn;
           serviceConf.url = appSettings.apiConfig.wifi_uri + serviceConf.endpoint;
         } else {
           serviceConf.url = appSettings.apiConfig.uri + serviceConf.endpoint;
@@ -1268,7 +1319,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }, false);
         }
         var self = this;
-        self.appSettings.config.ATTACHMENT_TIME_OUT = 1000;
+
 
         var timeoutFunction = function() {
           $ionicLoading.hide();
