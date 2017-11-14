@@ -61,9 +61,6 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
    */
   $scope.GetUserMenuMain = function() {
 
-    if(!PelApi.network.isOnline) {
-      return false ;
-    }
     var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
     try {
