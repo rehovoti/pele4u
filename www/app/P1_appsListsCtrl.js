@@ -221,7 +221,7 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
     var continueFlag = "Y";
 
     if ("wifi" === appSettings.config.network) {
-      appSettings.config.MSISDN_VALUE = $localStorage.MSISDN_VALUE;
+      appSettings.config.MSISDN_VALUE = $localStorage.PELE4U_MSISDN;
 
       //appSettings.config.MSISDN_VALUE = $scope.getMSISDN();
 
