@@ -16,7 +16,6 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
     }
   })
 
-
   //=======================================================//
   //== When        Who         Description               ==//
   //== ----------  ----------  ------------------------- ==//
@@ -226,7 +225,7 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
 
       //appSettings.config.MSISDN_VALUE = $scope.getMSISDN();
 
-      if (appSettings.config.MSISDN_VALUE === null) {
+      if (!appSettings.config.MSISDN_VALUE) {
         PelApi.showPopup(appSettings.config.TITLE_WIFI_FIRST_CONNECTION_1, appSettings.config.TITLE_WIFI_FIRST_CONNECTION_2);
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');

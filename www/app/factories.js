@@ -248,7 +248,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
           if (!msisdn) {
             self.lagger.error("Service:ScanPrint cant find msisdn ! not in config or localStorage or sessionStorage")
-
           }
 
           envUrl = links.url + parameters;
