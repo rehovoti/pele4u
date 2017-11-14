@@ -10,8 +10,9 @@ angular.module('pele.controllers', ['ngStorage'])
     }
 
 
-    $scope.appDebug = PelApi.appSettings.debug;
+    $scope.appDebug = PelApi.global.get('debugFlag', true)
     $scope.setDebug = function(flag) {
+
       PelApi.global.set('debugFlag', flag, true)
       $scope.appDebug = flag;
     }

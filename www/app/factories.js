@@ -1,7 +1,7 @@
 angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova', 'pele.messages'])
   .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages) {
     var self = this;
-    self._global = {};
+    var _global = {};
     return {
 
       getLocalStorageUsage: function() {
@@ -212,7 +212,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
           if (!msisdn) {
             self.lagger.error("Service:ScanPrint cant find msisdn ! not in config or localStorage or sessionStorage")
-
           }
 
 
@@ -1246,15 +1245,18 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return _.reverse(($localStorage.appErrors || []))
       },
       global: {
+        getall: function() {
+          return _global;
+        },
         get: function(varname, storageInd, defvalue) {
           storageInd = storageInd || true;
 
-          if (typeof self._global[varname] !== "undefined") {
-            return self._global[varname];
+          if (typeof _global[varname] !== "undefined") {
+            return _global[varname];
           }
           if (storageInd && $localStorage._global && $localStorage._global[varname] !== "undefined") {
-            self._global[varname] = $localStorage._global[varname]
-            return self._global[varname]
+            _global[varname] = $localStorage._global[varname]
+            return _global[varname]
           }
           if (defvalue) {
             return defvalue;
@@ -1265,14 +1267,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         },
         set: function(varname, newval, storageInd) {
           storageInd = storageInd || true;
-          self._global[varname] = newval;
+          _global[varname] = newval;
           if (storageInd) {
             $localStorage[varname] = newval;
           }
           return true;
         },
         clear: function(varname) {
-          delete self._global[varname]
+          delete _global[varname]
           delete $localStorage[varname]
           return true;
         }
