@@ -119,8 +119,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           });
 
           cordova.plugins.notification.badge.clear();
-
-          self.lagger.info("Clean badges counter");
+          self.lagger.info("Clean badge  counter");
         }
         var oneSignalConf = appSettings.apiConfig.OneSignal[appSettings.apiConfig.env] || "notfound";
         if (oneSignalConf === "notfound") {
