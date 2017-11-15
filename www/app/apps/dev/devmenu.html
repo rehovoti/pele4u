@@ -42,6 +42,17 @@
         <i class="icon ion-bug"></i>
           הצג קובץ לוג
       </a>
+      <a class="item item-icon-right">
+       <i class="icon ion-help-buoy"></i>
+       <button ng-click="setBadge(10)" class="button button-small button-default">
+          set 10
+        </button>
+        <button ng-click="setBadge(0)" class="button button-small button-positive">
+          clear
+        </button>
+          current = {{badgeCount}}
+    </a>
+
       <a class="item item-icon-right" ui-sref="app.p1_appsLists">
         <i class="icon ion-help-buoy"></i>
         חזרה לאפליקציה
