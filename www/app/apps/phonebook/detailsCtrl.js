@@ -23,11 +23,14 @@ angular.module('pele')
         return "data:image/jpg;" + base64String;
       }
 
+      $scope.managerInfo = {}
+
       $scope.getTreeData = function(person) {
         var tree = {};
-        person.membersTree.forEach(function(c) {
+        person.orgTree.forEach(function(c) {
 
           if (c.personId == person.directManagerNumber) {
+            $scope.managerInfo = c;
             return false;
           }
           tree[c.directManagerNumber] = tree[c.directManagerNumber] || {};

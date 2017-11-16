@@ -710,18 +710,47 @@ img.pel_icon.medium {height:50px}
 .col.col-input { padding:15px 30px}
 button.round {border-radius: 10px}
 
-ul.treeview.level1 {margin-left:10px}
-ul.treeview.level2 {margin-left:20px}
-ul.treeview li{ font-size: 16px;border-right:2px solid black;line-height:26px;padding:0;margin:0}
+
+
+ul.treeview.level1 {margin-right:0px}
+ul.treeview li  ul.level2 {margin-right:18px}
+ul.treeview li ul li ul.level3 {margin-right:37px}
+ul.treeview li.direct_admin > a  {text-decoration: none;padding-right:5px;font-size:1.2em;line-height:25px; margin-right:11px  }
+ul.treeview a  {text-decoration: none;padding-right:5px;font-size:1.2em;line-height:25px; margin-right:27px  }
+ul.treeview ul li { border-right:2px solid #000}
+
+ul.treeview div.links {
+  border-top: 2px solid #000;
+  height: 1px;
+  line-height: 0.1em;
+  width:28px;
+  position:relative;
+  top:14px;
+}
+
+
+
+ul.treeview  .links.last:after {
+content: "";
+border:3px solid #fff !important;
+position:relative;
+right:-3px;
+top:11px;
+}
+
+
+
+
+/* ul.treeview li{ font-size: 16px;border-right:2px solid black;line-height:26px;padding:0;margin:0}
+
 ul.treeview li.direct_admin {padding-right:10px }
 ul.treeview li.manager {padding-right:20px;}
 ul.treeview li.member {padding-right:30px;}
 ul.treeview li.member.active {font-weight:bold}
-ul.treeview li a  {text-decoration: none}
+ul.treeview li a  {text-decoration: none;padding-right:5px}
 
-ul.treeview li a { padding-right:5px}
 
-ul.treeview li.direct_admin  div.links {
+ul.treeview1 li.direct_admin  div.links {
   border-top: 2px solid #000;
   height: 1px;
   line-height: 0.1em;
@@ -730,7 +759,8 @@ ul.treeview li.direct_admin  div.links {
   right:-11px;
   top:12px ;
 }
-ul.treeview li.manager   div.links {
+
+ul.treeview1 li.manager   div.links {
   border-top: 2px solid #000;
   height: 1px;
   line-height: 0.1em;
@@ -740,13 +770,14 @@ ul.treeview li.manager   div.links {
   top:12px;
   }
 
-ul.treeview li.member   div.links {
+ul.treeview1 li.member   div.links {
   border-top: 2px solid #000;
   height: 1px;
   line-height: 0.1em;
   width:28px;
   position:relative;
-  right:-31px;top:12px}
+  right:-31px;top:12px
+}
 
   ul.treeview li.direct_admin::before {content: "עץ ארגוני";border:2px dotted navy;
   padding:3px;
@@ -759,3 +790,5 @@ position:relative;
 top:-15px;
 right:-3px;
 }
+
+*/

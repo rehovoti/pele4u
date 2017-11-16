@@ -29,28 +29,29 @@
         <!-------------------------------------------------------------------------------->
         <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
           <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
+            <h4 class="pele_rtl">{{managerInfo.orgName}}</h4>
             <div class="item-section">
               <ul class="list pele_rtl text-right treeview level1">
                 <li class="direct_admin tree-item">
-                  <div class="links"></div>
                   <a ui-sref="app.phonebook.details({personId:member.personId})">
-                       {{contact.directManagerName}} - {{contact.directManagerNumber}}</a>
-                </li>
-                <li class="{{member.relation}} tree-item" ng-repeat="(k,v) in contact.tree|filter k.personId !== undefined">
-                  <div class="links"></div>
-                  <a ui-sref="app.phonebook.details({personId:k})">
-                  <i ng-if="contact.personId==k" class="ion-arrow-left-c blue"></i>
-                  {{v.fullName}} - {{v.relation}}</a>
-                  <ul ng-if="v.members.length" class="list pele_rtl text-right treeview level2">
-                    <li class="{{member.relation}} tree-item" ng-repeat="member in v.members">
-                      <div class="links"></div>
+                       {{contact.directManagerName}} </a>
+                  <ul class="list level2">
+                    <li class="{{member.relation}} tree-item" ng-show="v.personId" ng-repeat="(k,v) in contact.tree">
+                      <div class="links" ng-class="{'last':$last}"></div>
                       <a ui-sref="app.phonebook.details({personId:k})">
-                      <i ng-if="contact.personId==k" class="ion-arrow-left-c blue"></i>
-                      {{member.fullName}} - {{member.relation}}</a>
+                          <i ng-if="contact.personId==k" class="ion-android-person blue"></i>
+                            {{v.fullName}}
+                      </a>
+                      <ul ng-if="v.members.length" class="list level3">
+                        <li class="{{member.relation}} tree-item" ng-repeat="member in v.members">
+                          <div class="links" ng-class="{'last':$last}"></div>
+                          <a ui-sref="app.phonebook.details({personId:member.personId})">
+                          {{member.fullName}} </a>
+                        </li>
+                      </ul>
                     </li>
                   </ul>
                 </li>
-                <li class="last-item"></li>
               </ul>
             </div>
           </ion-scroll>
