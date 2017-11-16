@@ -36,13 +36,13 @@
                   <a ui-sref="app.phonebook.details({personId:member.personId})">
                        {{contact.directManagerName}} - {{contact.directManagerNumber}}</a>
                 </li>
-                <li class="{{member.relation}} tree-item" ng-repeat="(k,v) in contact.tree">
+                <li class="{{member.relation}} tree-item" ng-repeat="(k,v) in contact.tree|filter k.personId !== undefined">
                   <div class="links"></div>
                   <a ui-sref="app.phonebook.details({personId:k})">
                   <i ng-if="contact.personId==k" class="ion-arrow-left-c blue"></i>
                   {{v.fullName}} - {{v.relation}}</a>
                   <ul ng-if="v.members.length" class="list pele_rtl text-right treeview level2">
-                    <li class="{{member.relation}} tree-item level3" ng-repeat="member in v.members">
+                    <li class="{{member.relation}} tree-item" ng-repeat="member in v.members">
                       <div class="links"></div>
                       <a ui-sref="app.phonebook.details({personId:k})">
                       <i ng-if="contact.personId==k" class="ion-arrow-left-c blue"></i>
