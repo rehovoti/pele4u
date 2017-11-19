@@ -13,68 +13,24 @@ angular.module('pele', ['ngCordova'])
       //$scope.shareViaSMS = $cordovaSocialSharing.shareViaSMS;
 
       $scope.shareViaEmail = function(email) {
-        alert('shareViaEmail')
-        $cordovaSocialSharing.shareViaEmail(
-          null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
-          null, [email], // TO: must be null or an array
-          null, // CC: must be null or an array
-          null, // BCC: must be null or an array
-          ['https://www.google.nl/images/srpr/logo4w.png'], // FILES: can be null, a string, or an array
-          function() {}, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below.
-          function() {} // called when sh*t hits the fan
-        );
+
+        $cordovaSocialSharing.shareViaEmail(null, null, [email]);
       }
 
       $scope.shareViaSMS = function(mobilePhone) {
-        alert('shareViaSMS')
-        $cordovaSocialSharing.shareViaSMS(
-          null, mobilePhone,
-          function() {}, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below.
-          function() {} // called when sh*t hits the fan
-        );
+
+        $cordovaSocialSharing.shareViaSMS(null, mobilePhone);
 
       }
 
       $scope.shareViaWhatsAppToReceiver = function(mobilePhone) {
-        alert('shareViaWhatsAppToReceiver')
-        $cordovaSocialSharing.shareViaWhatsAppToReceiver(mobilePhone, 'Message via WhatsApp', null, null, function() {
-          console.log('share ok')
-        })
+        $cordovaSocialSharing.shareViaWhatsAppToReceiver(mobilePhone)
+        $cordovaSocialSharing.shareViaWhatsAppToReceiver(100)
       }
 
       $scope.shareViaWhatsApp = function() {
         alert('shareViaWhatsApp')
-        $cordovaSocialSharing.shareViaWhatsApp('Message via WhatsApp', null, null, function() {
-          console.log('share ok')
-        }, function() {
-          console.log("")
-        })
-      }
-
-      $scope.sendMail = function(contact) {
-        $cordovaSocialSharing
-          .shareViaEmail("pele4U message",
-            null, contact.emailAddress, null, null, data)
-          .then(function(result) {
-
-          }, function(err) {
-
-          });
-      }
-
-
-
-
-      $scope.share = function(c) {
-        $cordovaSocialSharing.shareViaEmail(
-          null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
-          null, [c.emailAddress], // TO: must be null or an array
-          null, // CC: must be null or an array
-          null, // BCC: must be null or an array
-          ['https://www.google.nl/images/srpr/logo4w.png', 'www/localimage.png'], // FILES: can be null, a string, or an array
-          function() {}, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below.
-          function() {} // called when sh*t hits the fan
-        );
+        $cordovaSocialSharing.shareViaWhatsApp()
       }
 
       $scope.empPic = function(base64String) {
