@@ -12,8 +12,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         this.topconfig = appSettings.apiConfig;
         this.env = appSettings.env;
         //file "located" in Borwser localStorage
+        $fileLogger.setTimestampFormat('yy-M-dd HH:mm:ss :', '+0200');
         this.$fileLogger = $fileLogger;
         this.lagger = $fileLogger;
+
 
         this.sessionStorage = $sessionStorage;
         this.localStorage = $localStorage;
@@ -67,7 +69,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         })
 
         self.lagger = $fileLogger;
-
+        $fileLogger.setTimestampFormat('YY-M-DD HH:mm:ss', '+0200');
         $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME)
         self.lagger.deleteLogfile().then(function() {
           $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME)
