@@ -120,7 +120,7 @@
                 <div class="item-section">
                   <a ng-href="sms:{{contact.mobilePhone}}"> <img  class="pel_icon medium" src="img/sms.png"></a>
                   <a ng-href="tel:{{contact.mobilePhone}}"> <img class="pel_icon medium" src="img/smartphone.png"></a>
-                  <a ng-href="whatsapp://send?text=my message&phone=+{{contact.mobilePhone}}"><img  class="pel_icon medium" src="img/whatsapp.png"></a>
+                  <a ng-click="window.plugins.socialsharing.shareViaWhatsAppToReceiver(contact.mobilePhone, 'Message via WhatsApp', null /* img */, null /* url */, function() {console.log('share ok')})">aaa :<img  class="pel_icon medium" src="img/whatsapp.png"></a>
                 </div>
               </li>
             </ul>
