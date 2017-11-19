@@ -7,7 +7,6 @@ angular.module('pele')
   //=================================================================
   .controller('phonebookDetailsCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaSocialSharing',
     function($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaSocialSharing) {
-
       $scope.shareViaWhatsAppToReceiver = $cordovaSocialSharing.shareViaWhatsAppToReceiver;
       $scope.shareViaEmail = $cordovaSocialSharing.shareViaEmail;
       $scope.shareViaSMS = $cordovaSocialSharing.shareViaSMS;
