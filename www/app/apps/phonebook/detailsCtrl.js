@@ -37,14 +37,14 @@ angular.module('pele', ['ngCordova'])
 
       $scope.shareViaWhatsAppToReceiver = function(mobilePhone) {
         alert('shareViaWhatsAppToReceiver')
-        $cordovaSocialSharing.shareViaWhatsAppToReceiver(mobilePhone, 'Message via WhatsApp', null /* img */ , null /* url */ , function() {
+        $cordovaSocialSharing.shareViaWhatsAppToReceiver(mobilePhone, 'Message via WhatsApp', null, null, function() {
           console.log('share ok')
         })
       }
 
       $scope.shareViaWhatsApp = function() {
         alert('shareViaWhatsApp')
-        $cordovaSocialSharing.shareViaWhatsApp('Message via WhatsApp', null /* img */ , null /* url */ , function() {
+        $cordovaSocialSharing.shareViaWhatsApp('Message via WhatsApp', null, null, function() {
           console.log('share ok')
         }, function() {
           console.log("")
