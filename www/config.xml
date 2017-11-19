@@ -1,10 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.int-pele.pele4u_qa" version="117.6" versionCode="117.6" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-<<<<<<< HEAD
-    <name> PELE4U  QA </name>
-=======
     <name> PELE4U QA </name>
->>>>>>> 49f4fd5e0e74e4acb69400792d04b61c1f2f27c5
     <description>
     Work form anywhere
   </description>
