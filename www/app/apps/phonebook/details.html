@@ -122,13 +122,13 @@
                   <br \>
                   <a ng-href="sms:{{contact.mobilePhone}}"> <img  class="pel_icon medium" src="img/sms.png"></a>
                   <br \>
-                  <a href="#" ng-click="shareViaSMS(null,contact.mobilePhone)"> ng-click  <img  class=" pel_icon medium " src="img/sms.png "></a>
+                  <a href="#" ng-click="shareViaSMS(contact.mobilePhone)"> ng-click  <img  class=" pel_icon medium " src="img/sms.png "></a>
                   <br \>
                   <a ng-href="tel:{{contact.mobilePhone}} "> <img class="pel_icon medium " src="img/smartphone.png "></a>
                   <br \>
-                  <a href="#" ng-click="shareViaWhatsAppToReceiver(contact.mobilePhone, 'Message via WhatsApp', null /* img */, null /* url */, function() {console.log( 'share ok')}) ">iver : :<img  class="pel_icon medium " src="img/whatsapp.png "></a>
+                  <a href="#" ng-click="shareViaWhatsAppToReceiver(contact.mobilePhone)">iver : :<img  class="pel_icon medium " src="img/whatsapp.png "></a>
                   <br \>
-                  <a href="#" ng-click="shareViaWhatsApp( 'Message via WhatsApp',null /* img */, null /* url */, ()=>{}, ()=>{})"> no receiver : <img class="pel_icon medium" src="img/sms.png"></a>
+                  <a href="#" ng-click="shareViaWhatsApp()"> no receiver : <img class="pel_icon medium" src="img/sms.png"></a>
                 </div>
               </li>
             </ul>
