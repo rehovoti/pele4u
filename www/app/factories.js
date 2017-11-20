@@ -173,6 +173,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
 
       openExternal: function(url, options) {
+        var self = this;
         if (!deviceReady) {
           window.open(url, "_blank")
         } else {
