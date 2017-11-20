@@ -1,5 +1,17 @@
 angular.module('pele.states', [])
   .constant('appStates', [{
+    state: "app.external",
+    url: '/external/:url',
+    views: {
+      'menuContent@app': {
+        templateUrl: function() {
+          return 'app/apps/external/external.html';
+        },
+        controller: 'externalCtrl',
+      }
+    },
+    src: ["app/apps/external/externalCtrl.js"]
+  }, {
     state: "app.dev",
     url: '/dev',
     views: {

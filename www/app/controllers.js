@@ -9,6 +9,10 @@ angular.module('pele.controllers', ['ngStorage'])
       return PelApi.getLocalStorageUsage();
     }
 
+    $scope.openExternal = function(url) {
+      alert(url)
+      PelApi.openExternal(url);
+    }
 
     $scope.getBadgeCount = function() {
       var badgePlugin = _.get(window, "cordova.plugins.notification.badge");
@@ -102,6 +106,10 @@ angular.module('pele.controllers', ['ngStorage'])
 
     $scope.goBack = function() {
       $ionicHistory.goBack();
+    }
+
+    $scope.openExternal = function(url) {
+
     }
     //===============================================
     //==             isShowLogOut

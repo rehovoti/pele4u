@@ -111,13 +111,6 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
           }
         }
       })
-
-
-      //----------------------------------------------------------------------------//
-      //--                         End docApprove
-      //----------------------------------------------------------------------------//
-
-      //---- home ----//
       .state('app.home', {
         url: '/home/:showLoading',
         views: {
