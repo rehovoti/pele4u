@@ -169,6 +169,11 @@ angular.module('pele.config', [])
   .value('appSettings', {
     debug: false,
     config: {
+      iab_options: {
+        location: 'no',
+        clearcache: 'no',
+        toolbar: 'no'
+      },
       mainMenuKeepAlive: 0, // 0 - means disabled
       APP_VERSION: "117.7",
       SCAN_PRINT_SCANNING_ERROR: "שגיאה בסריקה",
