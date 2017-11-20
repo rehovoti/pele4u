@@ -86,7 +86,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       });
     }
   ])
-  .config(function($stateProvider, $urlRouterProvider, appStates, $ionicConfigProvider) {
+  .config(function($stateProvider, $urlRouterProvider, appStates, $ionicConfigProvider, $cordovaInAppBrowserProvider) {
     $ionicConfigProvider.backButton.text('')
     $ionicConfigProvider.views.swipeBackEnabled(false);
     $ionicConfigProvider.navBar.alignTitle('center');

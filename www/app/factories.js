@@ -1,5 +1,5 @@
 angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova', 'pele.messages'])
-  .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages, $cordovaInAppBrowser, $cordovaInAppBrowserProvider) {
+  .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages, $cordovaInAppBrowser) {
     var self = this;
     var _global = {};
     var network = {};
@@ -62,7 +62,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         var self = this;
         deviceReady = true;
 
-        $cordovaInAppBrowserProvider.setDefaultOptions(appSettings.config.iab_options)
         self.cordovaInAppBrowser = $cordovaInAppBrowser;
         self.isAndroid = ionic.Platform.isAndroid();
         self.isIOS = ionic.Platform.isIOS();

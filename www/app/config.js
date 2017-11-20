@@ -169,7 +169,7 @@ angular.module('pele.config', [])
   .value('appSettings', {
     debug: false,
     config: {
-      iab_options: {
+      inAppBrowserDefaultOptions: {
         location: 'no',
         clearcache: 'no',
         toolbar: 'no'
