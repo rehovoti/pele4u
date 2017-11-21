@@ -9,9 +9,75 @@ angular.module('pele', ['ionic.native'])
     function($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaSocialSharing, $cordovaContacts) {
 
 
-      $scope.addContact = function(c) {
-        var contact = navigator.contacts.create();
+      $scope.actions = function(group, contact, orgTree) {
+        console.log(contact)
+        var swal_str = ""
+        if (group === "members_tree") {
+          swal_str = "הוסף רשימת " + contact.orgName
+        }
+        if (group === "manager_tree") {
+          swal_str = "הוסף רשימת " + contact.orgName
+        }
+        swal({
+            text: swal_str,
+            buttons: {
+              "cancel": {
+                text: "ביטול",
+                value: "cancel",
+                visible: true
+              },
+              approve: {
+                text: "אישור",
+                value: "ok",
+              }
+            }
+          })
+          .then((value) => {
+            if (value === 'ok')
+              $scope.addGroup(group, contact, orgTree)
+          });
+      }
 
+      $scope.addGroup = function(group, contact, orgTree) {
+        var options = new ContactFindOptions();
+        options.filter = "אור";
+        options.multiple = true;
+        options.desiredFields = [navigator.contacts.fieldType.id];
+        options.hasPhoneNumber = true;
+        var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
+        navigator.contacts.find(fields, (res) => {
+          console.log("Res:", res)
+        }, () => {}, options);
+
+        var relation = ""
+        if (group === "members_tree") {
+          relation = "managed";
+          orgTree.forEach((c) => {
+            if (c.relation === relation || c.personId == contact.personId)
+              $scope.addContact(c);
+          })
+        }
+        if (group === "manager_tree") {
+          orgTree.forEach((c) => {
+            $scope.addContact(c);
+          })
+        }
+
+
+      }
+
+      $scope.addContact = function(c) {
+        console.log("C:", JSON.stringify(c))
+
+        var contact = navigator.contacts.create({
+          "displayName": c.fullName
+        });
+
+        var phoneNumbers = [];
+        phoneNumbers.push(new ContactField('work', c.workPhone, false))
+        phoneNumbers.push(new ContactField('mobile', c.mobilePhone, true))
+        c.phoneNumbers = phoneNumbers;
+        contact.save(() => {}, () => {});
       };
 
       $scope.shareViaEmail = function(email) {
