@@ -1,7 +1,7 @@
 /**
  * Created by User on 12/12/2016.
  */
-angular.module('pele')
+angular.module('pele', ['ngCordova'])
   .controller('p2_scan_printCtrl', function($scope, $stateParams, $cordovaBarcodeScanner, $ionicLoading, $ionicPopup, $localStorage, $ionicModal, PelApi) {
     $scope.modal = $ionicModal.fromTemplate('<ion-modal-view>' +
       '<ion-header-bar class="bar bar-header bar-positive">' +
