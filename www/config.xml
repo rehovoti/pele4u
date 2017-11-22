@@ -104,7 +104,7 @@
     <plugin name="cordova-plugin-badge" spec="~0.8.5" />
     <plugin name="cordova-plugin-x-socialsharing" source="npm" />
     <plugin name="onesignal-cordova-plugin" source="npm" spec="^2.2.2" />
-    <plugin name="cordova-plugin-barcodescanner" spec="^0.7.3" />
+    <plugin name="cordova-plugin-barcodescanner" spec="^0.7.3">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
     </plugin>
