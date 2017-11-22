@@ -102,54 +102,52 @@ angular.module('pele')
 
       PelApi.lagger.info("IN p2_scan_printCtrl.scanBarcode();");
       if (window.cordova != undefined) {
-        cordova.plugins.barcodeScanner.scan()
+        cordova.plugins.barcodeScanner.scan(function(imageData) {
 
-          .then(function(imageData) {
+          if (!imageData.cancelled) {
 
-            if (!imageData.cancelled) {
+            var printUrl = imageData.text;
 
-              var printUrl = imageData.text;
+            var patt = new RegExp(PelApi.appSettings.config.MSSO_PRINT_URL);
+            var res = patt.test(printUrl);
+            if (res) {
+              var sendScanPrint = PelApi.sendScanPrint(printUrl)
 
-              var patt = new RegExp(PelApi.appSettings.config.MSSO_PRINT_URL);
-              var res = patt.test(printUrl);
-              if (res) {
-                var sendScanPrint = PelApi.sendScanPrint(printUrl)
-
-                sendScanPrint.then(
-                  //----------------//
-                  //--   SUCCESS  --//
-                  //----------------//
-                  function() {
-                    sendScanPrint.success(function(data, status, headers, config) {
-                      PelApi.goHome();
-                    });
-                  }
-                  //----------------//
-                  //--   ERROR  --//
-                  //----------------//
-                  ,
-                  function(response) {
-                    console.log("ERROR_1 p2_scan_printCtrl.scanBarcode() :" + JSON.stringify(response));
-                    PelApi.lagger.error(" 1 . p2_scan_printCtrl.scanBarcode() - " + JSON.stringify(response));
-                    PelApi.showPopup(PelApi.appSettings.config.interfaceErrorTitle, "");
+              sendScanPrint.then(
+                //----------------//
+                //--   SUCCESS  --//
+                //----------------//
+                function() {
+                  sendScanPrint.success(function(data, status, headers, config) {
                     PelApi.goHome();
+                  });
+                }
+                //----------------//
+                //--   ERROR  --//
+                //----------------//
+                ,
+                function(response) {
+                  console.log("ERROR_1 p2_scan_printCtrl.scanBarcode() :" + JSON.stringify(response));
+                  PelApi.lagger.error(" 1 . p2_scan_printCtrl.scanBarcode() - " + JSON.stringify(response));
+                  PelApi.showPopup(PelApi.appSettings.config.interfaceErrorTitle, "");
+                  PelApi.goHome();
 
-                  }
-                );
-              } else {
-                PelApi.showPopup(PelApi.appSettings.config.MSSO_PRINT_WRONG_BARCODE, "");
-              }
-
+                }
+              );
             } else {
-              PelApi.goHome();
+              PelApi.showPopup(PelApi.appSettings.config.MSSO_PRINT_WRONG_BARCODE, "");
             }
-          }, function(error) {
 
-            console.log("ERROR_2 An error happened -> " + error);
-            PelApi.lagger.error(" 2 . p2_scan_printCtrl.scanBarcode() - " + JSON.stringify(error));
-            PelApi.showPopup(PelApi.appSettings.config.SCAN_PRINT_SCANNING_ERROR, "");
+          } else {
             PelApi.goHome();
-          });
+          }
+        }, function(error) {
+
+          console.log("ERROR_2 An error happened -> " + error);
+          PelApi.lagger.error(" 2 . p2_scan_printCtrl.scanBarcode() - " + JSON.stringify(error));
+          PelApi.showPopup(PelApi.appSettings.config.SCAN_PRINT_SCANNING_ERROR, "");
+          PelApi.goHome();
+        });
       }
     };
 
