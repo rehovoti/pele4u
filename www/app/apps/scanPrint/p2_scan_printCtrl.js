@@ -102,8 +102,7 @@ angular.module('pele.prinScan', ['ngCordova'])
 
       PelApi.lagger.info("IN p2_scan_printCtrl.scanBarcode();");
       if (window.cordova != undefined) {
-        $cordovaBarcodeScanner.scan()
-
+        cordova.plugins.barcodeScanner.scan()
 
           .then(function(imageData) {
 
