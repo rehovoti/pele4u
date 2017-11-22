@@ -40,13 +40,16 @@ angular.module('pele', ['ionic.native'])
 
       $scope.addGroup = function(group, contact, orgTree) {
         var options = new ContactFindOptions();
-        options.filter = "אור";
+        options.filter = null;
         options.multiple = true;
         options.desiredFields = [navigator.contacts.fieldType.id];
         options.hasPhoneNumber = true;
         var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
         navigator.contacts.find(fields, (res) => {
-          console.log("Res:", res)
+          res.forEach((con) => {
+            con.remove(() => {}, () => {});
+          })
+          console.table(res)
         }, () => {}, options);
 
         var relation = ""
@@ -63,20 +66,21 @@ angular.module('pele', ['ionic.native'])
           })
         }
 
-
+        swal({
+          title: "אנשי הקשר שבחרת נשמרו במכשירך",
+          icon: "success",
+        });
       }
 
       $scope.addContact = function(c) {
-        console.log("C:", JSON.stringify(c))
 
         var contact = navigator.contacts.create({
           "displayName": c.fullName
         });
-
         var phoneNumbers = [];
         phoneNumbers.push(new ContactField('work', c.workPhone, false))
         phoneNumbers.push(new ContactField('mobile', c.mobilePhone, true))
-        c.phoneNumbers = phoneNumbers;
+        contact.phoneNumbers = phoneNumbers;
         contact.save(() => {}, () => {});
       };
 

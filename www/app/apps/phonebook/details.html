@@ -8,7 +8,7 @@
       <div class="title">{{title}} </div>
     </div>
   </ion-nav-title>
-  <ion-content scroll="false">
+  <ion-content scroll="false" padding="true">
     <tab-slide-box tab="2">
       <div class="tsb-icons">
         <div class="tsb-ic-wrp">
@@ -30,8 +30,8 @@
         <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
           <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
 
-            <h4 class="pele_rtl">{{managerInfo.orgName}}</h4>
-            <h5 class="pele_rtl"> הוסף לאנשי קשר :
+            <h4 class="pele_rtl text-right">{{managerInfo.orgName}}</h4>
+            <h5 class="pele_rtl text-right"> הוסף לאנשי קשר :
               <span class="pel-badge blue"><i ng-click="actions('members_tree',contact,contact.orgTree)" class="icon white medium ion-person-stalker"></i></span>
               <span class="pel-badge blue"><i ng-click="actions('manager_tree',managerInfo,contact.orgTree)" class="icon white medium ion-ios-people"></i></span>
            </h5>
