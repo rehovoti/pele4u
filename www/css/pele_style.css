@@ -749,6 +749,7 @@ ul.treeview div.links {
   top:14px;
 }
 
+ul.treeview li .active {color:#0d47a1 ; font-weight:bold}
 
 
 ul.treeview  .links.last:after {
@@ -762,3 +763,18 @@ top:11px;
 
 .icon.medium  {font-size:16px}
 .swal-text {direction :rtl ; text-align:right}
+
+  .phonebook.list .item  img {
+    max-width: 40px;
+    max-height: 40px;
+    }
+
+.phonebook.list .item  img.avatar { float:right;
+  max-width: 40px;
+  max-height: 40px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  margin-left: 10px;}
+
+.phonebook.list .item   {background:none}

@@ -2,16 +2,47 @@
  * Created by User on 25/08/2016.
  */
 angular.module('pele', [])
-  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup, $ionicSlideBoxDelegate, $compile) {
+  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup, $ionicSlideBoxDelegate, $compile, $ionicModal) {
+
+    $scope.title = "אלפון"
     $scope.goHome = function() {
       PelApi.goHome();
     }
+
+    $scope.goBack = function() {
+      $scope.modals.search.hide();
+      $state.go("app.phonebook", {}, {
+        reload: true
+      })
+    }
+
+    $scope.modals = {
+      operunits: {},
+      search: {}
+    }
+
+
+
+    $ionicModal.fromTemplateUrl('operunits.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modals.operunits = modal;
+    });
+
+    $ionicModal.fromTemplateUrl('search.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modals.search = modal;
+    });
 
     $scope.options = {
       loop: false,
       effect: 'fade',
       speed: 500,
-      pagination: false
+      pagination: false,
+      direction: 'vertical'
     }
 
     $scope.data = {}
@@ -40,11 +71,13 @@ angular.module('pele', [])
     ]
 
     $scope.search = function() {
+      $scope.modals.search.show();
+      $scope.title = "אלפון - תוצאות חיפוש"
       PelApi.getLocalJson("mocks/phonebook_list.json")
         .success((data, status, headers, config) => {
           console.log(JSON.stringify(data))
           $scope.searchResult = data;
-          $scope.slideTo(2, 0)
+
         })
         .error((errorStr, httpStatus, headers, config) => {})
     }
@@ -119,7 +152,6 @@ angular.module('pele', [])
           }
         })
         .then((value) => {
-
           if (value === 'ok')
             $scope.saveInDevice(c)
         });
@@ -131,10 +163,6 @@ angular.module('pele', [])
 
     $scope.slidePrev = function() {
       $scope.slider.slidePrev()
-    }
-    $scope.slideTo = function(index) {
-      console.log($scope.slider)
-      $scope.slider.slideTo(index, 500)
     }
 
     $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {

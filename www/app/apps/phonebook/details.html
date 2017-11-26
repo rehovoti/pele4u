@@ -1,4 +1,4 @@
-<ion-view cache-view="false">
+<ion-view cache-view="true">
   <ion-nav-buttons side="right">
     <button menu-toggle="left" class="button button-icon icon ion-navicon">
     </button>
@@ -45,7 +45,7 @@
                       <div class="links" ng-class="{'last':$last}"></div>
                       <a ui-sref="app.phonebook.details({personId:k})">
                           <i ng-if="contact.personId==k" class="ion-android-person blue"></i>
-                            {{v.fullName}}
+                          <span ng-class="{active:contact.personId==k}"> {{v.fullName}} </span>
                       </a>
                       <ul ng-if="v.members.length" class="list level3">
                         <li class="{{member.relation}} tree-item" ng-repeat="member in v.members">
@@ -69,7 +69,7 @@
             <!-- Refresh to get the new posts -->
             <ul class="list">
               <li class="item item-info no-border item-thumbnail-left item-avatar">
-                <img src="data:image/JPEG;base64,{{contact.pic}}">
+                <img ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}">
                 <div class="item-section">
                   <table class="pele_rtl text-right">
                     <tbody>

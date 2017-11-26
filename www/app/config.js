@@ -171,6 +171,7 @@ angular.module('pele.config', [])
     debug: false,
     config: {
       mainMenuKeepAlive: 0, // 0 - means disabled
+      contactIdPrefix: "pele4u_",
       APP_VERSION: "117.6",
       SCAN_PRINT_SCANNING_ERROR: "שגיאה בסריקה",
       PIN_CODE_AUTHENTICATION_REQUIRED_CODE: "10000",

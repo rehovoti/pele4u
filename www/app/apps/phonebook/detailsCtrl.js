@@ -8,6 +8,8 @@ angular.module('pele', ['ionic.native'])
   .controller('phonebookDetailsCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaSocialSharing', '$cordovaContacts',
     function($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaSocialSharing, $cordovaContacts) {
 
+      alert('details ctrl')
+
 
       $scope.actions = function(group, contact, orgTree) {
         console.log(contact)
@@ -40,11 +42,11 @@ angular.module('pele', ['ionic.native'])
 
       $scope.addGroup = function(group, contact, orgTree) {
         var options = new ContactFindOptions();
-        options.filter = null;
+        options.filter = PelApi.appSettings.config.contactIdPrefix;
         options.multiple = true;
         options.desiredFields = [navigator.contacts.fieldType.id];
         options.hasPhoneNumber = true;
-        var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
+        var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name, navigator.contacts.fieldType.id];
         navigator.contacts.find(fields, (res) => {
           res.forEach((con) => {
             con.remove(() => {}, () => {});
@@ -78,10 +80,17 @@ angular.module('pele', ['ionic.native'])
           "displayName": c.fullName
         });
         var phoneNumbers = [];
+        contact.id = PelApi.appSettings.config.contactIdPrefix + c.personId
+
         phoneNumbers.push(new ContactField('work', c.workPhone, false))
         phoneNumbers.push(new ContactField('mobile', c.mobilePhone, true))
         contact.phoneNumbers = phoneNumbers;
+        contact.organizations = [new ContactOrganization(true, 'work', "פלאפון תקשורת", c.section, c.jobName)]
+        console.log(c)
+        if (c.pic)
+          contact.photos[new ContactField('base64', c.pic, true)]
         contact.save(() => {}, () => {});
+
       };
 
       $scope.shareViaEmail = function(email) {

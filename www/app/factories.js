@@ -1,5 +1,5 @@
 angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova', 'pele.messages'])
-  .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages) {
+  .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages, $ionicHistory) {
     var self = this;
     self._global = {};
 
@@ -931,6 +931,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       goHome: function() {
         //window.location = "./../../index.html" ;
         $state.go("app.p1_appsLists");
+      },
+
+      goBack: function() {
+        $ionicHistory.goBack();
       },
       goLogIn: function() {
         $state.go("app.login");
