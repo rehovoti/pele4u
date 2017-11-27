@@ -1,7 +1,7 @@
 /**
  * Created by User on 25/08/2016.
  */
-angular.module('pele', ['ngCorodova'])
+angular.module('pele')
   //=================================================================
   //==                    PAGE_4
   //=================================================================
@@ -41,10 +41,10 @@ angular.module('pele', ['ngCorodova'])
         var options = new ContactFindOptions();
         options.filter = PelApi.appSettings.config.contactIdPrefix;
         options.multiple = true;
-        options.desiredFields = [navigator.contacts.fieldType.id];
+        options.desiredFields = [$cordovaContacts.fieldType.id];
         options.hasPhoneNumber = true;
-        var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name, navigator.contacts.fieldType.id];
-        navigator.contacts.find(fields, (res) => {
+        var fields = [$cordovaContacts.fieldType.displayName, $cordovaContacts.fieldType.name, $cordovaContacts.fieldType.id];
+        $cordovaContacts.find(fields, (res) => {
           res.forEach((con) => {
             con.remove(() => {}, () => {});
           })

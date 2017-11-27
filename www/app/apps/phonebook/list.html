@@ -52,16 +52,15 @@
   <ion-content class="pele_rtl" scroll="true" ng-show="page=='result'">
     <div class="list phonebook">
       <div class="item item-avatar item-avatar-right item-icon-left " ng-repeat="contact in searchResult">
-        <img class="avatar" ng-if="contact.pic " ng-click="modals.search.hide() " ui-sref="app.phonebook.details({personId:contact.personId}) " src="data:image/JPEG;base64,{{contact.pic}} ">
-        <div ui-sref="app.phonebook.details({personId:contact.personId}) " ng-click="modals.search.hide() ">
+        <img class="avatar" ng-if="contact.pic" ui-sref="app.phonebook.details({personId:contact.personId}) " src="data:image/JPEG;base64,{{contact.pic}} ">
+        <div ui-sref="app.phonebook.details({personId:contact.personId})">
           <h2> {{contact.lastName}} {{contact.firstName}}</h2>
           <p>{{contact.sector}} </p>
         </div>
-        <div class="icon">
-          <a href="#" ng-href="tel:{{contact.mobilePhone}}"><img class="pel_icon" src="img/phone.png"></a>
-          <a href="#" ng-click="swalContact(contact) "><img class="pel_icon " src="img/add_contact.png"></a>
+        <div class="icon ">
+          <a href="# " ng-href="tel:{{contact.mobilePhone}} "><img class="pel_icon " src="img/phone.png "></a>
+          <a href="# " ng-click="swalContact(contact) "><img class="pel_icon " src="img/add_contact.png "></a>
         </div>
-
       </div>
   </ion-content>
 
@@ -74,7 +73,7 @@
         <h1 class="title ">{{title}}</h1>
       </ion-header-bar>
       <ion-content>
-        <div class="list phonebook">
+        <div class="list phonebook ">
           <a class="item item-avatar item-avatar-right item-icon-left " href="# " ng-repeat="contact in searchResult ">
               <img class="avatar " ng-if="contact.pic " ng-click="modals.search.hide() "  ui-sref="app.phonebook.details({personId:contact.personId}) " src="data:image/JPEG;base64,{{contact.pic}} ">
               <div ui-sref="app.phonebook.details({personId:contact.personId}) " ng-click="modals.search.hide() ">

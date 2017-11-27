@@ -1,9 +1,8 @@
 /**
  * Created by User on 25/08/2016.
  */
-angular.module('pele', [])
-  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, Contact, $ionicPopup, $compile, $ionicModal) {
-
+angular.module('pele')
+  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, Contact, $ionicPopup, $ionicModal) {
     $scope.title = "אלפון"
     $scope.goHome = function() {
       PelApi.goHome();

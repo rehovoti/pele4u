@@ -1418,11 +1418,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
         var contact;
         if (info.fullName) {
-          contact = navigator.contacts.create({
+          contact = $cordovaContacts.create({
             "displayName": info.fullName
           });
         } else if (info.firstName && info.lastName) {
-          contact = navigator.contacts.create({
+          contact = $cordovaContacts.create({
             "displayName": info.firstName + " " + info.lastName
           });
         }
@@ -1464,7 +1464,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           id: idPrefix + id
         };
 
-        navigator.contacts.pickContact(
+        $cordovaContacts.pickContact(
           (contact) => {
             deferred.resolve(contact)
           }, (err) => {
@@ -1494,11 +1494,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         options.multiple = true;
         options.desiredFields = [];
         fields.forEach((f) => {
-          options.desiredFields.push(navigator.contacts.fieldType[f])
-          searchFields.push(navigator.contacts.fieldType[f])
+          options.desiredFields.push($cordovaContacts.fieldType[f])
+          searchFields.push($cordovaContacts.fieldType[f])
         })
         options.hasPhoneNumber = hasPhoneNumber || true;
-        navigator.contacts.find(searchFields,
+        $cordovaContacts.find(searchFields,
           (res) => {
             return deferred.resolve(res);
           }, (err) => {
