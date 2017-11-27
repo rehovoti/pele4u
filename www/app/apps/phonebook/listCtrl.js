@@ -2,13 +2,17 @@
  * Created by User on 25/08/2016.
  */
 angular.module('pele', [])
-  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, $cordovaContacts, $ionicPopup, $ionicSlideBoxDelegate, $compile, $ionicModal) {
+  .controller('phonebookListCtrl', function($scope, $stateParams, $ionicLoading, $state, PelApi, Contact, $ionicPopup, $compile, $ionicModal) {
 
     $scope.title = "אלפון"
     $scope.goHome = function() {
       PelApi.goHome();
     }
-
+    $scope.page = 'form'
+    $scope.setForm = function() {
+      $scope.page = "form"
+      $scope.searchResult = []
+    }
     $scope.goBack = function() {
       $scope.modals.search.hide();
       $state.go("app.phonebook", {}, {
@@ -20,8 +24,6 @@ angular.module('pele', [])
       operunits: {},
       search: {}
     }
-
-
 
     $ionicModal.fromTemplateUrl('operunits.html', {
       scope: $scope,
@@ -71,72 +73,37 @@ angular.module('pele', [])
     ]
 
     $scope.search = function() {
-      $scope.modals.search.show();
+      //  $scope.modals.search.show();
       $scope.title = "אלפון - תוצאות חיפוש"
       PelApi.getLocalJson("mocks/phonebook_list.json")
         .success((data, status, headers, config) => {
           console.log(JSON.stringify(data))
           $scope.searchResult = data;
-
+          $scope.page = 'result';
         })
         .error((errorStr, httpStatus, headers, config) => {})
     }
 
-    $scope.saveInDevice = function(c) {
-      var opts = { //search options
-        filter: c.phoneNumber, // 'Bob'
-        multiple: true, // Yes, return any contact that matches criteria
-        fields: ["phoneNumbers", "displayName"], // These are the fields to search for 'bob'.
-        desiredFields: ["phoneNumbers", "displayName"],
-        hasPhoneNumber: true //return fields.
-      };
 
-      $cordovaContacts.find(opts).then(function(allContacts) {
+
+    $scope.addContact = function(c) {
+      Contact.save(c, PelApi.appSettings.config.contactIdPrefix).then((res) => {
         swal({
-          text: "Search number :" + JSON.stringify(allContacts),
+          text: "! איש הקשר   עודכן במכשירך",
           icon: "success",
           button: "סגור!",
         });
-      });
-
-      if (!navigator.contacts) {
+      }).
+      catch((err) => {
         swal({
-          text: "תכונה זאת נתמכת במכשיר בלבד!",
-          button: "סגור",
+          text: "! התרחשה שגיאה" + JSON.stringify(err),
+          icon: "error",
+          timer: 2000
         });
-        //  return false;
-      }
+      })
+    }
 
-      $cordovaContacts.save({
-        phoneNumbers: [{
-          "type": "Number",
-          "value": c.phoneNumber,
-          "pref": true
-        }],
-        "displayName": c.displayName,
-        organizations: {
-          name: "פלאפון"
-        }
-      }).then(function(result) {
-          swal({
-            text: "! איש הקשר   עודכן במכשירך",
-            icon: "success",
-            button: "סגור!",
-          });
-
-        },
-        function(err) {
-          swal({
-            text: "! התרחשה שגיאה" + JSON.stringify(err),
-            icon: "error",
-            timer: 2000
-          });
-
-        });
-    };
-
-    $scope.createContact = function(c) {
-
+    $scope.swalContact = function(c) {
       swal({
           text: "האם לשמור את איש הקשר במכשירכם ?",
           buttons: {
@@ -153,22 +120,10 @@ angular.module('pele', [])
         })
         .then((value) => {
           if (value === 'ok')
-            $scope.saveInDevice(c)
+            $scope.addContact(c)
         });
     }
 
-    $scope.slideNext = function() {
-      $scope.slider.slideNext()
-    }
 
-    $scope.slidePrev = function() {
-      $scope.slider.slidePrev()
-    }
-
-    $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
-      // data.slider is the instance of Swiper
-      $scope.slider = data.slider;
-
-    });
 
   });

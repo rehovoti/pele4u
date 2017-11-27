@@ -28,7 +28,7 @@
         <!----------------------------- Approve List Slide ------------------------------->
         <!-------------------------------------------------------------------------------->
         <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
-          <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
+          <ion-scroll scrollX="false" scrollX="false" delegate-handle="slide1Scroll">
 
             <h4 class="pele_rtl text-right">{{managerInfo.orgName}}</h4>
             <h5 class="pele_rtl text-right"> הוסף לאנשי קשר :
@@ -65,11 +65,17 @@
         <!----------------------------- Doc Details Slide ------------------------------->
         <!------------------------------------------------------------------------------->
         <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
-          <ion-scroll class="pele_rtl text-right" scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+
+          <ion-scroll class="pele_rtl text-right" scrollX="false" delegate-handle="slide1Scroll">
             <!-- Refresh to get the new posts -->
+
             <ul class="list">
+              <li class="item">
+                <h1 class="text-center h1">{{contact.firstName}} {{contact.lastName}}</h1>
+                <div class="item-thumbnail-center contact-avatar text-center"><img ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}"></div>
+
+              </li>
               <li class="item item-info no-border item-thumbnail-left item-avatar">
-                <img ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}">
                 <div class="item-section">
                   <table class="pele_rtl text-right">
                     <tbody>
@@ -148,7 +154,7 @@
       </ion-slide-box>
   </ion-content>
   <!-- Footer Actions -->
-  <ion-footer-bar class="footer50 ">
+  <!-- ion-footer-bar  class="phonebook-footer">
     <div class="row ">
       <div class="col col-50 text-center ">
         <button class="button button-clear button-positive" ui-sref="app.p1_appsLists">
@@ -161,5 +167,5 @@
       </button>
       </div>
     </div>
-  </ion-footer-bar>
+  </ion-footer-bar-->
 </ion-view>

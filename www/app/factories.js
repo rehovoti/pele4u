@@ -1441,9 +1441,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ionic.nati
 
         if (info.company || info.section || info.jobName)
           contact.organizations = [new ContactOrganization(true, 'work', info.company, info.section, info.jobName)]
-
+        contact.photos = [];
         if (info.pic)
-          contact.photos[new ContactField('base64', info.pic, true)]
+          contact.photos[0] = new ContactField('base64', info.pic, true)
 
         contact.save((c) => {
           deferred.resolve(c)
