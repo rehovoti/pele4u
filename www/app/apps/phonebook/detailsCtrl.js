@@ -5,11 +5,8 @@ angular.module('pele', ['ionic.native'])
   //=================================================================
   //==                    PAGE_4
   //=================================================================
-  .controller('phonebookDetailsCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaSocialSharing', '$cordovaContacts',
-    function($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaSocialSharing, $cordovaContacts) {
-
-      alert('details ctrl')
-
+  .controller('phonebookDetailsCtrl', ['Contact', '$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaSocialSharing', '$cordovaContacts',
+    function(Contact, $scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaSocialSharing, $cordovaContacts) {
 
       $scope.actions = function(group, contact, orgTree) {
         console.log(contact)
@@ -64,7 +61,9 @@ angular.module('pele', ['ionic.native'])
         }
         if (group === "manager_tree") {
           orgTree.forEach((c) => {
-            $scope.addContact(c);
+            var prms = $scope.addContact(c);
+            console.log(prms)
+
           })
         }
 
@@ -75,23 +74,13 @@ angular.module('pele', ['ionic.native'])
       }
 
       $scope.addContact = function(c) {
-
-        var contact = navigator.contacts.create({
-          "displayName": c.fullName
-        });
-        var phoneNumbers = [];
-        contact.id = PelApi.appSettings.config.contactIdPrefix + c.personId
-
-        phoneNumbers.push(new ContactField('work', c.workPhone, false))
-        phoneNumbers.push(new ContactField('mobile', c.mobilePhone, true))
-        contact.phoneNumbers = phoneNumbers;
-        contact.organizations = [new ContactOrganization(true, 'work', "פלאפון תקשורת", c.section, c.jobName)]
-        console.log(c)
-        if (c.pic)
-          contact.photos[new ContactField('base64', c.pic, true)]
-        contact.save(() => {}, () => {});
-
-      };
+        Contact.save(c, PelApi.appSettings.config.contactIdPrefix).then((res) => {
+          console.log("Saved :", res)
+        }).
+        catch((err) => {
+          console.log("contact err:", err)
+        })
+      }
 
       $scope.shareViaEmail = function(email) {
         $cordovaSocialSharing.shareViaEmail(null, null, [email]);

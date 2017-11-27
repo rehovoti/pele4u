@@ -1,5 +1,5 @@
-angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova', 'pele.messages'])
-  .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages, $ionicHistory) {
+angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ionic.native', 'pele.messages'])
+  .factory('PelApi', function($cordovaTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages, $ionicHistory) {
     var self = this;
     self._global = {};
 
@@ -1317,24 +1317,21 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           } else if (self.isAndroid) {
             var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
 
-            $cordovaFileTransfer.download(fileApiData.URI, targetPath, {}, true)
+            $cordovaTransfer.download(fileApiData.URI, targetPath, {}, true)
               .then(
                 //success
                 function(result) {
                   $timeout.cancel(filetimeout);
                   if (!result.nativeURL) {
                     self.hideLoading();
-                    self.throwError("api", "cordovaFileTransfer.download", JSON.stringify(result), false);
+                    self.throwError("api", "cordovaTransfer.download", JSON.stringify(result), false);
                   } else {
                     openDoc(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
                   }
-                },
+                }).catch(
                 function(error) {
                   self.hideLoading()
                   self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
-                },
-                function(progress) {
-                  //  self.showLoading(spinOptions);
                 })
           }
         }).error(function(error) {
@@ -1403,5 +1400,112 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       text = text.toString();
       if (phrase) text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
       return $sce.trustAsHtml(text)
+    }
+  }).factory('Contact', function($cordovaContacts, $q) {
+    var self = this;
+    var _global = {};
+    var network = {};
+    var deviceReady = false;
+    return {
+      save: function(info, idPrefix) {
+        var deferred = $q.defer();
+
+        if (!idPrefix)
+          deferred.reject("Missing idPrefix !!!")
+
+        if (!(info.workPhone || info.mobilePhone))
+          deferred.reject("Contact has no phone numbers !!!")
+
+        var contact;
+        if (info.fullName) {
+          contact = navigator.contacts.create({
+            "displayName": info.fullName
+          });
+        } else if (info.firstName && info.lastName) {
+          contact = navigator.contacts.create({
+            "displayName": info.firstName + " " + info.lastName
+          });
+        }
+
+        if (info.emailAddress)
+          contact.emails = [new ContactField('work', info.emailAddress, true)]
+
+        var phoneNumbers = [];
+        contact.id = idPrefix + info.personId
+
+        if (info.workPhone)
+          phoneNumbers.push(new ContactField('work', info.workPhone, false))
+        if (info.mobilePhone)
+          phoneNumbers.push(new ContactField('mobile', info.mobilePhone, true))
+        contact.phoneNumbers = phoneNumbers;
+
+        if (info.company || info.section || info.jobName)
+          contact.organizations = [new ContactOrganization(true, 'work', info.company, info.section, info.jobName)]
+
+        if (info.pic)
+          contact.photos[new ContactField('base64', info.pic, true)]
+
+        contact.save((c) => {
+          deferred.resolve(c)
+        }, (err) => {
+          deferred.reject(err)
+        });
+        return deferred.promise;
+      },
+      get: (id, idPrefix) => {
+        if (!idPrefix)
+          deferred.reject("Missing idPrefix !!!")
+
+        if (!id)
+          deferred.reject("Missing id  !!!")
+
+        var deferred = $q.defer();
+        var contact = {
+          id: idPrefix + id
+        };
+
+        navigator.contacts.pickContact(
+          (contact) => {
+            deferred.resolve(contact)
+          }, (err) => {
+            deferred.reject(err)
+          });
+        return deferred.promise;
+      },
+
+      remove: (id, idPrefix) => {
+        var deferred = $q.defer();
+        self.get()
+        if (!idPrefix)
+          deferred.reject("Missing idPrefix !!!")
+
+        con.remove(() => {}, () => {});
+
+        return deferred.promise;
+      },
+      find: function(idPrefix, filter, fields, hasPhoneNumber) {
+        var deferred = $q.defer();
+        if (!idPrefix)
+          deferred.reject("Missing idPrefix !!!")
+
+        var options = new ContactFindOptions();
+        var searchFields = [];
+        options.filter = filter;
+        options.multiple = true;
+        options.desiredFields = [];
+        fields.forEach((f) => {
+          options.desiredFields.push(navigator.contacts.fieldType[f])
+          searchFields.push(navigator.contacts.fieldType[f])
+        })
+        options.hasPhoneNumber = hasPhoneNumber || true;
+        navigator.contacts.find(searchFields,
+          (res) => {
+            return deferred.resolve(res);
+          }, (err) => {
+            return deferred.reject(err);
+          },
+          options);
+        return deferred.promise;
+      }
     }
   });
