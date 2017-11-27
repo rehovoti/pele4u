@@ -5,8 +5,8 @@ angular.module('pele')
   //=================================================================
   //==                    PAGE_4
   //=================================================================
-  .controller('phonebookDetailsCtrl', ['Contact', '$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaSocialSharing', '$cordovaContacts',
-    function(Contact, $scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaSocialSharing, $cordovaContacts) {
+  .controller('phonebookDetailsCtrl', ['Contact', '$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaSocialSharing',
+    function(Contact, $scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaSocialSharing) {
 
       $scope.actions = function(group, contact, orgTree) {
         console.log(contact)
@@ -41,10 +41,10 @@ angular.module('pele')
         var options = new ContactFindOptions();
         options.filter = PelApi.appSettings.config.contactIdPrefix;
         options.multiple = true;
-        options.desiredFields = [$cordovaContacts.fieldType.id];
+        options.desiredFields = [navigator.contacts.fieldType.id];
         options.hasPhoneNumber = true;
-        var fields = [$cordovaContacts.fieldType.displayName, $cordovaContacts.fieldType.name, $cordovaContacts.fieldType.id];
-        $cordovaContacts.find(fields, (res) => {
+        var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name, navigator.contacts.fieldType.id];
+        navigator.contacts.find(fields, (res) => {
           res.forEach((con) => {
             con.remove(() => {}, () => {});
           })
