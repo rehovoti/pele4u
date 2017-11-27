@@ -8,13 +8,8 @@ angular.module('pele', ['ionic', 'ionic.native', 'ngStorage', 'tabSlideBox', 'pe
     //-----------------------------------------//
     //--           MENU                      --//
     //-----------------------------------------//
-    , 'pele.P1_appsListCtrl'
-    //-----------------------------------------//
-    //--       Authentication                --//
-    //-----------------------------------------//
-    , 'pele.authCtrl', 'pele.states', , 'fileLogger', 'oc.lazyLoad'
+    , 'pele.P1_appsListCtrl', 'pele.authCtrl', 'pele.states', , 'fileLogger', 'oc.lazyLoad'
   ])
-
   .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings',
     function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings) {
       PelApi.init();
