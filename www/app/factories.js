@@ -1,5 +1,5 @@
-angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ionic.native', 'pele.messages'])
-  .factory('PelApi', function($cordovaTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages, $ionicHistory) {
+angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova', 'pele.messages'])
+  .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages, $ionicHistory) {
     var self = this;
     self._global = {};
 
@@ -1317,14 +1317,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ionic.nati
           } else if (self.isAndroid) {
             var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
 
-            $cordovaTransfer.download(fileApiData.URI, targetPath, {}, true)
+            $cordovaFileTransfer.download(fileApiData.URI, targetPath, {}, true)
               .then(
                 //success
                 function(result) {
                   $timeout.cancel(filetimeout);
                   if (!result.nativeURL) {
                     self.hideLoading();
-                    self.throwError("api", "cordovaTransfer.download", JSON.stringify(result), false);
+                    self.throwError("api", "cordovaFileTransfer.download", JSON.stringify(result), false);
                   } else {
                     openDoc(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
                   }
