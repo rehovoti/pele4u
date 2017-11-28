@@ -115,6 +115,6 @@
     <plugin name="cordova-plugin-badge" spec="~0.8.1" />
     <plugin name="cordova-plugin-x-socialsharing" source="npm" />
     <plugin name="onesignal-cordova-plugin" spec="^2.2.2" source="npm" />
-    <plugin name="cordova-plugin-contacts">
+    <plugin name="cordova-plugin-contacts" />
     <!--plugin name="cordova-plugin-contacts" spec="^3.0.0" /-->
 </widget>
