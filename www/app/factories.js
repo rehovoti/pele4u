@@ -1431,7 +1431,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         //  contact.emails = [new ContactField('work', info.emailAddress, true)]
 
         var phoneNumbers = [];
-        contact.id = idPrefix + info.personId
+        //contact.id = idPrefix + info.personId
 
         if (info.workPhone)
           phoneNumbers.push(new ContactField('work', info.workPhone, false))
