@@ -1,20 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.intpele.pele4u_dv" version="116.8" versionCode="116.8" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-  <name>DV_PELE4U</name>
-  <description>
+    <name>DV_PELE4U</name>
+    <description>
     Work form anywhere
   </description>
-  <author email="oren@pelephone.co.il" href="http://www.pelephone.co.il">
+    <author email="oren@pelephone.co.il" href="http://www.pelephone.co.il">
     Pelephone IT
   </author>
-
-  <preference name="phonegap-version" value="cli-7.0.1" /><!-- for Push Notif O.H / R.W. 08/02/2016 -->
-  <preference name="android-build-tool" value="gradle" /> <!-- for Push Notif O.H / R.W.  08/02/2016 -->
-  <preference name="android-minSdkVersion" value="15" />
-      <!--   <preference name="android-maxSdkVersion" value="15" /> -->
-  <preference name="android-targetSdkVersion" value="23" />
-
-
+    <preference name="phonegap-version" value="cli-7.0.1" />
+    <preference name="android-build-tool" value="gradle" />
+    <preference name="android-minSdkVersion" value="15" />
+    <preference name="android-targetSdkVersion" value="23" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
@@ -32,7 +28,6 @@
     <preference name="SplashScreen" value="splash" />
     <preference name="SplashScreenDelay" value="4000" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
-
     <plugin name="cordova-plugin-battery-status" spec="~1.2.2" />
     <plugin name="cordova-plugin-camera" spec="~2.3.1">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
@@ -111,10 +106,8 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="whatsapp:*" />
-
     <plugin name="cordova-plugin-badge" spec="~0.8.1" />
     <plugin name="cordova-plugin-x-socialsharing" source="npm" />
-    <plugin name="onesignal-cordova-plugin" spec="^2.2.2" source="npm" />
-    <plugin name="cordova-plugin-contacts" />
-    <!--plugin name="cordova-plugin-contacts" spec="^3.0.0" /-->
+    <plugin name="onesignal-cordova-plugin" source="npm" spec="^2.2.2" />
+    <plugin name="cordova-plugin-contacts" spec="^2.3.1" />
 </widget>
