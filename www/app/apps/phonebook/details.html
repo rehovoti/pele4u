@@ -8,7 +8,7 @@
       <div class="title">{{title}} </div>
     </div>
   </ion-nav-title>
-  <ion-content scroll="false" padding="true">
+  <ion-content scroll="false" padding="true" id="phonebook_details">
     <tab-slide-box tab="2">
       <div class="tsb-icons">
         <div class="tsb-ic-wrp">
@@ -71,9 +71,8 @@
 
             <ul class="list">
               <li class="item">
-                <h2 class="text-center h1">{{contact.firstName}} {{contact.lastName}}</h2>
+                <div class="blue text-center"><strong>{{contact.firstName}} {{contact.lastName}}</strong></div>
                 <div class="item-thumbnail-center contact-avatar text-center"><img ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}"></div>
-
               </li>
               <li class="item item-info no-border item-thumbnail-left item-avatar">
                 <div class="item-section">
@@ -89,11 +88,11 @@
                       </tr>
                       <tr>
                         <td class="label">פלאפון: </td>
-                        <td class="info"> {{contact.mobilePhone}}</td>
+                        <td class="info"> <a ng-href="tel://{{contact.mobilePhone}}">{{contact.mobilePhone}}</a></td>
                       </tr>
                       <tr>
                         <td class="label">שלוחה: </td>
-                        <td class="info"> {{contact.workPhone}}</td>
+                        <td class="info"> <a ng-href="tel://{{contact.workPhone}}">{{contact.workPhone}} </a></td>
                       </tr>
                       <tr>
                         <td class="label">דוא"ל: </td>
@@ -129,9 +128,9 @@
               </li>
               <li class="item item-info no-border contact-icons text-center">
                 <a href="#" ng-click="addContact(contact)"> <img  class=" pel_icon medium " src="img/new_icons/purple_add_contact.png "></a>
-                <a href="#" ng-click="shareViaSMS(contact.mobilePhone)"> <img  class=" pel_icon medium " src="img/new_icons/blue_sms.png "></a>
+                <a ng-href="sms://{{contact.mobilePhone}}"> <img  class=" pel_icon medium " src="img/new_icons/blue_sms.png "></a>
                 <a href="#" ng-click="shareViaEmail(contact.emailAddress)"> <img  class=" pel_icon medium " src="img/new_icons/red_email.png "></a>
-                <a ng-href="tel:{{contact.workPhone}}"><img class=" pel_icon medium " src="img/new_icons/blue_phone.png"></a>
+                <a ng-href="tel:{{contact.workPhone}}"><img class=" pel_icon medium " src="img/new_icons/gray_phone.png"></a>
                 <a ng-href="tel:{{contact.mobilePhone}}"> <img  class=" pel_icon medium " src="img/new_icons/green_mobile.png"></a>
                 <!--div class="item-section">
                   <a href="#" ng-click="shareViaEmail(contact.emailAddress)"> e-mail</a>
