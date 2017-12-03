@@ -13,6 +13,8 @@
       <div class="tsb-icons">
         <div class="tsb-ic-wrp">
           <ion-scroll has-bouncing="false" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
+            <a href="#" ng-click="swalContact(contact)" class="">
+                <img  class="fab" src="img/new_icons/purple_add_contact.png "></a>
             <a class="triangle-isosceles" on-finish-render="test()">
             עץ ארגוני
             </a>
@@ -72,7 +74,10 @@
             <ul class="list">
               <li class="item">
                 <div class="blue text-center"><strong>{{contact.firstName}} {{contact.lastName}}</strong></div>
-                <div class="item-thumbnail-center contact-avatar text-center"><img ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}"></div>
+                <div class="  text-center">
+                  <img class="contact-avatar" ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}" /-->
+                  <img class="no-contact-pic" ng-if="!contact.pic" ng-src="img/new_icons/blue_avatar.png" />
+                </div>
               </li>
               <li class="item item-info no-border item-thumbnail-left item-avatar">
                 <div class="item-section">
@@ -127,7 +132,7 @@
                 </div>
               </li>
               <li class="item item-info no-border contact-icons text-center">
-                <a href="#" ng-click="addContact(contact)"> <img  class=" pel_icon medium " src="img/new_icons/purple_add_contact.png "></a>
+                <a href="#" ng-click="swalContact(contact)"> <img  class=" pel_icon medium " src="img/new_icons/purple_add_contact.png "></a>
                 <a ng-href="sms://{{contact.mobilePhone}}"> <img  class=" pel_icon medium " src="img/new_icons/blue_sms.png "></a>
                 <a href="#" ng-click="shareViaEmail(contact.emailAddress)"> <img  class=" pel_icon medium " src="img/new_icons/red_email.png "></a>
                 <a ng-href="tel:{{contact.workPhone}}"><img class=" pel_icon medium " src="img/new_icons/gray_phone.png"></a>

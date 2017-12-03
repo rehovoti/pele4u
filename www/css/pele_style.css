@@ -779,5 +779,22 @@ top:11px;
 
 .phonebook.list .item   {background:none}
 .contact-icons img  {height:50px}
-.contact-avatar img {border-radius:50%;border:1px dotted #5885b3;margin-top:5px}
+
+
+.contact-avatar {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+      border:1px double #CCC;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-contact-pic {height:100px;width:100px}
+.phonebook-form .col-input {margin:10px 30px}
+
+
 .phonebook-footer.bar-footer {height:50px}

@@ -8,6 +8,27 @@ angular.module('pele')
   .controller('phonebookDetailsCtrl', ['Contact', '$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaSocialSharing',
     function(Contact, $scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaSocialSharing) {
 
+      $scope.swalContact = function(c) {
+        swal({
+            text: "האם לשמור את איש הקשר במכשירכם ?",
+            buttons: {
+              "cancel": {
+                text: "ביטול",
+                value: "cancel",
+                visible: true
+              },
+              approve: {
+                text: "אישור",
+                value: "ok",
+              }
+            }
+          })
+          .then((value) => {
+            if (value === 'ok')
+              $scope.addContact(c)
+          });
+      }
+
       $scope.actions = function(group, contact, orgTree) {
         console.log(contact)
         var swal_str = ""

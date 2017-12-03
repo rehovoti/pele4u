@@ -11,7 +11,7 @@
       <div class="title">{{title}}</div>
     </div>
   </ion-nav-title>
-  <ion-content class="pele-background" scroll="true" ng-show="page=='form' || !page">
+  <ion-content class="phonebook-form pele-background" scroll="true" ng-show="page=='form' || !page">
     <div class="row">
       <div class="col col-input">
         <ion-item class="item item-input">
@@ -106,8 +106,8 @@
                   {{u.displayName}} </div>
                 <div class="col col-35 ">{{u.phoneNumber}}</div>
                 <div class="col col-30 text-left ">
-                  <a href="tel:{{u.phoneNumber}} "><img class="pel_icon " src="img/phone.png " \></a>
-                  <a ng-click="createContact(u) "><img class="pel_icon " src="img/add_contact.png " \></a>
+                  <a href="tel:{{u.phoneNumber}} "><img class="pel_icon " src="img/new_icons/blue_phone.png " \></a>
+                  <a ng-click="createContact(u) "><img class="pel_icon " src="img/new_icons/green_add_contact.png " \></a>
                 </div>
               </div>
             </ion-item>
