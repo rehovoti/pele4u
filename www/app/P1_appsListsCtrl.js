@@ -187,6 +187,7 @@ app.controller('P1_appsListCtrl', function($scope, $http, $state, $ionicLoading,
         PelApi.goHome();
         //PelApi.showPopup(appSettings.config.pinCodeSubTitlePWA , "");
       } else if ("OLD" === pinCodeStatus) {
+        
         PelApi.showPopupVersionUpdate(data.StatusDesc, "");
       }
     }).error(

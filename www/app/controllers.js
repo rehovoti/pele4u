@@ -129,7 +129,7 @@ angular.module('pele.controllers', ['ngStorage'])
         if (ionic.Platform.isAndroid()) {
           window.open(appSettings.GOOGLE_PLAY_APP_LINK, '_system', 'location=yes');
         } else if (isIOS) {
-          window.open(appSettings.APPLE_STORE_APP_LING, '_system', 'location=yes');
+          window.open(appSettings.APPLE_STORE_APP_LINK, '_system', 'location=yes');
         }
       } // updateAppVersion
 

@@ -808,7 +808,32 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //==               Update Version                          ==//
       //===========================================================//
       showPopupVersionUpdate: function(title, subTitle) {
-        $rootScope.data = {}
+        var storeUrl = appSettings.GOOGLE_PLAY_APP_LINK ;
+
+        if(ionic.Platform.isIOS()) {
+           storeUrl = PelApi.appSettings.APPLE_STORE_APP_LINK;
+
+        }
+        swal({
+            text: title,
+            buttons: {
+              "cancel": {
+                text: "ביטול",
+                value: "cancel",
+                visible: true
+              },
+              approve: {
+                text: "עדכון גרסה",
+                value: "ok",
+              }
+            }
+          })
+          .then((value) => {
+            if (value === 'ok')
+                window.open(storeUrl, '_system', 'location=yes');
+          });
+
+        /* $rootScope.data = {}
 
         // An elaborate, custom popup
         var myPopup = $ionicPopup.show({
@@ -833,7 +858,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         myPopup.then(function(res) {
 
         });
-
+*/
       },
       //----------------------------------------------------------//
       //                   WI_FI Pop Up
