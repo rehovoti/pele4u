@@ -456,7 +456,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         });
 
       },
-     isValidNote: function(note) {
+      isValidNote: function(note) {
         var chkNote = note;
         if (!chkNote) return false;
         if (chkNote.replace(/[^\wא-ת]+/g, "").length < 2)
@@ -1381,6 +1381,127 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
         });
       },
+      receivedEvent: function(id) {
+        var parentElement = document.getElementById(id);
+        var listeningElement = parentElement.querySelector('.listening');
+        var receivedElement = parentElement.querySelector('.received');
+
+        listeningElement.setAttribute('style', 'display:none;');
+        receivedElement.setAttribute('style', 'display:block;');
+
+        console.log('Received Event: ' + id);
+
+        document.getElementById("syncBtn").onclick = this.sync;
+        document.getElementById("downloadExtractBtn").onclick = this.download;
+
+        var sync = ContentSync.sync({
+          id: 'myapp',
+          type: 'local'
+        });
+        sync.on('complete', function(data) {
+          if (data.localPath) {
+            var url = "file://" + data.localPath + "/www/index.html";
+            alert('Sync complete ' + data + ' changing document.location ' + url);
+            //document.location = url;
+            ContentSync.loadUrl(url);
+          }
+        });
+        sync.on('error', function(e) {
+          alert('no synced app. Loading main app');
+        });
+      },
+
+      setProgress: function(progress) {
+        if (progress.status) {
+          switch (progress.status) {
+            case 1:
+              document.getElementById('status').innerHTML = "Downloading...";
+              break;
+            case 2:
+              document.getElementById('status').innerHTML = "Extracting...";
+              break;
+            case 3:
+              document.getElementById('status').innerHTML = "Complete!";
+              break;
+            default:
+              document.getElementById('status').innerHTML = "";
+          }
+        }
+        if (progress.progress) {
+          var progressBar = document.getElementById('progressbar').children[0];
+          progressBar.style.width = progress.progress + '%';
+        }
+      },
+
+
+      sync: function() {
+        //var url = "https://github.com/timkim/zipTest/archive/master.zip";
+        var url = "http://localhost:8000/www.zip";
+        //var sync = ContentSync.sync({ src: url, id: 'myapp', type: 'merge', copyCordovaAssets: true, copyRootApp: false, headers: false, trustHost: true });
+        //var sync = ContentSync.sync({ src: null, id: 'myapp', type: 'local', copyRootApp: true });
+        var sync = ContentSync.sync({
+          src: url,
+          id: 'myapp',
+          type: 'merge',
+          copyCordovaAssets: true
+        });
+
+        var setProgress = this.setProgress;
+
+        sync.on('progress', function(progress) {
+          console.log("Progress event", progress);
+          app.setProgress(progress);
+        });
+        sync.on('complete', function(data) {
+          console.log("Complete", data);
+          //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
+          //document.location = data.localPath + "/zipTest-master/www/index.html";
+        });
+
+        sync.on('error', function(e) {
+          console.log("Something went wrong: ", e);
+          document.getElementById('status').innerHTML = e;
+        });
+      },
+      download: function() {
+        document.getElementById("downloadExtractBtn").disabled = true;
+        var url = "https://github.com/timkim/zipTest/archive/master.zip";
+        var extract = this.extract;
+        var setProgress = this.setProgress;
+        var callback = function(response) {
+          console.log(response);
+          if (response.progress) {
+            app.setProgress(response);
+
+          }
+          if (response.archiveURL) {
+            var archiveURL = response.archiveURL;
+            document.getElementById("downloadExtractBtn").disabled = false;
+            document.getElementById("downloadExtractBtn").innerHTML = "Extract";
+            document.getElementById("downloadExtractBtn").onclick = function() {
+              app.extract(archiveURL);
+            };
+            document.getElementById("status").innerHTML = archiveURL;
+          }
+        };
+        ContentSync.download(url, callback);
+      },
+      extract: function(archiveURL) {
+        window.requestFileSystem(PERSISTENT, 1024 * 1024, function(fs) {
+          fs.root.getDirectory('zipOutPut', {
+            create: true
+          }, function(fileEntry) {
+            var dirUrl = fileEntry.toURL();
+            var callback = function(response) {
+              console.log(response);
+              document.getElementById("downloadExtractBtn").style.display = "none";
+              document.getElementById("status").innerHTML = "Extracted";
+            }
+            console.log(dirUrl, archiveURL);
+            Zip.unzip(archiveURL, dirUrl, callback);
+          });
+        });
+      },
       pinState: {
         get: function() {
           if (typeof this.pinStateData !== "undefined") {
@@ -1507,7 +1628,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               text: '<a class="pele-popup-positive-text-collot">המשך</a>',
               type: 'button-positive',
               onTap: function(e) {
-              if (!self.isValidNote(scope.actionNote.text)) {
+                if (!self.isValidNote(scope.actionNote.text)) {
                   e.preventDefault();
                   self.showPopup("יש להזין הערה", "יש להזין לפחות 2 אותיות");
                 } else {
