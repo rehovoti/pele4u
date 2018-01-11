@@ -2,9 +2,17 @@
  * Created by User on 27/01/2016.
  */
 var app = angular.module('pele.services', []);
-app.service('SyncRemoteCode', ['$http', 'PelApi', '$localStorage', function($http, PelApi, $localStorage) {
+app.service('SyncCodeService', ['$http', 'PelApi', '$localStorage', 'StorageService', function($http, PelApi, $localStorage, StorageService) {
   var self = this;
-
+  self.getRemoteAppsConfig = function() {
+    var cachedAppsConfig = StorageService.get("remoteAppsConfig")
+    $http.get("https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/config.json").success(function(data) {
+      console.log(data);
+      //StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
+    }).error(function(err) {
+      console.log(err)
+    })
+  }
   var showSyncState = function(str, icon) {
     PelApi.hideLoading();
     var spinOptions = {

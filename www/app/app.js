@@ -15,9 +15,10 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
     , 'pele.authCtrl', 'pele.states', , 'fileLogger', 'oc.lazyLoad'
   ])
 
-  .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings',
-    function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings) {
-      PelApi.init();
+  .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings', 'SyncCodeService',
+    function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings, SyncCodeService) {
+
+      SyncCodeService.getRemoteAppsConfig();
 
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {

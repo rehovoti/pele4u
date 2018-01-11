@@ -4,7 +4,7 @@
     fallback:"core",
     version:"1.0",
     appName:"leads application" ,
-    syncType:"merge" ,
-    stateConfig:
+    syncType:"merge",
+    src:"https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/apps/lead.zip"
   }
 ]
