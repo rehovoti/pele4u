@@ -1372,7 +1372,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           return true;
         }
       },
-      getFreshJson: function(jsonfile) {
+      getLocalJson: function(jsonfile) {
         return $http.get(jsonfile, {
           headers: {
             "Cache-Control": "no-cache, no-store, must-revalidate",

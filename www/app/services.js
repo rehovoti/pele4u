@@ -6,9 +6,9 @@ app.service('SyncCodeService', ['$http', 'PelApi', '$localStorage', 'StorageServ
   var self = this;
   self.getRemoteAppsConfig = function() {
     var cachedAppsConfig = StorageService.get("remoteAppsConfig")
-    $http.get("https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/config.json").success(function(data) {
+    $http.get("https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/config.json").success(function(data) {
       console.log(data);
-      //StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
+      StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
     }).error(function(err) {
       console.log(err)
     })

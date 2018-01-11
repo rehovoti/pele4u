@@ -17,9 +17,8 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
 
   .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings', 'SyncCodeService',
     function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings, SyncCodeService) {
-
+      PelApi.init();
       SyncCodeService.getRemoteAppsConfig();
-
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {
 
@@ -217,6 +216,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       $stateProvider.state(state.state, {
         url: state.url,
         views: state.views,
+
         resolve: {
           deps: ['$ocLazyLoad', function($ocLazyLoad) {
             if (!state.src)
