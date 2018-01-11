@@ -1,0 +1,10 @@
+[
+  {
+    appid:"leads",
+    fallback:"core",
+    version:"1.0",
+    appName:"leads application" ,
+    syncType:"merge" ,
+    stateConfig:
+  }
+]

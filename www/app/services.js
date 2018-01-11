@@ -29,7 +29,7 @@ app.service('SyncRemoteCode', ['$http', 'PelApi', '$localStorage', function($htt
           showSyncState("סינכרון הושלם")
           break;
         default:
-          showSyncState("")
+          //showSyncState("")
       }
     }
     if (progress.progress) {
@@ -58,15 +58,14 @@ app.service('SyncRemoteCode', ['$http', 'PelApi', '$localStorage', function($htt
       self.setProgress(progress);
     });
     sync.on('complete', function(data) {
-      showSyncState("כישלון בעדכון אפליקציה")
+      showSyncState("עדכון אפליקציה הסתיים בהצלחה")
       console.log("Complete", data);
       //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
-      //document.location = data.localPath + "/zipTest-master/www/index.html";
+      //document.location = data.localPath + "/myapp/www/index.html";
     });
 
     sync.on('error', function(e) {
       showSyncState("כישלון בעדכון אפליקציה")
-
     });
   }
   self.download = function() {
