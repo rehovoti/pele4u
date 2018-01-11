@@ -116,5 +116,5 @@
     <plugin name="cordova-plugin-x-socialsharing" source="npm" />
     <plugin name="onesignal-cordova-plugin" source="npm" spec="~2.2.2" />
     <plugin name="cordova-plugin-contacts" source="npm" version="2.3.1" />
-    <plugin name="phonegap-plugin-contentsync" spec="npm" version="1.4.2"/>
+    <plugin name="phonegap-plugin-contentsync" source="npm" />
 </widget>
