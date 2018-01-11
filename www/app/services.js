@@ -2,120 +2,6 @@
  * Created by User on 27/01/2016.
  */
 var app = angular.module('pele.services', []);
-app.service('SyncCodeService', ['$http', 'PelApi', '$localStorage', 'StorageService', function($http, PelApi, $localStorage, StorageService) {
-  var self = this;
-  self.getRemoteAppsConfig = function() {
-    var cachedAppsConfig = StorageService.get("remoteAppsConfig")
-    $http.get("https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/config.json").success(function(data) {
-      console.log(data);
-      StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
-    }).error(function(err) {
-      console.log(err)
-    })
-  }
-  var showSyncState = function(str, icon) {
-    PelApi.hideLoading();
-    var spinOptions = {
-      delay: 0,
-      template: '<div class="text-center">' + str +
-        '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
-        '</div>',
-    };
-    PelApi.showLoading(spinOptions);
-  }
-
-  self.setProgress = function(progress) {
-    if (progress.status) {
-      switch (progress.status) {
-        case 1:
-          showSyncState("מוריד עדכון");
-          break;
-        case 2:
-          showSyncState("פורס עדכון")
-          break;
-        case 3:
-          showSyncState("סינכרון הושלם")
-          break;
-        default:
-          //showSyncState("")
-      }
-    }
-    if (progress.progress) {
-
-    }
-  }
-
-
-  self.sync = function() {
-    //var url = "http://localhost:8000/www.zip";
-    var url = "https://github.com/ghadad/pele4u/archive/v117.8.zip";
-
-    //var sync = ContentSync.sync({ src: url, id: 'myapp', type: 'merge', copyCordovaAssets: true, copyRootApp: false, headers: false, trustHost: true });
-    //var sync = ContentSync.sync({ src: null, id: 'myapp', type: 'local', copyRootApp: true });
-    var sync = ContentSync.sync({
-      src: url,
-      id: 'myapp',
-      type: 'merge',
-      copyCordovaAssets: true
-    });
-
-    var setProgress = self.setProgress;
-
-    sync.on('progress', function(progress) {
-      console.log("Progress event", progress);
-      self.setProgress(progress);
-    });
-    sync.on('complete', function(data) {
-      showSyncState("עדכון אפליקציה הסתיים בהצלחה")
-      console.log("Complete", data);
-      //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
-      //document.location = data.localPath + "/myapp/www/index.html";
-    });
-
-    sync.on('error', function(e) {
-      showSyncState("כישלון בעדכון אפליקציה")
-    });
-  }
-  self.download = function() {
-    document.getElementById("downloadExtractBtn").disabled = true;
-    var url = "https://github.com/timkim/zipTest/archive/master.zip";
-    var extract = self.extract;
-    var setProgress = self.setProgress;
-    var callback = function(response) {
-      console.log(response);
-      if (response.progress) {
-        self.setProgress(response);
-      }
-      if (response.archiveURL) {
-        var archiveURL = response.archiveURL;
-        document.getElementById("downloadExtractBtn").disabled = false;
-        document.getElementById("downloadExtractBtn").innerHTML = "Extract";
-        document.getElementById("downloadExtractBtn").onclick = function() {
-          self.extract(archiveURL);
-        };
-        document.getElementById("status").innerHTML = archiveURL;
-      }
-    };
-    ContentSync.download(url, callback);
-  }
-  self.extract = function(archiveURL) {
-    window.requestFileSystem(PERSISTENT, 1024 * 1024, function(fs) {
-      fs.root.getDirectory('zipOutPut', {
-        create: true
-      }, function(fileEntry) {
-        var dirUrl = fileEntry.toURL();
-        var callback = function(response) {
-          console.log(response);
-          document.getElementById("downloadExtractBtn").style.display = "none";
-          document.getElementById("status").innerHTML = "Extracted";
-        }
-        console.log(dirUrl, archiveURL);
-        Zip.unzip(archiveURL, dirUrl, callback);
-      });
-    });
-  }
-}]);
-
 app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($http, PelApi, $localStorage) {
     // ttl - time ( seconds to live)
 
@@ -133,11 +19,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         return true;
       return false;
     }
+
     this.set = function(varname, data, ttl) {
       // default ttl is one year
       if (typeof ttl === 'undefined')
         ttl = yearTtl;
-      if (typeof $localStorage[varname] === 'undefined' || $localStorage[varname] === null || isExpired($localStorage[varname])) {
+      if (typeof $localStorage[varname] === 'undefined' || $localStorage[varname] === null || checkExpired($localStorage[varname])) {
         $localStorage[varname] = {};
         $localStorage[varname].data = data;
         $localStorage[varname].ttl = ttl;
@@ -147,6 +34,118 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     }
     this.get = function(varname) {
       return $localStorage[varname];
+    }
+  }]).service('SyncCodeService', ['$http', 'PelApi', '$localStorage', 'StorageService', function($http, PelApi, $localStorage, StorageService) {
+    var self = this;
+    self.getRemoteAppsConfig = function() {
+      var cachedAppsConfig = StorageService.get("remoteAppsConfig")
+      $http.get("https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/config.json").success(function(data) {
+        console.log(data);
+        StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
+      }).error(function(err) {
+        console.log(err)
+      })
+    }
+    var showSyncState = function(str, icon) {
+      PelApi.hideLoading();
+      var spinOptions = {
+        delay: 0,
+        template: '<div class="text-center">' + str +
+          '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+          '</div>',
+      };
+      PelApi.showLoading(spinOptions);
+    }
+
+    self.setProgress = function(progress) {
+      if (progress.status) {
+        switch (progress.status) {
+          case 1:
+            showSyncState("מוריד עדכון");
+            break;
+          case 2:
+            showSyncState("פורס עדכון")
+            break;
+          case 3:
+            showSyncState("סינכרון הושלם")
+            break;
+          default:
+            //showSyncState("")
+        }
+      }
+      if (progress.progress) {
+
+      }
+    }
+
+
+    self.sync = function() {
+      //var url = "http://localhost:8000/www.zip";
+      var url = "https://github.com/ghadad/pele4u/archive/v117.8.zip";
+
+      //var sync = ContentSync.sync({ src: url, id: 'myapp', type: 'merge', copyCordovaAssets: true, copyRootApp: false, headers: false, trustHost: true });
+      //var sync = ContentSync.sync({ src: null, id: 'myapp', type: 'local', copyRootApp: true });
+      var sync = ContentSync.sync({
+        src: url,
+        id: 'myapp',
+        type: 'merge',
+        copyCordovaAssets: true
+      });
+
+      var setProgress = self.setProgress;
+
+      sync.on('progress', function(progress) {
+        console.log("Progress event", progress);
+        self.setProgress(progress);
+      });
+      sync.on('complete', function(data) {
+        showSyncState("עדכון אפליקציה הסתיים בהצלחה")
+        console.log("Complete", data);
+        //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
+        //document.location = data.localPath + "/myapp/www/index.html";
+      });
+
+      sync.on('error', function(e) {
+        showSyncState("כישלון בעדכון אפליקציה")
+      });
+    }
+    self.download = function() {
+      document.getElementById("downloadExtractBtn").disabled = true;
+      var url = "https://github.com/timkim/zipTest/archive/master.zip";
+      var extract = self.extract;
+      var setProgress = self.setProgress;
+      var callback = function(response) {
+        console.log(response);
+        if (response.progress) {
+          self.setProgress(response);
+        }
+        if (response.archiveURL) {
+          var archiveURL = response.archiveURL;
+          document.getElementById("downloadExtractBtn").disabled = false;
+          document.getElementById("downloadExtractBtn").innerHTML = "Extract";
+          document.getElementById("downloadExtractBtn").onclick = function() {
+            self.extract(archiveURL);
+          };
+          document.getElementById("status").innerHTML = archiveURL;
+        }
+      };
+      ContentSync.download(url, callback);
+    }
+    self.extract = function(archiveURL) {
+      window.requestFileSystem(PERSISTENT, 1024 * 1024, function(fs) {
+        fs.root.getDirectory('zipOutPut', {
+          create: true
+        }, function(fileEntry) {
+          var dirUrl = fileEntry.toURL();
+          var callback = function(response) {
+            console.log(response);
+            document.getElementById("downloadExtractBtn").style.display = "none";
+            document.getElementById("status").innerHTML = "Extracted";
+          }
+          console.log(dirUrl, archiveURL);
+          Zip.unzip(archiveURL, dirUrl, callback);
+        });
+      });
     }
   }]).service('ApiService', ['$http', '$ionicHistory', 'PelApi', '$sessionStorage', function($http, $ionicHistory, PelApi, $sessionStorage) {
     var Errors = {

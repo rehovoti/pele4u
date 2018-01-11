@@ -212,6 +212,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       })
 
 
+
     appStates.forEach(function(state) {
       $stateProvider.state(state.state, {
         url: state.url,
