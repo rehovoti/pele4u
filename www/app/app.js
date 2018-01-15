@@ -4,6 +4,28 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+function setDynamicStates($stateProvider, appStates, SyncCodeService) {
+  // look for remote state in localStorage
+
+  console.log(SyncCodeService)
+  appStates.forEach(function(state) {
+    $stateProvider.state(state.state, {
+      url: state.url,
+      views: state.views,
+      resolve: {
+        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+          if (!state.src)
+            return true;
+          return $ocLazyLoad.load({
+            name: state.state,
+            files: state.src
+          });
+        }]
+      }
+    });
+  })
+}
+
 angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.messages', 'pele.controllers', 'pele.factories', 'pele.config', 'pele.services'
     //-----------------------------------------//
     //--           MENU                      --//
@@ -42,6 +64,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
         event.preventDefault();
         SyncCodeService.getRemoteAppsConfig();
+
         console.log(unfoundState.to.match(/\w+$/)); // "lazy.state"
         console.log(unfoundState.toParams); // {a:1, b:2}
         console.log(unfoundState.options); // {inherit:false} + default options
@@ -94,7 +117,9 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       });
     }
   ])
-  .config(function($stateProvider, $urlRouterProvider, appStates, $ionicConfigProvider) {
+  .config(function($stateProvider, $urlRouterProvider, appStates, $ionicConfigProvider, $injector) {
+    var SyncCodeService = $injector.get('SyncCodeService');
+    console.log($injector)
     $ionicConfigProvider.backButton.text('')
     $ionicConfigProvider.views.swipeBackEnabled(false);
     $ionicConfigProvider.navBar.alignTitle('center');
@@ -220,25 +245,8 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
         }
       })
 
+    setDynamicStates($stateProvider, appStates, SyncCodeService);
 
-
-    appStates.forEach(function(state) {
-      $stateProvider.state(state.state, {
-        url: state.url,
-        views: state.views,
-
-        resolve: {
-          deps: ['$ocLazyLoad', function($ocLazyLoad) {
-            if (!state.src)
-              return true;
-            return $ocLazyLoad.load({
-              name: state.state,
-              files: state.src
-            });
-          }]
-        }
-      });
-    })
 
     // if none of the above states are matched, use this as the fallback
     //$urlRouterProvider.deferIntercept();
