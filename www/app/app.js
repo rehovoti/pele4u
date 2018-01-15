@@ -21,7 +21,6 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       SyncCodeService.getRemoteAppsConfig();
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {
-
           if (PelApi.global.get('debugFlag')) {
             PelApi.lagger.info("start StateChange ->  from :  " + fromState.name + " to: ", toState.name);
             PelApi.lagger.info(" new State params :  ", toParams);
@@ -39,7 +38,18 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
           }
         });
 
+
+      $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
+        event.preventDefault();
+        SyncCodeService.getRemoteAppsConfig();
+        console.log(unfoundState.to.match(/\w+$/)); // "lazy.state"
+        console.log(unfoundState.toParams); // {a:1, b:2}
+        console.log(unfoundState.options); // {inherit:false} + default options
+      });
+
       $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+
+        console.log("ERROR:", error);
         if (PelApi.global.get('debugFlag')) {
           PelApi.lagger.error('State Resolve on ' + toState.name + ' -> Error: ', error);
         } else {
@@ -51,7 +61,6 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
           }, false)
         }
       });
-
 
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 

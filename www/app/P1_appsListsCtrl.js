@@ -104,6 +104,17 @@ app.controller('P1_appsListCtrl',
           strData = strData.replace(/"\"/g, "");
           appSettings.config.GetUserMenu = JSON.parse(strData);
           $scope.feeds_categories = appSettings.config.GetUserMenu;
+
+          appSettings.config.GetUserMenu.menuItems.push({
+            AppId: "2313E2E95ADHFDB3E050AE0A5B0768D2",
+            ApplicationType: "INT",
+            DisplayName: "לידים",
+            Image: "img/feeds/pele_app/printer_icon.png",
+            PUSH_FLAG: true,
+            Path: "app.leads",
+            Pin: false,
+            WorkState: "online"
+          });
           $scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
 
 
