@@ -12,7 +12,7 @@
             "url": "/lead",
             "views": {
                "menuContent": {
-                  "templateUrl": function(){ return 'app/apps/lead/lead.html'; },
+                  "templateUrl": "app/apps/lead/lead.html",
                   "controller": "leadCtrl"
                }
             },
@@ -25,7 +25,7 @@
             "url": "/report",
             "views": {
                "menuContent@app": {
-                  "templateUrl": function(){ return 'app/apps/lead/report.html'; },
+                  "templateUrl": "app/apps/lead/report.html",
                   "controller": "reportCtrl"
                }
             },
