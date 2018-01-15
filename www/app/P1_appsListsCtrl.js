@@ -111,10 +111,11 @@ app.controller('P1_appsListCtrl',
             DisplayName: "לידים",
             Image: "img/feeds/pele_app/printer_icon.png",
             PUSH_FLAG: true,
-            Path: "app.leads",
+            Path: "app.lead",
             Pin: false,
             WorkState: "online"
           });
+
           $scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
 
 

@@ -35,12 +35,94 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     this.get = function(varname) {
       return $localStorage[varname];
     }
-  }]).service('SyncCodeService', ['$http', 'PelApi', '$localStorage', 'StorageService', function($http, PelApi, $localStorage, StorageService) {
+  }]).service('SyncCodeService', ['$state', '$http', 'PelApi', '$localStorage', 'StorageService', function($state, $http, PelApi, $localStorage, StorageService, $stateRegistry) {
     var self = this;
+
+    //console.log($state)
+    //console.log($state.get('app.phonebook.details'))
+    self.getRemoteApp = function(unfoundState) {
+      var founds = unfoundState.to.match(/\w+$/);
+      var appId = founds[0];
+      var stateOptions = unfoundState.options;
+      stateOptions.reload = true;
+      //$state.go(unfoundState.to, unfoundState.toParams, stateOptions)
+      //console.log(unfoundState.toParams); // {a:1, b:2}
+      //console.log(unfoundState.options); // {inherit:false} + default options
+      var remoteInfoUrl = "https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/" + appId + "/config.json";
+      $http.get(remoteInfoUrl).success(function(data) {
+        var remoteStates = []
+        data.forEach(function(i) {
+          remoteStates = _.concat(remoteStates, i.states)
+
+        });
+        console.log()
+        console.log(remoteStates)
+        //  $uiRouter.stateRegistry.deregister(i.state)
+        //checkDuplicate
+        remoteStates.forEach(function(state) {
+          var stateConfig;
+          if (stateConfig = $state.get(state.state)) {
+            console.log("state exists : " + state.state)
+            console.log("state confif : " + stateConfig)
+          }
+          app.stateProvider.state(state.state, {
+            url: state.url,
+            views: state.views,
+            resolve: {
+              deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                if (!state.src)
+                  return true;
+                return $ocLazyLoad.load({
+                  name: state.state,
+                  files: state.src
+                });
+              }]
+            }
+          });
+        });
+        $state.go(unfoundState.to, unfoundState.toParams, stateOptions)
+        //app.setDynamicStates(app.stateProvider, remoteStates);
+        StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
+      }).error(function(err) {
+        console.log(err)
+      })
+
+    }
     self.getRemoteAppsConfig = function() {
       var cachedAppsConfig = StorageService.get("remoteAppsConfig")
       $http.get("https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/config.json").success(function(data) {
-        console.log(data);
+        var remoteStates = []
+        data.forEach(function(i) {
+          remoteStates = _.concat(remoteStates, i.states)
+
+        });
+        console.log()
+        console.log(remoteStates)
+        //  $uiRouter.stateRegistry.deregister(i.state)
+        //checkDuplicate
+        remoteStates.forEach(function(state) {
+          var stateConfig;
+          if (stateConfig = $state.get(state.state)) {
+            console.log("state exists : " + state.state)
+            console.log("state confif : " + stateConfig)
+          }
+          app.stateProvider.state(state.state, {
+            url: state.url,
+            views: state.views,
+            resolve: {
+              deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                if (!state.src)
+                  return true;
+                return $ocLazyLoad.load({
+                  name: state.state,
+                  files: state.src
+                });
+              }]
+            }
+          });
+        });
+
+        //app.setDynamicStates(app.stateProvider, remoteStates);
         StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
       }).error(function(err) {
         console.log(err)

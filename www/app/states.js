@@ -278,8 +278,8 @@ angular.module('pele.states', [])
     },
     src: ["app/apps/scanPrint/p2_scan_printCtrl.js"]
   }, {
-    state: 'app.lead',
-    url: '/lead',
+    state: 'app.lead-2',
+    url: '/lead2',
     views: {
       'menuContent': {
         templateUrl: function() {
@@ -290,8 +290,8 @@ angular.module('pele.states', [])
     },
     src: ["app/apps/lead/leadCtrl.js"]
   }, {
-    state: 'app.lead.report',
-    url: '/report',
+    state: 'app.lead.report-2',
+    url: '/report2',
     views: {
       'menuContent@app': {
         templateUrl: function() {
