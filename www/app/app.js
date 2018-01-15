@@ -43,16 +43,28 @@ app.run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'a
 
       $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
         event.preventDefault();
-
+        console.log("unfoundState", unfoundState)
         //  SyncCodeService.getRemoteAppsConfig(unfoundState);
         SyncCodeService.getRemoteApp(unfoundState);
         //console.log(unfoundState.to.match(/\w+$/)); // "lazy.state"
         //console.log(unfoundState.toParams); // {a:1, b:2}
-        //console.log(unfoundState.options); // {inherit:false} + default options
+        //console.log(unfoundState.options); // {inherit:false} + default op  tions
       });
 
       $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-
+        console.log("error", error)
+        console.log("toState", toState)
+        console.log("toParams", toParams)
+        if (error.status == 404) {
+          event.preventDefault();
+          var resolvedState = {}
+          resolvedState.status = error.status;
+          resolvedState.to = toState.name;
+          resolvedState.toParams = toParams
+          resolvedState.options = {}
+          console.log(resolvedState);
+          SyncCodeService.getRemoteApp(resolvedState, true);
+        }
         console.log("ERROR:", error);
         if (PelApi.global.get('debugFlag')) {
           PelApi.lagger.error('State Resolve on ' + toState.name + ' -> Error: ', error);

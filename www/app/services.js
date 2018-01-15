@@ -19,6 +19,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         return true;
       return false;
     }
+    this.clean = function(varname) {
+      if ($localStorage[varname])
+        delete $localStorage[varname];
+    }
 
     this.set = function(varname, data, ttl) {
       // default ttl is one year
@@ -35,111 +39,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     this.get = function(varname) {
       return $localStorage[varname];
     }
-  }]).service('SyncCodeService', ['$state', '$http', 'PelApi', '$localStorage', 'StorageService', function($state, $http, PelApi, $localStorage, StorageService, $stateRegistry) {
+  }]).service('SyncCodeService', ['$state', '$http', 'PelApi', 'StorageService', '$q', function($state, $http, PelApi, StorageService, $q) {
     var self = this;
 
-    //console.log($state)
-    //console.log($state.get('app.phonebook.details'))
-    self.getRemoteApp = function(unfoundState) {
-      var founds = unfoundState.to.match(/\w+$/);
-      var appId = founds[0];
-      var stateOptions = unfoundState.options;
-      stateOptions.reload = true;
-      //$state.go(unfoundState.to, unfoundState.toParams, stateOptions)
-      //console.log(unfoundState.toParams); // {a:1, b:2}
-      //console.log(unfoundState.options); // {inherit:false} + default options
-      var remoteInfoUrl = "https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/" + appId + "/config.json";
-      $http.get(remoteInfoUrl).success(function(data) {
-        var remoteStates = []
-        data.forEach(function(i) {
-          remoteStates = _.concat(remoteStates, i.states)
-
-        });
-        console.log()
-        console.log(remoteStates)
-        //  $uiRouter.stateRegistry.deregister(i.state)
-        //checkDuplicate
-        remoteStates.forEach(function(state) {
-          var stateConfig;
-          if (stateConfig = $state.get(state.state)) {
-            console.log("state exists : " + state.state)
-            console.log("state confif : " + stateConfig)
-          }
-          app.stateProvider.state(state.state, {
-            url: state.url,
-            views: state.views,
-            resolve: {
-              deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                if (!state.src)
-                  return true;
-                return $ocLazyLoad.load({
-                  name: state.state,
-                  files: state.src
-                });
-              }]
-            }
-          });
-        });
-        $state.go(unfoundState.to, unfoundState.toParams, stateOptions)
-        //app.setDynamicStates(app.stateProvider, remoteStates);
-        StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
-      }).error(function(err) {
-        console.log(err)
-      })
-
-    }
-    self.getRemoteAppsConfig = function() {
-      var cachedAppsConfig = StorageService.get("remoteAppsConfig")
-      $http.get("https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/config.json").success(function(data) {
-        var remoteStates = []
-        data.forEach(function(i) {
-          remoteStates = _.concat(remoteStates, i.states)
-
-        });
-        console.log()
-        console.log(remoteStates)
-        //  $uiRouter.stateRegistry.deregister(i.state)
-        //checkDuplicate
-        remoteStates.forEach(function(state) {
-          var stateConfig;
-          if (stateConfig = $state.get(state.state)) {
-            console.log("state exists : " + state.state)
-            console.log("state confif : " + stateConfig)
-          }
-          app.stateProvider.state(state.state, {
-            url: state.url,
-            views: state.views,
-            resolve: {
-              deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                if (!state.src)
-                  return true;
-                return $ocLazyLoad.load({
-                  name: state.state,
-                  files: state.src
-                });
-              }]
-            }
-          });
-        });
-
-        //app.setDynamicStates(app.stateProvider, remoteStates);
-        StorageService.set("remoteAppsConfig", data, 24 * 60 * 60);
-      }).error(function(err) {
-        console.log(err)
-      })
-    }
-    var showSyncState = function(str, icon) {
-      PelApi.hideLoading();
-      var spinOptions = {
-        delay: 0,
-        template: '<div class="text-center">' + str +
-          '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
-          '</div>',
-      };
-      PelApi.showLoading(spinOptions);
-    }
-
-    self.setProgress = function(progress) {
+    function setProgress(progress) {
       if (progress.status) {
         switch (progress.status) {
           case 1:
@@ -160,75 +63,124 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       }
     }
 
+    function syncRemoteContect(config) {
 
-    self.sync = function() {
-      //var url = "http://localhost:8000/www.zip";
-      var url = "https://github.com/ghadad/pele4u/archive/v117.8.zip";
+      var deferred = $q.defer();
 
-      //var sync = ContentSync.sync({ src: url, id: 'myapp', type: 'merge', copyCordovaAssets: true, copyRootApp: false, headers: false, trustHost: true });
-      //var sync = ContentSync.sync({ src: null, id: 'myapp', type: 'local', copyRootApp: true });
+      if (!ionic.Platform.is('cordova')) {
+        deferred.reject("עדכון קוד חם אפשרי רק במכשיר");
+        return deferred.promise;
+      }
       var sync = ContentSync.sync({
-        src: url,
-        id: 'myapp',
-        type: 'merge',
-        copyCordovaAssets: true
+        src: config.url,
+        id: config.appid,
+        type: config.type
       });
-
-      var setProgress = self.setProgress;
 
       sync.on('progress', function(progress) {
         console.log("Progress event", progress);
-        self.setProgress(progress);
+        setProgress(progress);
       });
       sync.on('complete', function(data) {
-        showSyncState("עדכון אפליקציה הסתיים בהצלחה")
-        console.log("Complete", data);
+        deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
+
         //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
         //document.location = data.localPath + "/myapp/www/index.html";
       });
-
       sync.on('error', function(e) {
-        showSyncState("כישלון בעדכון אפליקציה")
+        deferred.reject("שגיאה בעדכון האפליקציה ");
       });
+      return deferred.promise;
     }
-    self.download = function() {
-      document.getElementById("downloadExtractBtn").disabled = true;
-      var url = "https://github.com/timkim/zipTest/archive/master.zip";
-      var extract = self.extract;
-      var setProgress = self.setProgress;
-      var callback = function(response) {
-        console.log(response);
-        if (response.progress) {
-          self.setProgress(response);
-        }
-        if (response.archiveURL) {
-          var archiveURL = response.archiveURL;
-          document.getElementById("downloadExtractBtn").disabled = false;
-          document.getElementById("downloadExtractBtn").innerHTML = "Extract";
-          document.getElementById("downloadExtractBtn").onclick = function() {
-            self.extract(archiveURL);
-          };
-          document.getElementById("status").innerHTML = archiveURL;
-        }
+
+    var showSyncState = function(str, icon, duration) {
+
+      console.log(arguments);
+      PelApi.hideLoading();
+      var duration = duration || 5;
+      var spinOptions = {
+        delay: 0,
+
+        template: '<div class="text-center">' + str +
+          '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+          '</div>',
       };
-      ContentSync.download(url, callback);
+      PelApi.showLoading(spinOptions);
     }
-    self.extract = function(archiveURL) {
-      window.requestFileSystem(PERSISTENT, 1024 * 1024, function(fs) {
-        fs.root.getDirectory('zipOutPut', {
-          create: true
-        }, function(fileEntry) {
-          var dirUrl = fileEntry.toURL();
-          var callback = function(response) {
-            console.log(response);
-            document.getElementById("downloadExtractBtn").style.display = "none";
-            document.getElementById("status").innerHTML = "Extracted";
+
+    //console.log($state)
+    //console.log($state.get('app.phonebook.details'))
+    self.getRemoteApp = function(unfoundState, force) {
+      console.log("force", force)
+      var founds = unfoundState.to.match(/\w+$/);
+      var appId = founds[0];
+      var storageKey = appId + "_" + "remoteAppsConfig";
+      if (force) {
+        StorageService.clean(storageKey);
+      }
+
+      var stateOptions = unfoundState.options;
+      stateOptions.reload = true;
+      //$state.go(unfoundState.to, unfoundState.toParams, stateOptions)
+      //console.log(unfoundState.toParams); // {a:1, b:2}
+      //console.log(unfoundState.options); // {inherit:false} + default options
+      var remoteInfoUrl = "https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/" + appId + "/config.json";
+
+      var StorageAppConfig = _.get(StorageService.get(storageKey), "data");
+
+      function registerStates(config) {
+        config.states.forEach(function(state) {
+          var stateConfig;
+          if (stateConfig = $state.get(state.state)) {
+            console.log("state exists : " + state.state)
+            console.log("state config : " + stateConfig)
+
+          } else {
+
           }
-          console.log(dirUrl, archiveURL);
-          Zip.unzip(archiveURL, dirUrl, callback);
+          app.stateProvider.state(state.state, {
+            url: state.url,
+            views: state.views,
+            resolve: {
+              deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                if (!state.src)
+                  return true;
+                return $ocLazyLoad.load({
+                  name: state.state,
+                  files: state.src
+                });
+              }]
+            }
+          });
         });
-      });
+        StorageService.set(storageKey, config, 24 * 60 * 60);
+      }
+
+      console.log("StorageAppConfig", StorageAppConfig)
+
+      if (StorageAppConfig) {
+        if (!force) registerStates(StorageAppConfig);
+        $state.go(unfoundState.to, unfoundState.toParams, stateOptions);
+      } else {
+        $http.get(remoteInfoUrl).success(function(data) {
+          if (!force) registerStates(data);
+          syncRemoteContect(data).then(function(res) {
+            showSyncState(res)
+            $state.go(unfoundState.to, unfoundState.toParams, stateOptions)
+
+          }).catch(function(err) {
+            showSyncState(err, "error", 5)
+          })
+
+        }).error(function(err) {
+          console.log(err)
+        })
+      }
     }
+
+
+
+
   }]).service('ApiService', ['$http', '$ionicHistory', 'PelApi', '$sessionStorage', function($http, $ionicHistory, PelApi, $sessionStorage) {
     var Errors = {
       2: {
