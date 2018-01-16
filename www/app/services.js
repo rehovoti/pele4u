@@ -111,8 +111,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         deferred.reject("עדכון קוד חם אפשרי רק במכשיר");
         return deferred.promise;
       }
+
       var sync = ContentSync.sync({
-        src: config.url,
+        src: config.src,
         id: config.appid,
         type: config.type
       });
