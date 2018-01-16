@@ -42,6 +42,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
   }]).service('SyncCodeService', ['$state', '$http', 'PelApi', 'StorageService', '$q', function($state, $http, PelApi, StorageService, $q) {
     var self = this;
 
+    function CheckResource(url) {
+      var http = new XMLHttpRequest();
+      http.open('HEAD', url, false);
+      http.send();
+      return http.status != 404;
+    }
+
+
     function setProgress(progress) {
       if (progress.status) {
         switch (progress.status) {
@@ -64,8 +72,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     }
 
     function resolvedStatesConfig(config, location) {
+      var clonedConfig = _.clone(config);
       var resolvedStates = [];
-      config.states.forEach(function(s) {
+      clonedConfig.states.forEach(function(s) {
         var tu = _.get(s, "templateUrl")
         if (tu) {
           if (!tu.match("^app/|^/app")) {
@@ -91,15 +100,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         })
         resolvedStates.push(s)
       })
-      config.states = resolvedStates;
-      return config;
+      clonedConfig.states = resolvedStates;
+      return clonedConfig;
     }
 
     function syncRemoteContect(config) {
-
       var deferred = $q.defer();
-      console.log(config)
-      console.log(resolvedStatesConfig(config, "native/"));
+
       if (!ionic.Platform.is('cordova')) {
         deferred.reject("עדכון קוד חם אפשרי רק במכשיר");
         return deferred.promise;
@@ -114,26 +121,24 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         setProgress(progress);
       });
       sync.on('complete', function(data) {
+        resolvedStatesConfig(config, data.localPath);
         deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
-        resolvedStatesConfig(config, data.localPath)
         //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
         //document.location = data.localPath + "/myapp/www/index.html";
       });
       sync.on('error', function(e) {
+
         deferred.reject("שגיאה בעדכון האפליקציה ");
       });
       return deferred.promise;
     }
 
     var showSyncState = function(str, icon, duration) {
-
-      console.log(arguments);
       PelApi.hideLoading();
       var iconUrl = "./img/spinners/puff.svg"
 
       if (icon == "error")
         iconUrl = "./img/error.png";
-
 
       var duration = duration || 3000;
       var spinOptions = {
@@ -146,10 +151,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       PelApi.showLoading(spinOptions);
     }
 
-    //console.log($state)
-    //console.log($state.get('app.phonebook.details'))
     self.getRemoteApp = function(unfoundState, force) {
-      console.log("force", force)
       var founds = unfoundState.to.match(/\w+$/);
       var appId = founds[0];
       var storageKey = appId + "_" + "remoteAppsConfig";
@@ -159,59 +161,67 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
 
       var stateOptions = unfoundState.options;
       stateOptions.reload = true;
-      //$state.go(unfoundState.to, unfoundState.toParams, stateOptions)
-      //console.log(unfoundState.toParams); // {a:1, b:2}
-      //console.log(unfoundState.options); // {inherit:false} + default options
+
       var remoteInfoUrl = "https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/" + appId + "/config.json";
 
       var StorageAppConfig = _.get(StorageService.get(storageKey), "data");
 
       function registerStates(config) {
+        var deferred = $q.defer();
         config.states.forEach(function(state) {
           var stateConfig;
           if (stateConfig = $state.get(state.state)) {
-            console.log("state exists : " + state.state)
-            console.log("state config : " + stateConfig)
 
           } else {
-
+            app.stateProvider.state(state.state, {
+              url: state.url,
+              views: state.views,
+              resolve: {
+                deps: ['$ocLazyLoad', '$q', function($ocLazyLoad, $q) {
+                  if (!state.src)
+                    return true;
+                  return $q.all([$ocLazyLoad.load({
+                    name: state.state,
+                    files: state.src
+                  })]).then(function(err) {}).catch(function(err) {
+                    config.error = err;
+                    deferred.reject(err)
+                  });
+                }]
+              }
+            });
           }
-          app.stateProvider.state(state.state, {
-            url: state.url,
-            views: state.views,
-            resolve: {
-              deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                if (!state.src)
-                  return true;
-                return $ocLazyLoad.load({
-                  name: state.state,
-                  files: state.src
-                });
-              }]
-            }
-          });
         });
-        StorageService.set(storageKey, config, 24 * 60 * 60);
+        return deferred.promise;
       }
 
-      console.log("StorageAppConfig", StorageAppConfig)
+
 
       if (StorageAppConfig) {
-        if (!force) registerStates(StorageAppConfig);
+        if (!force) registerStates(StorageAppConfig).then(function(config) {
+
+          StorageService.set(storageKey, config, 24 * 60 * 60);
+        }).catch(function(err) {
+          StorageService.clean(storageKey)
+        });
         $state.go(unfoundState.to, unfoundState.toParams, stateOptions);
       } else {
         $http.get(remoteInfoUrl).success(function(data) {
-          if (!force) registerStates(data);
+          if (!force) registerStates(data).then(function(config) {
+            StorageService.set(storageKey, config, 24 * 60 * 60);
+          }).catch(function(err) {
+            StorageService.clean(storageKey)
+          });
           syncRemoteContect(data).then(function(res) {
             showSyncState(res)
             $state.go(unfoundState.to, unfoundState.toParams, stateOptions)
-
           }).catch(function(err) {
+            StorageService.clean(storageKey)
             showSyncState(err, "error", 4000)
           })
 
         }).error(function(err) {
-          console.log(err)
+          showSyncState("נכשל לקבל מידע לגבי עדכון האפליקציה", "error", 4000)
         })
       }
     }

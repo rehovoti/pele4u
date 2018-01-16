@@ -111,7 +111,7 @@ app.controller('P1_appsListCtrl',
             DisplayName: "לידים",
             Image: "img/feeds/pele_app/printer_icon.png",
             PUSH_FLAG: true,
-            Path: "app.lead",
+            Path: "app.leads",
             Pin: false,
             WorkState: "online"
           });

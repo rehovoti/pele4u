@@ -945,6 +945,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
         })
       },
+      swal: swal,
       showPopupVersionUpdate_old: function(title, subTitle) {
 
         $rootScope.data = {}

@@ -20,6 +20,7 @@ var app = angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBo
 app.run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings', 'SyncCodeService',
     function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings, SyncCodeService) {
       PelApi.init();
+      PelApi.sessionStorage.hotcodeErrorCounter = 0;
       //SyncCodeService.getRemoteAppsConfig();
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {
@@ -42,10 +43,21 @@ app.run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'a
 
 
       $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
+        console.log($state.get())
         event.preventDefault();
-        console.log("unfoundState", unfoundState)
+        console.log("stateNotFound :", unfoundState)
         //  SyncCodeService.getRemoteAppsConfig(unfoundState);
-        SyncCodeService.getRemoteApp(unfoundState);
+        if (PelApi.sessionStorage.hotcodeErrorCounter++ < 3)
+          SyncCodeService.getRemoteApp(unfoundState);
+        else {
+          PelApi.swal({
+            text: "עדכון האפליקציה נכשל , אנא בדוק גרסה תקינה בחנות",
+            type: "error",
+            timer: 3000
+          });
+          PelApi.sessionStorage.hotcodeErrorCounter = 0;
+        }
+
         //console.log(unfoundState.to.match(/\w+$/)); // "lazy.state"
         //console.log(unfoundState.toParams); // {a:1, b:2}
         //console.log(unfoundState.options); // {inherit:false} + default op  tions
@@ -63,7 +75,18 @@ app.run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'a
           resolvedState.toParams = toParams
           resolvedState.options = {}
           console.log(resolvedState);
-          SyncCodeService.getRemoteApp(resolvedState, true);
+
+          if (PelApi.sessionStorage.hotcodeErrorCounter++ < 3)
+            SyncCodeService.getRemoteApp(resolvedState, true);
+          else {
+            PelApi.swal({
+              text: "עדכון האפליקציה נכשל, אנא בדוק גרסה תקינה בחנות ",
+              type: "error",
+              timer: 3000
+            });
+            PelApi.sessionStorage.hotcodeErrorCounter = 0;
+          }
+
         }
         console.log("ERROR:", error);
         if (PelApi.global.get('debugFlag')) {
