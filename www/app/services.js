@@ -63,10 +63,43 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       }
     }
 
+    function resolvedStatesConfig(config, location) {
+      var resolvedStates = [];
+      config.states.forEach(function(s) {
+        var tu = _.get(s, "templateUrl")
+        if (tu) {
+          if (!tu.match("^app/|^/app")) {
+            var newlocation = location + "/" + tu;
+            s.templateUrl = newlocation.replace(/\/+/g, "/");
+          }
+        }
+        var viewsKey = _.keys(_.get(s, "views", {}));
+        viewsKey.forEach(function(k, i) {
+          var tu = _.get(s.views[k], "templateUrl")
+          if (tu) {
+            if (!tu.match("^app/|^/app")) {
+              var newlocation = location + "/" + tu;
+              s.views[k].templateUrl = newlocation.replace(/\/+/g, "/");
+            }
+          }
+        })
+        s.src.forEach(function(srcItem, index) {
+          if (!srcItem.match("^app/|^/app")) {
+            var newlocation = location + "/" + srcItem;
+            s.src[index] = newlocation.replace(/\/+/g, "/");
+          }
+        })
+        resolvedStates.push(s)
+      })
+      config.states = resolvedStates;
+      return config;
+    }
+
     function syncRemoteContect(config) {
 
       var deferred = $q.defer();
-
+      console.log(config)
+      console.log(resolvedStatesConfig(config, "native/"));
       if (!ionic.Platform.is('cordova')) {
         deferred.reject("עדכון קוד חם אפשרי רק במכשיר");
         return deferred.promise;
@@ -78,12 +111,11 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       });
 
       sync.on('progress', function(progress) {
-        console.log("Progress event", progress);
         setProgress(progress);
       });
       sync.on('complete', function(data) {
         deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
-
+        resolvedStatesConfig(config, data.localPath)
         //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
         //document.location = data.localPath + "/myapp/www/index.html";
       });
@@ -97,12 +129,18 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
 
       console.log(arguments);
       PelApi.hideLoading();
-      var duration = duration || 5;
+      var iconUrl = "./img/spinners/puff.svg"
+
+      if (icon == "error")
+        iconUrl = "./img/error.png";
+
+
+      var duration = duration || 3000;
       var spinOptions = {
         delay: 0,
-
-        template: '<div class="text-center">' + str +
-          '<br \><img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">' +
+        duration: duration,
+        template: '<div class="text-center"><p>' + str +
+          ' </p><img ng-click="stopLoading()" class="spinner" src="' + iconUrl + '">' +
           '</div>',
       };
       PelApi.showLoading(spinOptions);
@@ -169,7 +207,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
             $state.go(unfoundState.to, unfoundState.toParams, stateOptions)
 
           }).catch(function(err) {
-            showSyncState(err, "error", 5)
+            showSyncState(err, "error", 4000)
           })
 
         }).error(function(err) {
