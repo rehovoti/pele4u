@@ -79,7 +79,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         if (tu) {
           if (!tu.match("^app/|^/app")) {
             var newlocation = location + "/" + tu;
-            s.templateUrl = "file://" + newlocation.replace(/\/+/g, "/");
+            s.templateUrl = newlocation.replace(/\/+/g, "/");
           }
         }
         var viewsKey = _.keys(_.get(s, "views", {}));
@@ -88,14 +88,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
           if (tu) {
             if (!tu.match("^app/|^/app")) {
               var newlocation = location + "/" + tu;
-              s.views[k].templateUrl = "file://" + newlocation.replace(/\/+/g, "/");
+              s.views[k].templateUrl = newlocation.replace(/\/+/g, "/");
             }
           }
         })
         s.src.forEach(function(srcItem, index) {
           if (!srcItem.match("^app/|^/app")) {
             var newlocation = location + "/" + srcItem;
-            s.src[index] = "file://" + newlocation.replace(/\/+/g, "/");
+            s.src[index] = newlocation.replace(/\/+/g, "/");
           }
         })
         resolvedStates.push(s)
