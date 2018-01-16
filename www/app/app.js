@@ -67,28 +67,23 @@ app.run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'a
         console.log("error", error)
         console.log("toState", toState)
         console.log("toParams", toParams)
-        if (error.status == 404) {
-          event.preventDefault();
-          var resolvedState = {}
-          resolvedState.status = error.status;
-          resolvedState.to = toState.name;
-          resolvedState.toParams = toParams
-          resolvedState.options = {}
-          console.log(resolvedState);
-
-          if (PelApi.sessionStorage.hotcodeErrorCounter++ < 3)
-            SyncCodeService.getRemoteApp(resolvedState, true);
-          else {
-            PelApi.swal({
-              text: "עדכון האפליקציה נכשל, אנא בדוק גרסה תקינה בחנות ",
-              type: "error",
-              timer: 3000
-            });
-            PelApi.sessionStorage.hotcodeErrorCounter = 0;
-          }
-
+        event.preventDefault();
+        var resolvedState = {}
+        resolvedState.status = error.status;
+        resolvedState.to = toState.name;
+        resolvedState.toParams = toParams
+        resolvedState.options = {}
+        console.log(resolvedState);
+        if (PelApi.sessionStorage.hotcodeErrorCounter++ < 3)
+          SyncCodeService.getRemoteApp(resolvedState, true);
+        else {
+          PelApi.swal({
+            text: "עדכון האפליקציה נכשל, אנא בדוק גרסה תקינה בחנות ",
+            type: "error",
+            timer: 3000
+          });
+          PelApi.sessionStorage.hotcodeErrorCounter = 0;
         }
-        console.log("ERROR:", error);
         if (PelApi.global.get('debugFlag')) {
           PelApi.lagger.error('State Resolve on ' + toState.name + ' -> Error: ', error);
         } else {
