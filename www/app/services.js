@@ -54,13 +54,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       if (progress.status) {
         switch (progress.status) {
           case 1:
-            showSyncState("מוריד עדכון");
+            showSyncState("מוריד עדכון", null, 3000);
             break;
           case 2:
-            showSyncState("פורס עדכון")
+            showSyncState("פורס עדכון", null, 3000)
             break;
           case 3:
-            showSyncState("סינכרון הושלם")
+            showSyncState("סינכרון הושלם", null, 3000)
             break;
           default:
             //showSyncState("")
@@ -115,7 +115,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       var sync = ContentSync.sync({
         src: config.src,
         id: config.appid,
-        type: config.type
+        type: config.syncType
       });
 
       sync.on('progress', function(progress) {

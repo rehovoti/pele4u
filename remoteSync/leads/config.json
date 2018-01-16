@@ -3,7 +3,7 @@
       "fallback": "core",
       "version": "1.0",
       "appName": "leads application",
-      "syncType": "replace",
+      "syncType": "local",
       "src": "https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/leads/leads.zip",
       "states": [
          {
@@ -11,7 +11,7 @@
             "url": "/lead",
             "views": {
                "menuContent": {
-                  "templateUrl": "/lead.html",
+                  "templateUrl": "/leads/lead.html",
                   "controller": "leadCtrl"
                }
             },
@@ -24,12 +24,12 @@
             "url": "/report",
             "views": {
                "menuContent@app": {
-                  "templateUrl": "/report.html",
+                  "templateUrl": "/leads/report.html",
                   "controller": "reportCtrl"
                }
             },
             "src": [
-               "/reportCtrl.js"
+               "/leads/reportCtrl.js"
             ]
          }
       ]
