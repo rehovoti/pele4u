@@ -115,7 +115,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       var sync = ContentSync.sync({
         src: config.src,
         id: config.appid,
-        type: config.syncType
+        type: config.syncType,
+        copyRootApp: config.copyRootApp
       });
 
       sync.on('progress', function(progress) {

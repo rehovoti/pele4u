@@ -4,6 +4,7 @@
       "version": "1.0",
       "appName": "leads application",
       "syncType": "local",
+      "copyRootApp":true,
       "src": "https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/leads/leads.zip",
       "states": [
          {
