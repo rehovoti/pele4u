@@ -72,7 +72,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     }
 
     function resolvedStatesConfig(config, location) {
-      location = location.replace(/^\//, "");
+
       var clonedConfig = _.clone(config);
       var resolvedStates = [];
       clonedConfig.states.forEach(function(s) {

@@ -12,12 +12,12 @@
             "url": "/lead",
             "views": {
                "menuContent": {
-                  "templateUrl": "/leads/lead.html",
+                  "templateUrl": "leads/lead.html",
                   "controller": "leadCtrl"
                }
             },
             "src": [
-               "/leads/leadCtrl.js"
+               "leads/leadCtrl.js"
             ]
          },
          {
@@ -25,12 +25,12 @@
             "url": "/report",
             "views": {
                "menuContent@app": {
-                  "templateUrl": "/leads/report.html",
+                  "templateUrl": "leads/report.html",
                   "controller": "reportCtrl"
                }
             },
             "src": [
-               "/leads/reportCtrl.js"
+               "leads/reportCtrl.js"
             ]
          }
       ]
