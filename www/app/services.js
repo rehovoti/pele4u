@@ -128,7 +128,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         //document.location = data.localPath + "/myapp/www/index.html";
       });
       sync.on('error', function(e) {
-
         deferred.reject("שגיאה בעדכון האפליקציה ");
       });
       return deferred.promise;
