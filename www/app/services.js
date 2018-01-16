@@ -79,7 +79,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         if (tu) {
           if (!tu.match("^app/|^/app")) {
             var newlocation = location + "/" + tu;
-            s.templateUrl = newlocation.replace(/\/+/g, "/");
+            s.templateUrl = "file://" + newlocation.replace(/\/+/g, "/");
           }
         }
         var viewsKey = _.keys(_.get(s, "views", {}));
@@ -88,14 +88,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
           if (tu) {
             if (!tu.match("^app/|^/app")) {
               var newlocation = location + "/" + tu;
-              s.views[k].templateUrl = newlocation.replace(/\/+/g, "/");
+              s.views[k].templateUrl = "file://" + newlocation.replace(/\/+/g, "/");
             }
           }
         })
         s.src.forEach(function(srcItem, index) {
           if (!srcItem.match("^app/|^/app")) {
             var newlocation = location + "/" + srcItem;
-            s.src[index] = newlocation.replace(/\/+/g, "/");
+            s.src[index] = "file://" + newlocation.replace(/\/+/g, "/");
           }
         })
         resolvedStates.push(s)
@@ -122,7 +122,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         setProgress(progress);
       });
       sync.on('complete', function(data) {
-        resolvedStatesConfig(config, "file://" + data.localPath);
+        resolvedStatesConfig(config, data.localPath);
         deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
         //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
         //document.location = data.localPath + "/myapp/www/index.html";
