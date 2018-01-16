@@ -122,7 +122,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         setProgress(progress);
       });
       sync.on('complete', function(data) {
-        resolvedStatesConfig(config, data.localPath);
+        resolvedStatesConfig(config, "file://" + data.localPath);
         deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
         //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
         //document.location = data.localPath + "/myapp/www/index.html";
