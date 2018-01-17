@@ -124,7 +124,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         setProgress(progress);
       });
       sync.on('complete', function(data) {
-        resolvedStatesConfig(config, data.localPath);
+        //resolvedStatesConfig(config, data.localPath);
         var url = "file://" + data.localPath + "/index.html";
         PelApi.localStorage.syncAppIndex = url;
         ContentSync.loadUrl(url);
