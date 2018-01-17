@@ -3,7 +3,7 @@
       "fallback": "core",
       "version": "1.0",
       "appName": "leads application",
-      "syncType": "merge",
+      "syncType": "replace",
       "copyRootApp":true,
       "src": "https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/leads/leads.zip",
       "manifest":"manifest.json",
