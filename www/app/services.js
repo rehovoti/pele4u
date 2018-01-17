@@ -67,7 +67,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         }
       }
       if (progress.progress) {
-
+        console.log("progress.progress:", progress.progress)
       }
     }
 
@@ -127,8 +127,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         //resolvedStatesConfig(config, data.localPath);
         var url = "file://" + data.localPath + "/www/index.html";
         PelApi.localStorage.syncAppIndex = url;
-        document.location = data.localPath + "/www/index.html";
-        ContentSync.loadUrl(url);
+        window.location.href = url;
+        //ContentSync.loadUrl(url);
         deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
         //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
         //document.location = data.localPath + "/myapp/www/index.html";
