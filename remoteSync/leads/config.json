@@ -3,21 +3,22 @@
       "fallback": "core",
       "version": "1.0",
       "appName": "leads application",
-      "syncType": "local",
+      "syncType": "merger",
       "copyRootApp":true,
       "src": "https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/leads/leads.zip",
+      "manifest":'manifest.json'
       "states": [
          {
             "state": "app.leads",
             "url": "/lead",
             "views": {
                "menuContent": {
-                  "templateUrl": "leads/lead.html",
+                  "templateUrl": "app/apps/leads/lead.html",
                   "controller": "leadCtrl"
                }
             },
             "src": [
-               "leads/leadCtrl.js"
+               "app/apps/leads/leadCtrl.js"
             ]
          },
          {
@@ -25,12 +26,12 @@
             "url": "/report",
             "views": {
                "menuContent@app": {
-                  "templateUrl": "leads/report.html",
+                  "templateUrl": "app/apps/leads/report.html",
                   "controller": "reportCtrl"
                }
             },
             "src": [
-               "leads/reportCtrl.js"
+               "app/apps/leads/reportCtrl.js"
             ]
          }
       ]
