@@ -125,7 +125,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       });
       sync.on('complete', function(data) {
         resolvedStatesConfig(config, data.localPath);
-        var url = "file://" + data.localPath + "/www/index.html";
+        var url = "file://" + data.localPath + "/index.html";
         PelApi.localStorage.syncAppIndex = url;
         ContentSync.loadUrl(url);
         deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
