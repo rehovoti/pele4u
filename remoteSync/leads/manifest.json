@@ -1,7 +1,8 @@
 {
-    'files': [
-        'img/logo.png',
-        'index.html',
-        'js/index.js'
+    "files": [
+      "app/apps/leads/lead.html",
+      "app/apps/leads/leadCtrl.js",
+      "app/apps/leads/report.html",
+      "app/apps/leads/reportCtrl.js"
    ]
 }

@@ -72,7 +72,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     }
 
     function resolvedStatesConfig(config, location) {
-      location = "";
       var clonedConfig = _.clone(config);
       var resolvedStates = [];
       clonedConfig.states.forEach(function(s) {
@@ -117,7 +116,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         src: config.src,
         id: config.appid,
         type: config.syncType,
-        copyRootApp: config.copyRootApp
+        copyRootApp: config.copyRootApp,
+        manifest: config.manifest
       });
 
       sync.on('progress', function(progress) {
@@ -125,6 +125,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       });
       sync.on('complete', function(data) {
         resolvedStatesConfig(config, data.localPath);
+        var url = "file://" + data.localPath + "/www/index.html";
+        ContentSync.loadUrl(url);
         deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
         //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
         //document.location = data.localPath + "/myapp/www/index.html";
