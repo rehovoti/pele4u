@@ -117,7 +117,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
         id: config.appid,
         type: config.syncType,
         copyRootApp: config.copyRootApp,
-        manifest: config.manifest
+        manifest: config.manifest,
+        copyCordovaAssets: true
       });
 
       sync.on('progress', function(progress) {
