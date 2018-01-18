@@ -167,6 +167,7 @@ const apiConfig = {
 angular.module('pele.config', [])
   .constant('$ionicLoadingConfig', spinConfig)
   .value('appSettings', {
+    releaseUrl: "https://raw.githubusercontent.com/ghadad/pele4u/v118.0_leads/remoteRelease/config.json",
     debug: false,
     EnvCodes: EnvCodes,
     SSOEnv: SSOEnv,

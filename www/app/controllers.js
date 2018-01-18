@@ -1,6 +1,18 @@
 angular.module('pele.controllers', ['ngStorage'])
-  .controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, PelApi, $state, $ionicHistory, $ionicPopup) {
+  .controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, PelApi, $state, $ionicHistory, $ionicPopup, CodePushService) {
 
+    $scope.codePush = function() {
+
+      if (!ionic.Platform.is('cordova')) {
+        console.log("not on device")
+      }
+
+      console.log($state.params.config)
+      setTimeout(function() {
+
+        PelApi.sessionStorage.codepush = false;
+      }, 3000);
+    }
     $rootScope.stopLoading = function() {
       PelApi.hideLoading()
     }

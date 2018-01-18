@@ -2,7 +2,78 @@
  * Created by User on 27/01/2016.
  */
 var app = angular.module('pele.services', []);
-app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($http, PelApi, $localStorage) {
+app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageService', function($state, $http, PelApi, $q, StorageService) {
+
+    var self = this;
+    var storageKey = "AppReleaseConfig";
+
+
+    self.checkForUpdate = function() {
+
+      var lastReleseConfig = StorageService.getData(storageKey, {
+        version: "0"
+      })
+
+      var remoteInfoUrl = PelApi.appSettings.releaseUrl;
+
+      $http.get(remoteInfoUrl).success(function(data) {
+        var currentVersion = parseInt(lastReleseConfig.version) || "0";
+        var remoteVersion = parseInt(data.version) || "999999";
+        if (remoteVersion > currentVersion) {
+          $state.go("app.codepush", {
+            config: data
+          })
+        } else {
+          state.go("app.codepush", {
+            config: {}
+          })
+        }
+      }).catch(function(err) {
+        state.go("app.codepush", {
+          config: {}
+        })
+
+      });
+      //return deferred.promise;
+    }
+
+    self.sync = function(config) {
+
+      PelApi.appSettings.config.APP_VERSION = config.version;
+      StorageService.set(storageKey, config, 25);
+    }
+
+    self.setProgress = function setProgress(progress) {
+      if (progress.status) {
+        switch (progress.status) {
+          case 1:
+            return {
+              status: "download"
+            };
+            break;
+          case 2:
+            return {
+              status: "deploy"
+            };
+            break;
+          case 3:
+            return {
+              status: "complete"
+            };
+            break;
+          default:
+            //showSyncState("")
+        }
+      }
+      if (progress.progress) {
+        return {
+          status: "progress",
+          complete: progress.progress
+        }
+      }
+    }
+
+  }]).service('StorageService', ['$http', 'PelApi', '$localStorage', function($http, PelApi, $localStorage) {
     // ttl - time ( seconds to live)
 
     var yearTtl = 60 * 60 * 24 * 365;
@@ -12,17 +83,29 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     }
 
     function checkExpired(obj) {
-      if (!obj) obj = {};
+
+      if (typeof obj !== "object")
+        return true;
+
       if (!obj.ttl) obj.ttl = yearTtl;
       var current = new Date().getTime();
-      if (currentStamp() - obj.timestamp > obj.ttl)
+      console.log("ttl: " + obj.ttl + " now: " + currentStamp() + " timestamp:" + obj.timestamp + " result : " + (currentStamp() - obj.timestamp))
+      if ((currentStamp() - obj.timestamp) > obj.ttl) {
         return true;
+      }
       return false;
     }
+
+    this.clean = function(varname) {
+      if ($localStorage[varname])
+        delete $localStorage[varname];
+    }
+
     this.set = function(varname, data, ttl) {
       // default ttl is one year
       if (typeof ttl === 'undefined')
         ttl = yearTtl;
+      ttl = ttl * 1000;
       if (typeof $localStorage[varname] === 'undefined' || $localStorage[varname] === null || checkExpired($localStorage[varname])) {
         $localStorage[varname] = {};
         $localStorage[varname].data = data;
@@ -34,6 +117,214 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     this.get = function(varname) {
       return $localStorage[varname];
     }
+
+    this.getData = function(varname, defValue) {
+      var retDefValue = defValue;
+      if (typeof defValue === "undefined") {
+        retDefValue = null;
+      }
+      var c = $localStorage[varname];
+
+      if (typeof c === 'undefined' || c === null || checkExpired(c))
+        return retDefValue;
+
+      if (c.data)
+        return c.data;
+
+      return c;
+    }
+
+  }]).service('SyncCodeService', ['$state', '$http', 'PelApi', 'StorageService', '$q', function($state, $http, PelApi, StorageService, $q) {
+    var self = this;
+
+    function CheckResource(url) {
+      var http = new XMLHttpRequest();
+      http.open('HEAD', url, false);
+      http.send();
+      return http.status != 404;
+    }
+
+
+    function setProgress(progress) {
+      if (progress.status) {
+        switch (progress.status) {
+          case 1:
+            showSyncState("מוריד עדכון", null, 3000);
+            break;
+          case 2:
+            showSyncState("פורס עדכון", null, 3000)
+            break;
+          case 3:
+            showSyncState("סינכרון הושלם", null, 3000)
+            break;
+          default:
+            //showSyncState("")
+        }
+      }
+      if (progress.progress) {
+        console.log("progress.progress:", progress.progress)
+      }
+    }
+
+    function resolvedStatesConfig(config, location) {
+      var clonedConfig = _.clone(config);
+      var resolvedStates = [];
+      clonedConfig.states.forEach(function(s) {
+        var tu = _.get(s, "templateUrl")
+        if (tu) {
+          if (!tu.match("^app/|^/app")) {
+            var newlocation = location + "/" + tu;
+            s.templateUrl = newlocation.replace(/\/+/g, "/");
+          }
+        }
+        var viewsKey = _.keys(_.get(s, "views", {}));
+        viewsKey.forEach(function(k, i) {
+          var tu = _.get(s.views[k], "templateUrl")
+          if (tu) {
+            if (!tu.match("^app/|^/app")) {
+              var newlocation = location + "/" + tu;
+              s.views[k].templateUrl = newlocation.replace(/\/+/g, "/");
+            }
+          }
+        })
+        s.src.forEach(function(srcItem, index) {
+          if (!srcItem.match("^app/|^/app")) {
+            var newlocation = location + "/" + srcItem;
+            s.src[index] = newlocation.replace(/\/+/g, "/");
+          }
+        })
+        resolvedStates.push(s)
+      })
+      clonedConfig.states = resolvedStates;
+      return clonedConfig;
+    }
+
+    function syncRemoteContect(config) {
+      var deferred = $q.defer();
+
+      if (!ionic.Platform.is('cordova')) {
+        deferred.reject("עדכון קוד חם אפשרי רק במכשיר");
+        return deferred.promise;
+      }
+
+      var sync = ContentSync.sync({
+        src: config.src,
+        id: config.appid,
+        type: config.syncType,
+        copyRootApp: config.copyRootApp,
+        manifest: config.manifest,
+        copyCordovaAssets: true
+      });
+
+      sync.on('progress', function(progress) {
+        setProgress(progress);
+      });
+      sync.on('complete', function(data) {
+        //resolvedStatesConfig(config, data.localPath);
+        var url = "file://" + data.localPath + "/www/index.html";
+        PelApi.localStorage.syncAppIndex = url;
+        window.location.href = url;
+        //ContentSync.loadUrl(url);
+        deferred.resolve("עדכון אפליקציה הסתיים בהצלחה");
+        //ContentSync.loadUrl("file://"+data.localPath + "/zipTest-master/www/index.html");
+        //document.location = data.localPath + "/myapp/www/index.html";
+      });
+      sync.on('error', function(e) {
+        deferred.reject("שגיאה בעדכון האפליקציה ");
+      });
+      return deferred.promise;
+    }
+
+    var showSyncState = function(str, icon, duration) {
+      PelApi.hideLoading();
+      var iconUrl = "./img/spinners/puff.svg"
+
+      if (icon == "error")
+        iconUrl = "./img/error.png";
+
+      var duration = duration || 3000;
+      var spinOptions = {
+        delay: 0,
+        duration: duration,
+        template: '<div class="text-center"><p>' + str +
+          ' </p><img ng-click="stopLoading()" class="spinner" src="' + iconUrl + '">' +
+          '</div>',
+      };
+      PelApi.showLoading(spinOptions);
+    }
+
+    self.getRemoteApp = function(unfoundState, force) {
+      var founds = unfoundState.to.match(/\w+$/);
+      var appId = founds[0];
+      var storageKey = appId + "_" + "remoteAppsConfig";
+      if (force) {
+        StorageService.clean(storageKey);
+      }
+
+      var stateOptions = unfoundState.options;
+      stateOptions.reload = true;
+
+      var remoteInfoUrl = "https://raw.githubusercontent.com/ghadad/pele4u/v117.9_remote_code/remoteSync/" + appId + "/config.json";
+
+      var StorageAppConfig = _.get(StorageService.get(storageKey), "data");
+
+      function registerStates(config) {
+        var deferred = $q.defer();
+        config.states.forEach(function(state) {
+          var stateConfig;
+          if (stateConfig = $state.get(state.state)) {
+
+          } else {
+            app.stateProvider.state(state.state, {
+              url: state.url,
+              views: state.views,
+              resolve: {
+                deps: ['$ocLazyLoad', '$q', function($ocLazyLoad, $q) {
+                  if (!state.src)
+                    return true;
+                  return $q.all([$ocLazyLoad.load({
+                    name: state.state,
+                    files: state.src
+                  })]).then(function(err) {}).catch(function(err) {
+                    config.error = err;
+                    deferred.reject(err)
+                  });
+                }]
+              }
+            });
+          }
+        });
+        return deferred.promise;
+      }
+      if (StorageAppConfig) {
+        if (!force) registerStates(StorageAppConfig).then(function(config) {
+
+          StorageService.set(storageKey, config, 24 * 60 * 60);
+        }).catch(function(err) {
+          StorageService.clean(storageKey)
+        });
+        $state.go(unfoundState.to, unfoundState.toParams, stateOptions);
+      } else {
+        $http.get(remoteInfoUrl).success(function(data) {
+          if (!force) registerStates(data).then(function(config) {
+            StorageService.set(storageKey, config, 24 * 60 * 60);
+          }).catch(function(err) {
+            StorageService.clean(storageKey)
+          });
+          syncRemoteContect(data).then(function(res) {
+            showSyncState(res)
+            $state.go(unfoundState.to, unfoundState.toParams, stateOptions)
+          }).catch(function(err) {
+            StorageService.clean(storageKey)
+            showSyncState(err, "error", 4000)
+          })
+
+        }).error(function(err) {
+          showSyncState("נכשל לקבל מידע לגבי עדכון האפליקציה", "error", 4000)
+        })
+      }
+    }
+
   }]).service('ApiService', ['$http', '$ionicHistory', 'PelApi', '$sessionStorage', function($http, $ionicHistory, PelApi, $sessionStorage) {
     var Errors = {
       2: {

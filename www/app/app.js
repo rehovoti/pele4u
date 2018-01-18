@@ -15,12 +15,17 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
     , 'pele.authCtrl', 'pele.states', , 'fileLogger', 'oc.lazyLoad'
   ])
 
-  .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings',
-    function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings) {
+  .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings', 'CodePushService', '$ionicHistory',
+    function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings, CodePushService, $ionicHistory) {
       PelApi.init();
+      CodePushService.checkForUpdate();
 
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {
+          if (toState.name === "app.codepush")
+            PelApi.sessionStorage.codepush = true;
+          if (PelApi.sessionStorage.codepush && toState.name !== "app.codepush")
+            event.preventDefault();
 
           if (PelApi.global.get('debugFlag')) {
             PelApi.lagger.info("start StateChange ->  from :  " + fromState.name + " to: ", toState.name);
@@ -53,7 +58,9 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       });
 
 
-      $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
+      $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+
+      });
 
       $ionicPlatform.ready(function() {
         //----------------------------------------
@@ -147,9 +154,17 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
           }
         }
       })
-      //---------------------------------------------------------------------------//
-      //--                         Settings                                      --//
-      //---------------------------------------------------------------------------//
+      .state('app.codepush', {
+        url: '/codepush',
+        params: {
+          config: {}
+        },
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/codepush.html'
+          }
+        }
+      })
       .state('app.settings', {
         url: '/settings',
         views: {
