@@ -5,7 +5,7 @@
       "appName": "leads application",
       "syncType": "merge",
       "copyRootApp":true,
-      "src": "https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/leads/leads.zip",
+      "src": "https://github.com/ghadad/pele4u/blob/v117.9_remote_code/remoteSync/leads/www.zip",
       "manifest":"manifest.json",
       "states": [
          {

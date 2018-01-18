@@ -99,6 +99,8 @@ app.run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'a
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
       $ionicPlatform.ready(function() {
+
+        console.log("cordova file config:", cordova.file);
         //----------------------------------------
         //--    Get Version from config.xml
         //----------------------------------------
