@@ -30,7 +30,6 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
 
     self.sync = function(config, scope) {
       var p = 0;
-
       var deferred = $q.defer();
       var syncConfig = {
         src: config.src,
@@ -63,7 +62,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
         deferred.reject("שגיאה בעדכון האפליקציה ");
       });
 
-
+      return deferred.promise;
     }
 
     self.setProgress = function(progress) {
