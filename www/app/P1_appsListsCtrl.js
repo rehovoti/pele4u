@@ -6,7 +6,9 @@ var app = angular.module('pele.P1_appsListCtrl', ['ngStorage', 'ngCordova']);
 //==                         PAGE_1                                  ==//
 //=====================================================================//
 app.controller('P1_appsListCtrl',
-  function($scope, $http, $state, $ionicLoading, PelApi, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork) {
+  function($rootScope, CodePushService, $scope, $http, $state, $ionicLoading, PelApi, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData) {
+    $rootScope.enableTransition = true;
+    CodePushService.checkForUpdate()
 
     $ionicHistory.clearHistory();
     PelApi.lagger.checkFile().then(function(logStat) {

@@ -15,17 +15,24 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
     , 'pele.authCtrl', 'pele.states', , 'fileLogger', 'oc.lazyLoad'
   ])
 
-  .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings', 'CodePushService', '$ionicHistory',
-    function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings, CodePushService, $ionicHistory) {
+  .run(['$timeout', '$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings', 'CodePushService', '$ionicHistory',
+    function($timeout, $rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings, CodePushService, $ionicHistory) {
       PelApi.init();
-      CodePushService.checkForUpdate();
-
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {
-          if (toState.name === "app.codepush")
-            PelApi.sessionStorage.codepush = true;
-          if (PelApi.sessionStorage.codepush && toState.name !== "app.codepush")
+          console.log("stateChangeStart:", toState)
+
+          if ($rootScope.enableTransition == false) {
             event.preventDefault();
+          }
+
+          if (toState.name.match(/app.error|app.codepush/)) {
+            $rootScope.enableTransition = false;
+            console.log(toState)
+          }
+
+
+
 
           if (PelApi.global.get('debugFlag')) {
             PelApi.lagger.info("start StateChange ->  from :  " + fromState.name + " to: ", toState.name);
@@ -59,6 +66,10 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
 
 
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+        console.log("stateChangeSuccess:", toState)
+        $timeout(function() {
+          $rootScope.enableTransition = true;
+        }, 3000)
 
       });
 

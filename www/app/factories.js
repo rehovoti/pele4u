@@ -456,7 +456,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         });
 
       },
-     isValidNote: function(note) {
+      isValidNote: function(note) {
         var chkNote = note;
         if (!chkNote) return false;
         if (chkNote.replace(/[^\wא-ת]+/g, "").length < 2)
@@ -570,6 +570,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
 
       throwError: function(category, from, errorString, redirectInd) {
+        $rootScope.statesPreventDefault = false;
         var self = this;
         var redirect = redirectInd || true;
         var network = "none";
@@ -640,6 +641,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           message = "API request " + from + " endedd with failure : " + errorString;
         }
         if (redirect) {
+          $rootScope.statesPreventDefault = true;
           $state.go("app.error", {
             error: lastError
           })
@@ -1507,7 +1509,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               text: '<a class="pele-popup-positive-text-collot">המשך</a>',
               type: 'button-positive',
               onTap: function(e) {
-              if (!self.isValidNote(scope.actionNote.text)) {
+                if (!self.isValidNote(scope.actionNote.text)) {
                   e.preventDefault();
                   self.showPopup("יש להזין הערה", "יש להזין לפחות 2 אותיות");
                 } else {

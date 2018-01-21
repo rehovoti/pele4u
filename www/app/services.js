@@ -2,63 +2,89 @@
  * Created by User on 27/01/2016.
  */
 var app = angular.module('pele.services', []);
-app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageService', function($state, $http, PelApi, $q, StorageService) {
+app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageService', '$interval', function($state, $http, PelApi, $q, StorageService, $interval) {
 
     var self = this;
     var storageKey = "AppReleaseConfig";
-
-
     self.checkForUpdate = function() {
-
+      if (typeof ContentSync === "undefined") {
+        return PelApi.throwError("app", "CodePushService.checkForUpdate", "missing ContentSync plugin", true)
+      }
       var lastReleseConfig = StorageService.getData(storageKey, {
         version: "0"
       })
-
       var remoteInfoUrl = PelApi.appSettings.releaseUrl;
-
       $http.get(remoteInfoUrl).success(function(data) {
         var currentVersion = parseInt(lastReleseConfig.version) || "0";
         var remoteVersion = parseInt(data.version) || "999999";
         if (remoteVersion > currentVersion) {
-          $state.go("app.codepush", {
+          return $state.go("app.codepush", {
             config: data
-          })
-        } else {
-          state.go("app.codepush", {
-            config: {}
           })
         }
       }).catch(function(err) {
-        state.go("app.codepush", {
-          config: {}
-        })
-
+        PelApi.throwError("app", "CodePushService.checkForUpdate", "(httpStatus : " + httpStatus + ") " + err)
       });
-      //return deferred.promise;
     }
 
-    self.sync = function(config) {
 
-      PelApi.appSettings.config.APP_VERSION = config.version;
-      StorageService.set(storageKey, config, 25);
+    self.sync = function(config, scope) {
+      var p = 0;
+
+      var deferred = $q.defer();
+      var syncConfig = {
+        src: config.src,
+        id: config.appid,
+        type: config.syncType,
+        copyRootApp: (config.copyRootApp || false),
+        manifest: (config.manifest || null),
+        copyCordovaAssets: (config.copyCordovaAssets || false)
+      }
+      console.log("syncConfig:", syncConfig)
+
+      var sync = ContentSync.sync(syncConfig);
+      sync.on('progress', function(progress) {
+        scope.syncProgress = setProgress(progress);
+      });
+
+      sync.on('complete', function(data) {
+        scope.syncProgress = setProgress({
+          status: 3,
+          progres: 100
+        });
+        deferred.resolve(data);
+      });
+
+      sync.on('error', function(e) {
+        scope.syncProgress = setProgress({
+          status: "error",
+          progres: 100
+        });
+        deferred.reject("שגיאה בעדכון האפליקציה ");
+      });
+
+
     }
 
-    self.setProgress = function setProgress(progress) {
+    self.setProgress = function(progress) {
       if (progress.status) {
         switch (progress.status) {
           case 1:
             return {
-              status: "download"
+              status: "download",
+              progress: progress.progress
             };
             break;
           case 2:
             return {
-              status: "deploy"
+              status: "deploy",
+              progress: progress.progress
             };
             break;
           case 3:
             return {
-              status: "complete"
+              status: "complete",
+              progress: progress.progress
             };
             break;
           default:
@@ -68,7 +94,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
       if (progress.progress) {
         return {
           status: "progress",
-          complete: progress.progress
+          progress: progress.progress
         }
       }
     }

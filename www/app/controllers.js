@@ -2,17 +2,34 @@ angular.module('pele.controllers', ['ngStorage'])
   .controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, PelApi, $state, $ionicHistory, $ionicPopup, CodePushService) {
 
     $scope.codePush = function() {
-
+      $scope.syncError = "";
+      $scope.syncProgress = {
+        status: "start",
+        progress: 0
+      }
+      console.log($state.params.config)
       if (!ionic.Platform.is('cordova')) {
         console.log("not on device")
+
       }
-
-      console.log($state.params.config)
-      setTimeout(function() {
-
-        PelApi.sessionStorage.codepush = false;
-      }, 3000);
+      CodePushService.sync($state.params.config, $scope).then(function(data) {
+        //resolvedStatesConfig(config, data.localPath);
+        var url = "file://" + data.localPath + "/www/index.html";
+        PelApi.localStorage.syncAppIndex = url;
+        window.location.href = url;
+        PelApi.appSettings.config.APP_VERSION = config.version;
+        StorageService.set(storageKey, config, 25);
+        //for ios
+        //ContentSync.loadUrl(url);
+      }).catch(function(err) {
+        $scope.syncError = "עדכון אוטומטי לא הצליח - אנא עבור לחנות "
+      })
+      //console.log($state.params.config)
+      //setTimeout(function() {
+      //  PelApi.sessionStorage.codepush = false;
+      //}, 3000);
     }
+
     $rootScope.stopLoading = function() {
       PelApi.hideLoading()
     }
