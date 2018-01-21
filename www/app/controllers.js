@@ -7,7 +7,7 @@ angular.module('pele.controllers', ['ngStorage'])
         status: "start",
         progress: 1
       }
-      $scope.$apply();
+      scope.$apply();
       console.log($state.params.config)
       if (!ionic.Platform.is('cordova')) {
         console.log("not on device")
