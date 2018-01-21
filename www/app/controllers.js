@@ -14,7 +14,7 @@ angular.module('pele.controllers', ['ngStorage'])
       }
       CodePushService.sync($state.params.config, $scope).then(function(data) {
         //resolvedStatesConfig(config, data.localPath);
-        var url = "file://" + data.localPath + "/www/index.html";
+        var url = "file://" + data.localPath + "/index.html";
         PelApi.localStorage.syncAppIndex = url;
         window.location.href = url;
         PelApi.appSettings.config.APP_VERSION = config.version;

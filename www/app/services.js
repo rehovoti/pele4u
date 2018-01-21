@@ -44,6 +44,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
       var sync = ContentSync.sync(syncConfig);
       sync.on('progress', function(progress) {
         scope.syncProgress = self.setProgress(progress);
+        scope.$apply();
       });
 
       sync.on('complete', function(data) {
@@ -51,6 +52,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
           status: 3,
           progres: 100
         });
+        scope.$apply();
         deferred.resolve(data);
       });
 
@@ -59,6 +61,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
           status: "error",
           progres: 100
         });
+        scope.$apply();
         deferred.reject("שגיאה בעדכון האפליקציה ");
       });
 
