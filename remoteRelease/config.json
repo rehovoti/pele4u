@@ -3,7 +3,7 @@
   "version":"120.0" ,
   "description":"אפליקציית לידים חדשה",
   "src":"https://github.com/ghadad/pele4u/archive/v117.8.zip",
-  "syncType": "merge",
+  "syncType": "replace",
   "copyRootApp":true,
   "copyCordovaAssets": true
 }
