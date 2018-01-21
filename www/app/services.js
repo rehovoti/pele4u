@@ -43,8 +43,10 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
 
       var sync = ContentSync.sync(syncConfig);
       sync.on('progress', function(progress) {
-        scope.syncProgress = self.setProgress(progress);
-        scope.$apply();
+
+        scope.$apply(function() {
+          scope.syncProgress = self.setProgress(progress);
+        });
       });
 
       sync.on('complete', function(data) {
@@ -52,16 +54,22 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
           status: 3,
           progres: 100
         });
-        scope.$apply();
+        scope.$apply(function() {
+          scope.syncProgress = self.setProgress({
+            status: 3,
+            progres: 100
+          });
+        });
         deferred.resolve(data);
       });
 
       sync.on('error', function(e) {
-        scope.syncProgress = self.setProgress({
-          status: "error",
-          progres: 100
+        scope.$apply(function() {
+          scope.syncProgress = self.setProgress({
+            status: "error",
+            progres: 100
+          });
         });
-        scope.$apply();
         deferred.reject("שגיאה בעדכון האפליקציה ");
       });
 

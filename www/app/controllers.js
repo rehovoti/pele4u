@@ -5,8 +5,9 @@ angular.module('pele.controllers', ['ngStorage'])
       $scope.syncError = "";
       $scope.syncProgress = {
         status: "start",
-        progress: 0
+        progress: 1
       }
+      $scope.$apply();
       console.log($state.params.config)
       if (!ionic.Platform.is('cordova')) {
         console.log("not on device")
@@ -14,7 +15,7 @@ angular.module('pele.controllers', ['ngStorage'])
       }
       CodePushService.sync($state.params.config, $scope).then(function(data) {
         //resolvedStatesConfig(config, data.localPath);
-        var url = "file://" + data.localPath + "/" + $state.params.config.appid + "/WWW/index.html";
+        var url = "file://" + data.localPath + "/" + $state.params.config.appid + "/www/index.html";
         PelApi.localStorage.syncAppIndex = url;
         window.location.href = url;
         PelApi.appSettings.config.APP_VERSION = config.version;
