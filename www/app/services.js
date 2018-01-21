@@ -44,7 +44,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
       var sync = ContentSync.sync(syncConfig);
       sync.on('progress', function(progress) {
 
-        scope.$apply(function() {
+        PelApi.safeApply(scope, function() {
           scope.syncProgress = self.setProgress(progress);
         });
       });
@@ -54,7 +54,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
           status: 3,
           progres: 100
         });
-        scope.$apply(function() {
+        PelApi.safeApply(scope, function() {
           scope.syncProgress = self.setProgress({
             status: 3,
             progres: 100
@@ -64,7 +64,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
       });
 
       sync.on('error', function(e) {
-        scope.$apply(function() {
+        PelApi.safeApply(scope, function() {
           scope.syncProgress = self.setProgress({
             status: "error",
             progres: 100
