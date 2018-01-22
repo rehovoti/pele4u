@@ -19,7 +19,7 @@
       var http = new XMLHttpRequest();
       http.open('HEAD', url, false);
       http.send();
-      return http.status != 404;
+      return !(http.status == 404 || http.status == 0);
     }
 
 
@@ -28,10 +28,13 @@
 
     alert(CheckResource(localSyncPath))
 
-    if (CheckResource(localSyncPath) && localSyncPath && localSyncPath !== window.location.href)
-      window.location.href = localSyncPath;
-    else
-      window.localStorage.setItem("syncAppIndex", null);
+    if (CheckResource(localSyncPath) && localSyncPath && localSyncPath !== window.location.href) {
+      try {
+        window.location.href = localSyncPath;
+      } catch (err) {
+        window.localStorage.setItem("syncAppIndex", null);
+      }
+    }
 
   </script>
 
