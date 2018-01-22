@@ -11,10 +11,9 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
       if (typeof ContentSync === "undefined") {
         return PelApi.throwError("app", "CodePushService.checkForUpdate", "missing ContentSync plugin", true)
       }
-      var currentVersion = appSettings.config.APP_VERSION;
 
+      var currentVersion = PelApi.appSettings.config.APP_VERSION;
       var remoteInfoUrl = PelApi.appSettings.releaseUrl;
-
       $http.get(remoteInfoUrl).success(function(data) {
 
         var remoteVersion = parseInt(data.version) || "999999";
@@ -95,7 +94,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
             progres: 100
           });
         });
-        deferred.reject("שגיאה בעדכון האפליקציה ");
+        deferred.reject("שגיאה בעדכון האפליקציה");
       });
 
       return deferred.promise;
