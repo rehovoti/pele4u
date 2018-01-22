@@ -11,8 +11,6 @@ app.controller('P1_appsListCtrl',
     if (ionic.Platform.is('cordova')) {
       CodePushService.checkForUpdate()
     }
-
-
     $ionicHistory.clearHistory();
     PelApi.lagger.checkFile().then(function(logStat) {
       if (logStat.size > (1024 * 1024)) {

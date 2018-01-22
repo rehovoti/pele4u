@@ -86,7 +86,8 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
           }
 
           window.cordova.getAppVersion(function(version) {
-            appSettings.config.APP_VERSION = version;
+            var syncVersion = CodePushService.getSyncVersion() || version;
+            appSettings.config.APP_VERSION = syncVersion;
             PelApi.lagger.info("window.cordova.getAppVersion() : " + appSettings.config.APP_VERSION);
           });
 
