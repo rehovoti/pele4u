@@ -30,9 +30,11 @@
 
     if (CheckResource(localSyncPath) && localSyncPath && localSyncPath !== window.location.href) {
       try {
+        window.localStorage.setItem("syncError", false);
         window.location.href = localSyncPath;
       } catch (err) {
         window.localStorage.setItem("syncAppIndex", null);
+        window.localStorage.setItem("syncError", true);
       }
     }
 
