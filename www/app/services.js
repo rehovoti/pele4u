@@ -42,9 +42,10 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
       if (syncAppConfigStr) {
         try {
           syncAppConfig = JSON.parse(syncAppConfigStr);
-          if (syncAppConfig && syncAppConfig.version)
-
-            version = syncAppConfig.version
+          if (syncAppConfig && syncAppConfig.version) {
+            PelApi.appSettings.config.APP_VERSION = syncAppConfig.version;
+            version = syncAppConfig.version;
+          }
         } catch (e) {
           version = PelApi.appSettings.config.APP_VERSION;
         }
