@@ -15,26 +15,19 @@
   <!-- R.W. 11/10/2015 -->
   <link href="css/tabSlideBox.css" rel="stylesheet">
   <script>
-    function CheckResource(url) {
-      var http = new XMLHttpRequest();
-      http.open('HEAD', url, false);
-      http.send();
-      return !(http.status == 404 || http.status == 0);
-    }
-
-
     console.log("syncAppIndex:", window.localStorage.getItem("syncAppIndex"))
-    var localSyncPath = window.localStorage.getItem("syncAppIndex");
-
-    alert(CheckResource(localSyncPath))
-
-    if (CheckResource(localSyncPath) && localSyncPath && localSyncPath !== window.location.href) {
+    var syncAppConfigStr = window.localStorage.getItem("syncAppConfig");
+    //var localSyncPath = window.localStorage.getItem("syncAppIndex");
+    var syncAppConfig = {}
+    if (syncAppConfigStr) {
       try {
-        window.localStorage.setItem("syncError", false);
-        window.location.href = localSyncPath;
-      } catch (err) {
-        window.localStorage.setItem("syncAppIndex", null);
-        window.localStorage.setItem("syncError", true);
+        syncAppConfig = JSON.parse(syncAppConfigStr);
+        if (syncAppConfig.syncAppIndex && syncAppConfig.syncAppIndex != window.location.href) {
+          window.localStorage.setItem("syncRedirectError", false);
+          window.location.href = localSyncPath;
+        }
+      } catch (e) {
+        window.localStorage.setItem("syncRedirectError", true);
       }
     }
 

@@ -69,7 +69,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
         console.log("stateChangeSuccess:", toState)
         $timeout(function() {
           $rootScope.enableTransition = true;
-        }, 3000)
+        }, 2500)
 
       });
 
@@ -79,10 +79,23 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
         //----------------------------------------
         if (window.cordova) {
           PelApi.cordovaInit();
-          window.cordova.getAppVersion(function(version) {
-            appSettings.config.APP_VERSION = version;
-            PelApi.lagger.info("window.cordova.getAppVersion() : " + appSettings.config.APP_VERSION);
-          });
+          var syncAppConfigStr = window.localStorage.setItem("syncAppConfig");
+          var syncAppConfig;
+          if (syncAppConfigStr) {
+            try {
+              syncAppConfig = JSON.parse(syncAppConfigStr);
+              if (syncAppConfig && syncAppConfig.version)
+                appSettings.config.APP_VERSION = syncAppConfig.version;
+              PelApi.lagger.info("app version took from syncAppConfig.version  : " + syncAppConfig.version);
+            } catch (e) {
+
+            }
+          } else {
+            window.cordova.getAppVersion(function(version) {
+              appSettings.config.APP_VERSION = version;
+              PelApi.lagger.info("window.cordova.getAppVersion() : " + appSettings.config.APP_VERSION);
+            });
+          }
         }
 
 

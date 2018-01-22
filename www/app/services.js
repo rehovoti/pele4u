@@ -173,14 +173,6 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
   }]).service('SyncCodeService', ['$state', '$http', 'PelApi', 'StorageService', '$q', function($state, $http, PelApi, StorageService, $q) {
     var self = this;
 
-    function CheckResource(url) {
-      var http = new XMLHttpRequest();
-      http.open('HEAD', url, false);
-      http.send();
-      return http.status != 404;
-    }
-
-
     function setProgress(progress) {
       if (progress.status) {
         switch (progress.status) {

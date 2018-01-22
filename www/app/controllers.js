@@ -17,9 +17,11 @@ angular.module('pele.controllers', ['ngStorage'])
       CodePushService.sync($state.params.config, $scope).then(function(data) {
         var url = "file://" + data.localPath + "/" + $state.params.config.index;
         window.localStorage.setItem("syncAppIndex", url);
-        window.localStorage.setItem("syncAppConfig", JSON.stringify($state.params.config));
-        window.requestFileSystem(PERSISTENT, 1024 * 1024, function(fs) {
+        var syncConf = $state.params.config;
+        syncConf.syncAppIndex = url;
+        window.localStorage.setItem("syncAppConfig", JSON.stringify(syncConf));
 
+        /* window.requestFileSystem(PERSISTENT, 1024 * 1024, function(fs) {
           window.resolveLocalFileSystemURL("file://" + data.localPath, function(g) {
             //ok so G is a directory ob
             var dirReader = g.createReader();
@@ -32,12 +34,12 @@ angular.module('pele.controllers', ['ngStorage'])
             console.dir(e);
           })
         });
-
+        */
         window.location.href = url;
         //for ios
         //ContentSync.loadUrl(url);
       }).catch(function(err) {
-        $scope.syncError = "עדכון אוטומטי לא הצליח - אנא עבור לחנות "
+        $scope.syncError = "עדכון אוטומטי לא הצליח - אנא עבור לחנות"
       })
       //console.log($state.params.config)
       //setTimeout(function() {
