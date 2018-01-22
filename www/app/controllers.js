@@ -120,7 +120,7 @@ angular.module('pele.controllers', ['ngStorage'])
     }
 
     $scope.clearStorage = function() {
-
+      window.localStorage.clear();
       PelApi.localStorage.$reset();
       PelApi.sessionStorage.$reset();
       $scope.storageCheckClear = true;
