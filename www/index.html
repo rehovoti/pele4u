@@ -15,10 +15,20 @@
   <!-- R.W. 11/10/2015 -->
   <link href="css/tabSlideBox.css" rel="stylesheet">
   <script>
+    function CheckResource(url) {
+      var http = new XMLHttpRequest();
+      http.open('HEAD', url, false);
+      http.send();
+      return http.status != 404;
+    }
+
+
     console.log("syncAppIndex:", window.localStorage.getItem("syncAppIndex"))
     var localSyncPath = window.localStorage.getItem("syncAppIndex");
 
-    if (localSyncPath && localSyncPath !== window.location.href)
+    alert(CheckResource(localSyncPath))
+
+    if (CheckResource(localSyncPath) && localSyncPath && localSyncPath !== window.location.href)
       window.location.href = localSyncPath;
 
   </script>
