@@ -17,7 +17,7 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
       $http.get(remoteInfoUrl).success(function(data) {
 
         var remoteVersion = parseInt(data.version) || "999999";
-        if (remoteVersion > lastVersion) {
+        if (remoteVersion > currentVersion) {
           return $state.go("app.codepush", {
             config: data
           })
