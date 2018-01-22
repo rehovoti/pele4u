@@ -79,23 +79,22 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
         //----------------------------------------
         if (window.cordova) {
           PelApi.cordovaInit();
-          var syncAppConfigStr = window.localStorage.setItem("syncAppConfig");
-          var syncAppConfig;
-          if (syncAppConfigStr) {
-            try {
-              syncAppConfig = JSON.parse(syncAppConfigStr);
-              if (syncAppConfig && syncAppConfig.version)
-                appSettings.config.APP_VERSION = syncAppConfig.version;
-              PelApi.lagger.info("app version took from syncAppConfig.version  : " + syncAppConfig.version);
-            } catch (e) {
-
-            }
+          if (CodePushService.getSyncRedirectionError()) {
+            $state.go("app.codepush", {
+              error: "getSyncRedirectionError"
+            })
+          }
+          var appVersion = CodePushService.getSyncVersion();
+          if (appVersion) {
+            appSettings.config.APP_VERSION = version;
+            PelApi.lagger.info("app version took from  syncConfig : " + appSettings.config.APP_VERSION);
           } else {
             window.cordova.getAppVersion(function(version) {
               appSettings.config.APP_VERSION = version;
               PelApi.lagger.info("window.cordova.getAppVersion() : " + appSettings.config.APP_VERSION);
             });
           }
+
         }
 
 
@@ -181,7 +180,8 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       .state('app.codepush', {
         url: '/codepush',
         params: {
-          config: {}
+          config: {},
+          error: ""
         },
         views: {
           'menuContent': {

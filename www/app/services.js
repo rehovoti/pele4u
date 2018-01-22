@@ -27,6 +27,29 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
       });
     }
 
+    self.getSyncRedirectionError = function() {
+      var syncRedirectError = window.localStorage.getItem("syncRedirectError");
+      if (syncRedirectError === true || syncRedirectError === "true") {
+        return true;
+      }
+      return false;
+    }
+    self.getSyncVersion = function() {
+      var syncAppConfigStr = window.localStorage.getItem("syncAppConfig");
+      var syncAppConfig;
+      var version;
+      if (syncAppConfigStr) {
+        try {
+          syncAppConfig = JSON.parse(syncAppConfigStr);
+          if (syncAppConfig && syncAppConfig.version)
+
+            version = syncAppConfig.version
+        } catch (e) {
+          version = null;
+        }
+      }
+      return version;
+    }
 
     self.sync = function(config, scope) {
       var p = 0;
