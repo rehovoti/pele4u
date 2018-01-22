@@ -25,10 +25,11 @@
         syncAppConfig = JSON.parse(syncAppConfigStr);
         if (syncAppConfig.syncAppIndex && syncAppConfig.syncAppIndex != window.location.href) {
           window.localStorage.setItem("syncRedirectError", false);
-          window.location.href = localSyncPath;
+          window.location.href = syncAppConfig.syncAppIndex;
         }
       } catch (err) {
         console.log(err);
+        window.localStorage.setItem("syncAppConfig", null);
         window.localStorage.setItem("syncRedirectError", true);
       }
     }
