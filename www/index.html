@@ -30,6 +30,8 @@
 
     if (CheckResource(localSyncPath) && localSyncPath && localSyncPath !== window.location.href)
       window.location.href = localSyncPath;
+    else
+      window.localStorage.setItem("syncAppIndex", null);
 
   </script>
 
