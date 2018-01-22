@@ -15,10 +15,14 @@
   <!-- R.W. 11/10/2015 -->
   <link href="css/tabSlideBox.css" rel="stylesheet">
   <script>
-    if (window.localStorage && window.localStorage.syncAppIndex && window.localStorage.syncAppIndex !== window.location.href)
-      window.location.href = window.localStorage.syncAppIndex;
+    console.log("syncAppIndex:", window.localStorage.getItem("syncAppIndex"))
+    var localSyncPath = window.localStorage.getItem("syncAppIndex");
+
+    if (localSyncPath && localSyncPath !== window.location.href)
+      window.location.href = localSyncPath;
 
   </script>
+
   <script src="lib/ionic/js/ionic.bundle.min.js"></script>
 
   <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>

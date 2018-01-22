@@ -15,13 +15,10 @@ angular.module('pele.controllers', ['ngStorage'])
         console.log("not on device")
       }
       CodePushService.sync($state.params.config, $scope).then(function(data) {
-        //resolvedStatesConfig(config, data.localPath);
-
-        var url = "file://" + data.localPath + "/" + $state.params.config.appid + "/www/index.html";
-        $localStorage.syncAppIndex = url;
+        var url = "file://" + data.localPath + "/" + $state.params.config.index;
+        window.localStorage.setItem("syncAppIndex", url);
+        window.localStorage.setItem("syncAppConfig", JSON.stringify($state.params.config));
         window.location.href = url;
-        PelApi.appSettings.config.APP_VERSION = config.version;
-        StorageService.set(storageKey, config, 25);
         //for ios
         //ContentSync.loadUrl(url);
       }).catch(function(err) {
