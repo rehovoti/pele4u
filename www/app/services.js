@@ -23,7 +23,8 @@ app.service('CodePushService', ['$state', '$http', 'PelApi', '$q', 'StorageServi
           })
         }
       }).catch(function(err) {
-        PelApi.throwError("app", "CodePushService.checkForUpdate", "(httpStatus : " + httpStatus + ") " + err)
+        // nothing happend - just continue
+        //PelApi.throwError("app", "CodePushService.checkForUpdate", "(httpStatus : " + httpStatus + ") " + err)
       });
     }
 
