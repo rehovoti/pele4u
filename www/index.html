@@ -17,6 +17,7 @@
   <script>
     console.log("syncAppIndex:", window.localStorage.getItem("syncAppIndex"))
     var syncAppConfigStr = window.localStorage.getItem("syncAppConfig");
+
     //var localSyncPath = window.localStorage.getItem("syncAppIndex");
     var syncAppConfig = {}
     if (syncAppConfigStr) {
@@ -26,7 +27,8 @@
           window.localStorage.setItem("syncRedirectError", false);
           window.location.href = localSyncPath;
         }
-      } catch (e) {
+      } catch (err) {
+        console.log(err);
         window.localStorage.setItem("syncRedirectError", true);
       }
     }
