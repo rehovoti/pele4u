@@ -84,16 +84,12 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
               error: "getSyncRedirectionError"
             })
           }
-          var appVersion = CodePushService.getSyncVersion();
-          if (appVersion) {
-            appSettings.config.APP_VERSION = appVersion;
-            PelApi.lagger.info("app version took from  syncConfig : " + appSettings.config.APP_VERSION);
-          } else {
-            window.cordova.getAppVersion(function(version) {
-              appSettings.config.APP_VERSION = version;
-              PelApi.lagger.info("window.cordova.getAppVersion() : " + appSettings.config.APP_VERSION);
-            });
-          }
+
+          window.cordova.getAppVersion(function(version) {
+            appSettings.config.APP_VERSION = version;
+            PelApi.lagger.info("window.cordova.getAppVersion() : " + appSettings.config.APP_VERSION);
+          });
+
 
         }
 
