@@ -37,7 +37,10 @@ angular.module('pele')
 
           if (apiData.error) return false;
           $scope.docDetails = PelApi.getJsonString(apiData.Result, "JSON[0]", true);
+
           $scope.docDetails.attachments = $scope.docDetails.TASK_ATTACHMENTS_CUR || [];
+          console.log($scope.docDetails)
+
           PelApi.extendActionHistory($scope.docDetails);
           $scope.buttonsArr = $scope.docDetails.BUTTONS || [];
           $scope.title = "משימה " + $scope.docDetails.TASK_NUMBER;

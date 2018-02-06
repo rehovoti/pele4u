@@ -211,7 +211,6 @@ angular.module('pele')
       var retGetUserNotifications = PelApi.GetUserNotifications(links, appId, docId, docInitId);
 
       retGetUserNotifications.success(function(data, status) {
-
         data = $scope.fix_json(data);
 
         var stat = PelApi.GetPinCodeStatus2(data, "GetUserNotifNew");

@@ -334,6 +334,7 @@ angular.module('pele')
           var retGetFileURI = PelApi.GetFileURI(links, appId, appSettings.config.Pin, l_fileName);
           retGetFileURI.success(function(data, status) {
             var l_data = JSON.stringify(data);
+            console.log(l_data)
             var statusCode = PelApi.checkResponceStatus(data);
             if ("S" === statusCode.Status) {
               var url = statusCode.URL;
