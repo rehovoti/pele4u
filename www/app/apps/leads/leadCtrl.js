@@ -104,21 +104,47 @@ angular.module('pele', ['ngSanitize'])
       }
 
 
-      $scope.getNext = function() {
-        var refStamp = new Date().getTime();
-        PelApi.showLoading();
-        ApiGateway.get("leads/getnext", {
-          refStamp: refStamp
-        }).success(function(data) {
-          $scope.lead.LEAD_ID = data.VAL;
-          $scope.lead.FORM_TYPE = $state.params.type; //Draft
-        }).error(function(error, httpStatus, headers, config) {
-          //ApiGateway.reauthOnForbidden(httpStatus, "Unauthorized getnext api", config);
-          //PelApi.throwError("api", "get new Lead seq", "httpStatus : " + httpStatus + " " + JSON.stringify(error) + "(MS:" + config.ms + ")")
-          ApiGateway.throwError(httpStatus, "get new Lead seq", config);
-        }).finally(function() {
-          PelApi.hideLoading();
+       $scope.startLeadValues = function() {
+        var savedLead = _.get(PelApi.sessionStorage,$scope.lead.FORM_TYPE + "saveLead"); 
+        if(savedLead) {
+           swal({
+          html: 'קיים ליד בעבודה - תרצו להמשיך איתו ?',
+          showCloseButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText: 'אשור',
+          confirmButtonAriaLabel: 'Thumbs up, great!',
+          cancelButtonText: 'ביטול',
+          cancelButtonAriaLabel: 'Thumbs down',
+        }).then(function(btn) {
+          if (btn.value) {
+            $scope.lead = savedLead;
+            return true;
+          } 
+            delete PelApi.sessionStorage[$scope.lead.FORM_TYPE + "saveLead"]; 
+           $scope.getNext();
         })
+         } else{
+            $scope.getNext();
+         }
+       }
+           
+             
+      $scope.getNext = function() {
+          var refStamp = new Date().getTime();
+            PelApi.showLoading();
+            ApiGateway.get("leads/getnext", {
+              refStamp: refStamp
+            }).success(function(data) {
+              $scope.lead.LEAD_ID = data.VAL;
+              $scope.lead.FORM_TYPE = $state.params.type; //Draft
+            }).error(function(error, httpStatus, headers, config) {
+              //ApiGateway.reauthOnForbidden(httpStatus, "Unauthorized getnext api", config);
+              //PelApi.throwError("api", "get new Lead seq", "httpStatus : " + httpStatus + " " + JSON.stringify(error) + "(MS:" + config.ms + ")")
+              ApiGateway.throwError(httpStatus, "get new Lead seq", config);
+            }).finally(function() {
+              PelApi.hideLoading();
+            })
       }
 
       if ($state.params.task && $state.params.task.TASK_NUMBER) {
@@ -131,8 +157,9 @@ angular.module('pele', ['ngSanitize'])
         PelApi.safeApply($scope, function() {
           $scope.view = "lead";
           $scope.lead = $state.params.lead;
+           $scope.files = $scope.lead.files;
+          $scope.lead.PREFERRED_HOURS = $scope.lead.PREFERRED_HOURS || " - ";
           var found = $scope.lead.PREFERRED_HOURS.replace(/\s+/g, "").match(/(.+)-(.+)/) || ["", ""];
-          $scope.files = $scope.lead.files;
           $scope.lead.from_hour = found[1] || "";
           $scope.lead.to_hour = found[2] || "";
           $scope.savedAttributes = _.clone($state.params.lead.ATTRIBUTES)
@@ -148,7 +175,8 @@ angular.module('pele', ['ngSanitize'])
           $scope.lead.FORM_TYPE = 'T'; //Draft
           $scope.title = "פתיחת ליד לשגרירים";
         }
-        $scope.getNext();
+        
+        $scope.startLeadValues();
       }
 
 
@@ -380,7 +408,10 @@ angular.module('pele', ['ngSanitize'])
         }
 
         PelApi.showLoading();
+        
+        PelApi.sessionStorage[$scope.lead.FORM_TYPE + "saveLead"] = $scope.lead;
         ApiGateway.post("leads", $scope.lead).success(function(data) {
+          delete PelApi.sessionStorage[$scope.lead.FORM_TYPE + "saveLead"] ;
           $scope.leadSuccess = true;
           if ($state.params.lead && $state.params.lead.LEAD_ID)
             $scope.successMessage = "הליד נשמר בהצלחה";
