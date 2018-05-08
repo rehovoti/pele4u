@@ -331,7 +331,7 @@ angular.module('pele', ['ngSanitize'])
           return true;
         }
         ApiGateway.get("leads/conf").success(function(data) {
-          StorageService.set("leads_conf", data, 1000 * 60 * 60)
+          StorageService.set("leads_conf", data, 1000 * 60 * 1)
           $scope.conf = data;
           $scope.getRelevantLeadsType($scope.conf.types);
         }).error(function(error, httpStatus, headers, config) {
