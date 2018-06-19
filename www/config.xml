@@ -83,7 +83,7 @@
     <icon height="76" platform="ios" src="res/icons/ios/icon-76.png" width="76" />
     <icon height="152" platform="ios" src="res/icons/ios/icon-76-2x.png" width="152" />
     <splash src="splash.png" />
-    <splash platform="ios" src="www/splash/ios/Default@2x~universal~anyany.png" />
+    <splash platform="ios" src="res/screens/ios/ios_splash.png" />
 
     <!--splash height="480" platform="ios" src="res/screens/ios/screen-iphone-portrait.png" width="320" />
     <splash height="960" platform="ios" src="res/screens/ios/screen-iphone-portrait-2x.png" width="640" />
