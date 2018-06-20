@@ -90,9 +90,7 @@
     <splash height="2208" platform="ios" src="res/screens/ios/screen-iphone-portrait-736h.png" width="1242" />
     <splash height="1024" platform="ios" src="res/screens/ios/screen-ipad-portrait.png" width="768" />
     <splash height="2048" platform="ios" src="res/screens/ios/screen-ipad-portrait-2x.png" width="1536" />
-    <splash platform="ios" src="res/screens/ios/Default@2x~universal~anyany.png"/>
-    
-
+    <splash platform="ios" src="res/screens/ios/Default@2x~universal~anyany.png" />
     <platform name="android">
       <icon qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png" />
       <icon qualifier="mdpi" src="res/icons/android/icon-48-mdpi.png" />
