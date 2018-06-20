@@ -83,20 +83,16 @@
     <icon height="76" platform="ios" src="res/icons/ios/icon-76.png" width="76" />
     <icon height="152" platform="ios" src="res/icons/ios/icon-76-2x.png" width="152" />
     <splash src="splash.png" />
-    <!--splash height="480" platform="ios" src="res/screens/ios/screen-iphone-portrait.png" width="320" />
+    <splash height="480" platform="ios" src="res/screens/ios/screen-iphone-portrait.png" width="320" />
     <splash height="960" platform="ios" src="res/screens/ios/screen-iphone-portrait-2x.png" width="640" />
     <splash height="1136" platform="ios" src="res/screens/ios/screen-iphone-portrait-568h-2x.png" width="640" />
     <splash height="1334" platform="ios" src="res/screens/ios/screen-iphone-portrait-667h.png" width="750" />
     <splash height="2208" platform="ios" src="res/screens/ios/screen-iphone-portrait-736h.png" width="1242" />
     <splash height="1024" platform="ios" src="res/screens/ios/screen-ipad-portrait.png" width="768" />
     <splash height="2048" platform="ios" src="res/screens/ios/screen-ipad-portrait-2x.png" width="1536" />
-    <splash height="2436" platform="ios" src="resources/ios/splash/Default-2436h.png" width="1125" />
-    <splash height="1125" platform="ios" src="resources/ios/splash/Default-Landscape-2436h.png" width="2436" />
-    <splash platform="ios" src="res/screen/ios/Default-667h.png" width="750" height="1334"/>
-    <splash platform="ios" src="res/screen/ios/Default-736h.png" width="1242" height="2208"/-->
-    <platform name="ios">
-      <splash src="res/screens/ios/Default@2x~universal~anyany.png" />
-    </platform>
+    <splash platform="ios" src="res/screens/ios/Default@2x~universal~anyany.png"/>
+    
+
     <platform name="android">
       <icon qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png" />
       <icon qualifier="mdpi" src="res/icons/android/icon-48-mdpi.png" />

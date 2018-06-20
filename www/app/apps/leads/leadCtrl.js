@@ -378,24 +378,30 @@ angular.module('pele', ['ngSanitize'])
           })
           return false;
         }
-
+        $scope.disablePost = true;
         PelApi.showLoading();
         ApiGateway.post("leads", $scope.lead, {
-          timeout: 20000
+          timeout: 20000,
+          retry: 0
         }).success(function(data) {
           $scope.leadSuccess = true;
           if ($state.params.lead && $state.params.lead.LEAD_ID)
             $scope.successMessage = "הליד נשמר בהצלחה";
           else
             $scope.successMessage = $scope.trust(leadConf.SUCCESS_MESSAGE);
-
           $scope.lead = {};
           $ionicScrollDelegate.$getByHandle('mainContent').scrollTop(true);
         }).error(function(error, httpStatus, headers, config) {
+          PelApi.safeApply($scope, function() {
+            $scope.disablePost = false;
+          });
           //ApiGateway.reauthOnForbidden(httpStatus, "Unauthorized post lead  lead api", config);
           //PelApi.throwError("api", "Post new lead", "httpStatus : " + httpStatus + " " + JSON.stringify(error) + "(MS:" + config.ms + ")")
           ApiGateway.throwError(httpStatus, "Post new lead", config);
         }).finally(function() {
+          PelApi.safeApply($scope, function() {
+            $scope.disablePost = false;
+          });
           PelApi.hideLoading();
         })
       }

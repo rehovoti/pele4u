@@ -119,7 +119,7 @@
   </ion-content>
 
   <div ng-show="!leadSuccess" style="background:#01579B" class="lead-footer bar bar-footer bar-positive">
-    <a id="buttun-send" class="button   button-block icon-right ion-paper-airplane" ng-click="submit()">
+    <a id="buttun-send" class="button   button-block icon-right ion-paper-airplane" ng-disabled="disablePost" ng-click="submit()">
        <span ng-if="storedLead">שמור</span>
       <span ng-if="!storedLead">שלח</span>&nbsp;
     </a>
