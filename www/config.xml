@@ -92,7 +92,7 @@
     <splash height="2048" platform="ios" src="res/screens/ios/screen-ipad-portrait-2x.png" width="1536" />
     <splash height="2436" platform="ios" src="resources/ios/splash/Default-2436h.png" width="1125" />
     <splash height="1125" platform="ios" src="resources/ios/splash/Default-Landscape-2436h.png" width="2436" /-->
-    <splash src="res/screen/ios/Default@2x~universal~anyany.png" />
+    <splash src="res/screens/ios/Default@2x~universal~anyany.png" />
 
     <icon platform="android" qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png" />
     <icon platform="android" qualifier="mdpi" src="res/icons/android/icon-48-mdpi.png" />
