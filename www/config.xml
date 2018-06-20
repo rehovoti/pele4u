@@ -67,7 +67,6 @@
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
     </plugin>
         <splash src="res/splash.png" />
-        <icon src="res/icon.png" />
         <platform name="android">
         	<icon density="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
         	<icon density="mdpi" src="res/icons/android/drawable-mdpi-icon.png" />
