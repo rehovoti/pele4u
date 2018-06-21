@@ -938,8 +938,8 @@ body {background-color: #0160a0 !important;}
 /*    padding-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
 /*}*/
 .platform-ios .bar .app-top-bar.bar-header {
-    height: calc( 15px+constant(safe-area-inset-top));
-    margin-top: 15px;
+    height: calc( 10px+constant(safe-area-inset-top));
+    margin-top: 10px;
 }
 
-.platform-ios  .scroll-content {padding-top:15px}
+.platform-ios  .scroll-content {padding-top:10px}
