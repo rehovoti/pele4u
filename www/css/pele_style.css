@@ -933,6 +933,7 @@ a.white {color:white}
 
 body {background-color: #0160a0 !important;}
 
-.platform-ios .bar.app-top-bar {
+
+.platform-ios body  {
   padding-top: env(safe-area-inset-top);
 }
