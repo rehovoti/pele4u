@@ -336,6 +336,7 @@ sdiv.item-content{padding:5px 10px 5px 10px !important; border: none !important;
 
 /* rem by R.W.
 .bar.app-top-bar {
+
   border:none;
   background: transparent;
   background-size: 100% !important;
@@ -931,3 +932,7 @@ a.white {color:white}
 }
 
 body {background-color: #0160a0 !important;}
+
+.platform-ios .bar.app-top-bar {
+  padding-top: env(safe-area-inset-top);
+}
