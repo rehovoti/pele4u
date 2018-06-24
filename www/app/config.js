@@ -176,7 +176,7 @@ angular.module('pele.config', [])
     gw_timeout: 15000,
     config: {
       contactIdPrefix: "pelephone",
-      APP_VERSION: "119",
+      APP_VERSION: "119.1",
       SCAN_PRINT_SCANNING_ERROR: "שגיאה בסריקה",
       PIN_CODE_AUTHENTICATION_REQUIRED_CODE: "10000",
       IS_TOKEN_VALID: "N",
