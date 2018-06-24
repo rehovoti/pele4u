@@ -52,7 +52,7 @@
     <plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />
     <plugin name="cordova-plugin-globalization" spec="~1.0.5" />
     <plugin name="cordova-plugin-inappbrowser" spec="~1.6.1" />
-    <plugin name="cordova-plugin-media" spec="~2.4.1">
+    <plugin name="cordova-plugin-media" spec="~5.0.2">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
     </plugin>
