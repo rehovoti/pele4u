@@ -123,6 +123,7 @@
     <allow-intent href="geo:*" />
 
     <plugin name="cordova-plugin-badge" spec="~0.8.5" />
+    <plugin name="cordova-plugin-android-permissions" spec="~0.11.0" />    
     <plugin name="cordova-plugin-x-socialsharing" source="npm" />
     <plugin name="onesignal-cordova-plugin" source="npm" spec="2.3.3" />
     <plugin name="cordova-plugin-contacts" source="npm" version="2.3.1" />
