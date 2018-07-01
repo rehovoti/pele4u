@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.int-pele.pele4u_qa" version="119.1" versionCode="119.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name> PELE4U QA</name>
+<widget id="com.int-pele.pele4u" version="119.1" versionCode="119.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name> PELE4U</name>
     <description>
     Work form anywhere
   </description>
@@ -124,7 +124,7 @@
     <gap:plugin name="cordova-plugin-android-permissions" source="npm" version="0.11.0" />
     <plugin name="cordova-plugin-badge" spec="~0.8.5" />
     <plugin name="cordova-plugin-x-socialsharing" source="npm" />
-    <plugin name="onesignal-cordova-plugin" source="npm" spec="~3.9.2" />
+    <plugin name="onesignal-cordova-plugin" source="npm" spec="~2.3.3" />
     <plugin name="cordova-plugin-contacts" source="npm" version="~2.3.1" />
     <plugin name="cordova-plugin-filepath" spec="^1.3.0" />
 </widget>
