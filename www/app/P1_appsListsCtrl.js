@@ -17,6 +17,11 @@ app.controller('P1_appsListCtrl',
       }
     })
 
+    $scope.options = {
+      loop: true,
+      effect: 'fade',
+      speed: 500,
+    }
     $scope.childOf = {};
     //$scope.tilesEnabled = true;
     $scope.sort = function(items) {

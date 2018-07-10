@@ -1,5 +1,5 @@
-<ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content class="post-size-14px">
+<ion-side-menus enable-menu-with-back-views="false" ng-class="currentState">
+  <ion-side-menu-content class="post-size-14px" drag-content="false">
     <ion-nav-bar class="bar app-top-bar">
       <ion-nav-back-button class="button-clear" ng-click="goBack()">
         <i class="ion-arrow-left-a"></i>
@@ -12,7 +12,7 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left" class="main-menu" expose-aside-when="large">
+  <ion-side-menu side="right" class="main-menu">
     <ion-content class="main-menu-content">
       <ion-list>
         <ion-item class="heading-item item item-avatar" nav-clear menu-close ui-sref="#">
@@ -47,7 +47,7 @@
           <i class="icon ion-ios-telephone"></i>
           <h2 class="menu-text text-right">אלפון</h2>
         </ion-item>
-       </ion-list>
+      </ion-list>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

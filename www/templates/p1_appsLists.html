@@ -1,35 +1,88 @@
 <ion-view class="feeds-categories-view" cache-view="false" hide-back-button="true">
   <ion-nav-buttons side="right">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon">
+    <button menu-toggle="right" class="button button-icon icon ion-navicon">
     </button>
   </ion-nav-buttons>
-  <ion-nav-title>
-    <div class="bar bar-header bar-positive">
-      <h1 class="title">תפריט יישומים</h1>
+  <div class="grid-layout menu-plasma">
+    <div class="grid-item plasma">item 1</div>
+    <div class="grid-item new-menu-2">
+      <ion-slides page="false">
+        <ion-slide>
+          <div>
+            asdsds
+          </div>
+          <div>
+            asdsds
+          </div>
+          <div>
+            asdsds
+          </div>
+          <div>
+            asdsds
+          </div>
+        </ion-slide>
+        <ion-slide>
+          <div>
+            asdsds
+          </div>
+          <div>
+            asdsds
+          </div>
+          <div>
+            asdsds
+          </div>
+          <div>
+            asdsds
+          </div>
+        </ion-slide>
+
+      </ion-slides>
+    </div>
+  </div>
+
+  <ion-content class="menu3 ">
+    <div class="grid-layout ">
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+      <div class="grid-item ">item 1</div>
+    </div>
+    </ion-content->
+    <!--ion-nav-title>
+    <div class="bar bar-header bar-positive ">
+      <h1 class="title ">תפריט יישומים</h1>
     </div>
   </ion-nav-title>
 
-  <ion-content class="pele-background">
-    <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
+  <!--ion-content class="pele-background ">
+    <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
     </ion-refresher>
 
-    <ion-list ng-if="tilesEnabled" id="new-main-menu">
-      <ion-item ng-show="latestParent" ng-click="remenu(latestParent)">
+    <ion-list ng-if="tilesEnabled " id="new-main-menu ">
+      <ion-item ng-show="latestParent " ng-click="remenu(latestParent) ">
         {{visibleParent}} - latest:{{latestParent}}
       </ion-item>
-      <ion-item ng-show="app.parent===visibleParent" ng-repeat="app in feeds_categories.menuItems" ng-click="forwardToApp(app)" class="item-icon-left text-right menu-item" ng-class="app.classes">
-        <img class="icon" ng-src="{{app.Image}}" /> {{app.DisplayName}}
+      <ion-item ng-show="app.parent===visibleParent " ng-repeat="app in feeds_categories.menuItems " ng-click="forwardToApp(app) " class="item-icon-left text-right menu-item " ng-class="app.classes ">
+        <img class="icon " ng-src="{{app.Image}} " /> {{app.DisplayName}}
       </ion-item>
     </ion-list>
 
-    <div ng-if="!tilesEnabled" class="apps-front-menu">
-      <div class="menu-item" ng-repeat="category in feeds_categories.menuItems">
-        <button ng-click="forwardToApp(category)" class="button button-large button-stable button-block text-right">
-         <img class="menu-item-icon" ng-src="{{category.Image}}" />    {{category.DisplayName}}
+    <div ng-if="!tilesEnabled " class="apps-front-menu ">
+      <div class="menu-item " ng-repeat="category in feeds_categories.menuItems ">
+        <button ng-click="forwardToApp(category) " class="button button-large button-stable button-block text-right ">
+         <img class="menu-item-icon " ng-src="{{category.Image}} " />    {{category.DisplayName}}
         </button>
       </div>
     </div>
 
     <!-- end start ng-repeat -->
-  </ion-content>
+    </ion-content-->
 </ion-view>

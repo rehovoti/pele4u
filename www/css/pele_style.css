@@ -943,3 +943,42 @@ body {background-color: #0160a0 !important;}
 }
 
 .platform-ios  .scroll-content {padding-top:10px}
+
+.app-p1_appsLists .feeds-categories-view  , .app-p1_appsLists .bar.app-top-bar {  background-image: url('../img/DocApprove/background.png') !important;border:0}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 0px;
+    grid-auto-rows: minmax(100px, auto);
+    grid-auto-flow: dense;
+    padding: 0px;
+}
+
+.grid-item {
+    padding: 1rem;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #929796;
+    border:1px solid  #ccc;
+    border-radius: 5px;
+    &:nth-child(odd) {
+      border:1px solid  #ccc;
+    }
+}
+
+.span-2 {
+    grid-column-end: span 2;
+    grid-row-end: span 2;
+}
+
+.span-3 {
+    grid-column-end: span 3;
+    grid-row-end: span 4;
+}
+.plasma {grid-column-end: span 3;
+grid-row-end: span 2;}
+.new-menu-2 {grid-column-end: span 3;
+grid-row-end: span 1;}
+.menu3 {margin-top:250px !important}

@@ -34,6 +34,7 @@ angular.module('pele', [
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {
           // Idle.watch();
+          $rootScope.currentState = toState.name.replace(".", "-");
           if (PelApi.global.get('debugFlag')) {
             PelApi.lagger.info("start StateChange ->  from :  " + fromState.name + " to: ", toState.name);
             PelApi.lagger.info(" new State params :  ", toParams);
