@@ -1,19 +1,20 @@
 angular.module('pele.controllers', ['ngStorage'])
-  .controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, PelApi, $state, $ionicHistory, $ionicPopup,ApiGateway) {
+  .controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, PelApi, $state, $ionicHistory, $ionicPopup, ApiGateway, $sessionStorage, srvShareData) {
 
     $rootScope.stopLoading = function() {
       PelApi.hideLoading()
     }
-    
-    $scope.gateway = function() { 
-      $scope.gateway_r="";
-      ApiGateway.get("leads/conf").success(function(data){
-         $scope.gateway_r = "success";
-      }).error(function(error){
-         $scope.gateway_r="error"
+
+    $scope.menuItems = $sessionStorage.menuItems;
+    $scope.gateway = function() {
+      $scope.gateway_r = "";
+      ApiGateway.get("leads/conf").success(function(data) {
+        $scope.gateway_r = "success";
+      }).error(function(error) {
+        $scope.gateway_r = "error"
       });
     }
-    
+
     $scope.getLocalStorageUsage = function() {
       return PelApi.getLocalStorageUsage();
     }
@@ -120,6 +121,42 @@ angular.module('pele.controllers', ['ngStorage'])
     $scope.forwardTo = function(statePath) {
       $state.go(statePath);
     }
+
+    $scope.forwardToApp = function(appConfig) {
+      if (!appConfig.Path) {
+        $scope.latestParent = appConfig.parent;
+        $scope.visibleParent = appConfig.menuId;
+        return true;
+      }
+
+      $sessionStorage.PeleAppId = appConfig.AppId;
+
+      srvShareData.addData({
+        "PeleNetwork": PelApi.appSettings.config.network,
+        "PeleMsisdnValue": PelApi.appSettings.config.MSISDN_VALUE,
+        "PeleAppId": appConfig.AppId
+      });
+
+      var i = {};
+      i.Path = appConfig.Path;
+      i.AppId = appConfig.AppId;
+      i.Title = appConfig.DisplayName;
+      i.Pin = PelApi.appSettings.config.Pin;
+
+      PelApi.sessionStorage.ApiServiceAuthParams = {
+        PIN: $sessionStorage.AuthInfo.pinCode,
+        TOKEN: $sessionStorage.AuthInfo.token
+      };
+      if (appConfig.ApplicationType === "EXT") {
+        window.open(appConfig.Path, '_system');
+      } else {
+        $state.go(appConfig.Path, {
+          "AppId": appConfig.AppId,
+          "Title": appConfig.DisplayName,
+          "Pin": $sessionStorage.AuthInfo.pinCode
+        });
+      }
+    };
 
     $scope.goBack = function() {
       $ionicHistory.goBack();

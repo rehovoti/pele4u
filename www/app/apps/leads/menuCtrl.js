@@ -16,15 +16,15 @@ angular.module('pele')
       $scope.prevState = "";
       if ($state.is("app.leads.self")) {
         $scope.stateType = "S"
-        $scope.title = "הלידים שלי"
+        //$scope.title = "הלידים שלי"
         $scope.prevState = "app.leads.self";
       } else if ($state.is("app.leads.task")) {
-        $scope.title = "שגרירים כאן בשבילך"
+        //$scope.title = "שגרירים כאן בשבילך"
         $scope.stateType = "T"
         $scope.prevState = "app.leads.task";
       }
-
-
+      $scope.$root.title = $state.params.Title;
+      $scope.title = $state.params.Title;
       var getInfo = function() {
         console.log(_.get($scope.conf, "clientConfig", {}))
         return _.get($scope.conf, "clientConfig", {})
@@ -51,7 +51,6 @@ angular.module('pele')
       }
 
       $scope.getConf();
-
 
       $ionicModal.fromTemplateUrl('leadInfo.html', {
         scope: $scope,

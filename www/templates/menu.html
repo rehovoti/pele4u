@@ -1,51 +1,40 @@
-<ion-side-menus enable-menu-with-back-views="false" ng-class="currentState">
-  <ion-side-menu-content class="post-size-14px" drag-content="false">
+<ion-side-menus enable-menu-with-back-views="true">
+  <ion-side-menu-content class="post-size-14px">
     <ion-nav-bar class="bar app-top-bar">
       <ion-nav-back-button class="button-clear" ng-click="goBack()">
         <i class="ion-arrow-left-a"></i>
       </ion-nav-back-button>
       <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="right"> </button>
       </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
-
   <ion-side-menu side="right" class="main-menu">
     <ion-content class="main-menu-content">
-      <ion-list>
+      <ion-list class="pele_rtl text-right">
         <ion-item class="heading-item item item-avatar" nav-clear menu-close ui-sref="#">
-
           <div class="user-image-container">
-
             <pre-img ratio="_1_1" helper-class="rounded-image">
-              <!--<img class="user-image" ng-src="https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg" spinner-on-load>-->
-              <!--<img class="user-image" ng-src="img/employees/worker.png" spinner-on-load>-->
               <img class="user-image" ng-src="res/icon.png" spinner-on-load>
             </pre-img>
           </div>
-
-          <h2 class="dis-greeting text-right ">פלאפון</h2>
+          <h2 class="dis-greeting text-right">פלאפון</h2>
           <p class="message text-right">תקשורת בע"מ</p>
         </ion-item>
-
         <ion-item class="develeoper-info item-icon-left heading-item text-right pele_rtl" nav-clear menu-close ng-show="appSettings.env!='PD'">
           <i class="icon ion-code-working"></i>
           <div class="pele_rtl">סביבה:{{appSettings.env}} - V{{appSettings.config.APP_VERSION}} </div>
           <div class="pele_rtl">משתמש: {{appSettings.config.userName}}</div>
         </ion-item>
         <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.p1_appsLists" ui-sref-opts="{reload: true}">
-          <i class="icon ion-document"></i>
-          <h2 class="menu-text text-right">בחירת אפליקציה</h2>
+          <div class="pele_rtl">בחירת אפליקציה</div>
         </ion-item>
         <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.settings">
-          <i class="icon ion-gear-a"></i>
-          <h2 class="menu-text text-right">הגדרות</h2>
+          <div>הגדרות</div>
         </ion-item>
-        <ion-item ng-if="0" class="item-icon-left" nav-clear menu-close ui-sref="app.phonebook" ui-sref-opts="{reload: true}">
-          <i class="icon ion-ios-telephone"></i>
-          <h2 class="menu-text text-right">אלפון</h2>
+        <ion-item class="item-icon-left" ng-repeat="app in menuItems" nav-clear menu-close ng-click="forwardToApp(app)">
+          <div>{{app.DisplayName}}</div>
         </ion-item>
       </ion-list>
     </ion-content>

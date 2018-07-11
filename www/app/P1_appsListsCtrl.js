@@ -22,6 +22,8 @@ app.controller('P1_appsListCtrl',
       effect: 'fade',
       speed: 500,
     }
+
+
     $scope.childOf = {};
     //$scope.tilesEnabled = true;
     $scope.sort = function(items) {
@@ -140,6 +142,7 @@ app.controller('P1_appsListCtrl',
           //$scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
           $scope.visibleParent = "mid_0";
           $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);
+          $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
           //---------------------------------------------
           //-- Send User Tag for push notifications
           //---------------------------------------------
@@ -322,7 +325,6 @@ app.controller('P1_appsListCtrl',
         //$state.go("app.p2_test");
 
       }
-
     };
     //-----------------------------------------------------------//
     //--                 forwardToApp
@@ -332,7 +334,6 @@ app.controller('P1_appsListCtrl',
       $scope.visibleParent = parent;
     }
     $scope.forwardToApp = function(appConfig) {
-
       if (!appConfig.Path) {
         $scope.latestParent = appConfig.parent;
         $scope.visibleParent = appConfig.menuId;

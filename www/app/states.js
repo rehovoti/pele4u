@@ -297,7 +297,7 @@ angular.module('pele.states', [])
       src: ["app/apps/scanPrint/p2_scan_printCtrl.js"]
     }, {
       state: 'app.leads.all',
-      url: '/leads',
+      url: '/leads/:Title/',
       views: {
         'menuContent@app': {
           templateUrl: function() {
@@ -311,11 +311,11 @@ angular.module('pele.states', [])
       ]
     }, {
       state: 'app.leads',
-      url: '/leads',
+      url: '/leads/:Title/',
       abstract: true,
     }, {
       state: 'app.leads.task',
-      url: '/leads',
+      url: '/leads/:Title/',
       views: {
         'menuContent@app': {
           templateUrl: function() {
@@ -330,7 +330,7 @@ angular.module('pele.states', [])
     },
     {
       state: 'app.leads.self',
-      url: '/leads',
+      url: '/leads/:Title/',
       views: {
         'menuContent@app': {
           templateUrl: function() {
@@ -344,7 +344,7 @@ angular.module('pele.states', [])
       ]
     }, {
       state: 'app.leads.lead',
-      url: '/lead/:type',
+      url: '/lead/:type/:Title/',
       params: {
         lead: {},
         task: {}
@@ -352,8 +352,8 @@ angular.module('pele.states', [])
       views: {
         'menuContent@app': {
           templateUrl: function($stateParams) {
-            if($stateParams.task && $stateParams.task.TASK_NUMBER)
-              return  'app/apps/leads/task.html';
+            if ($stateParams.task && $stateParams.task.TASK_NUMBER)
+              return 'app/apps/leads/task.html';
             return 'app/apps/leads/lead.html';
           },
           controller: 'leadCtrl'
@@ -366,7 +366,7 @@ angular.module('pele.states', [])
     },
     {
       state: 'app.leads.report',
-      url: '/report/:type/',
+      url: '/report/:type/:Title/',
       views: {
         'menuContent@app': {
           templateUrl: function() {

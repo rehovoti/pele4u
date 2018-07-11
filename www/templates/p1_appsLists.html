@@ -4,65 +4,49 @@
     </button>
   </ion-nav-buttons>
   <div class="grid-layout menu-plasma">
-    <div class="grid-item plasma">item 1</div>
+    <div class="grid-item plasma">
+      <div class="user-image-container">
+        <pre-img ratio="_1_1" helper-class="rounded-image">
+          <img class="user-image" ng-src="res/icon.png" spinner-on-load>
+        </pre-img>
+      </div>
+    </div>
     <div class="grid-item new-menu-2">
-      <ion-slides page="false">
-        <ion-slide>
-          <div>
-            asdsds
-          </div>
-          <div>
-            asdsds
-          </div>
-          <div>
-            asdsds
-          </div>
-          <div>
-            asdsds
-          </div>
-        </ion-slide>
-        <ion-slide>
-          <div>
-            asdsds
-          </div>
-          <div>
-            asdsds
-          </div>
-          <div>
-            asdsds
-          </div>
-          <div>
-            asdsds
-          </div>
-        </ion-slide>
+      <div class="pele_rtl text-right caption">קישורים שימושיים: </div>
+      <ion-slides options="options" slider="slider" page="false">
 
+        <ion-slide-page ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in feeds_categories.menuItems ">
+          <img class="grid-item-image" ng-src="{{category.Image}}" />
+          <div class="caption">{{category.DisplayName}}</div>
+        </ion-slide-page>
+        <ion-slide-page>
+          <div class="">
+            bbbbbbbbbbb
+          </div>
+        </ion-slide-page>
       </ion-slides>
     </div>
   </div>
 
-  <ion-content class="menu3 ">
-    <div class="grid-layout ">
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
-      <div class="grid-item ">item 1</div>
+  <ion-content class="menu3">
+    <div class="grid-layout">
+      <div ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in feeds_categories.menuItems ">
+        <img class="grid-item-image" ng-src="{{category.Image}}" />
+        <div class="caption">{{category.DisplayName}}</div>
+      </div>
+      <div ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in feeds_categories.menuItems ">
+        <img class="grid-item-image" ng-src="{{category.Image}}" />
+        <div class="caption">{{category.DisplayName}}</div>
+      </div>
     </div>
-    </ion-content->
-    <!--ion-nav-title>
+  </ion-content>
+  <!--ion-nav-title>
     <div class="bar bar-header bar-positive ">
       <h1 class="title ">תפריט יישומים</h1>
     </div>
-  </ion-nav-title>
+  </ion-nav-title-->
 
-  <!--ion-content class="pele-background ">
+  <!--ion-content class="pele-background">
     <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
     </ion-refresher>
 
@@ -82,7 +66,7 @@
         </button>
       </div>
     </div>
+</ion-content-->
+  <!-- end start ng-repeat -->
 
-    <!-- end start ng-repeat -->
-    </ion-content-->
 </ion-view>

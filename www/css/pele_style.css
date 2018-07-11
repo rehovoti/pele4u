@@ -813,25 +813,26 @@ top:11px;
 .phonebook-form .col-input {margin:10px 30px}
 .phonebook-footer.bar-footer {height:50px}
 
-.main-menu-content {background:#fff}
-.main-menu-content  .item .menu-text {color:#11418e}
-.main-menu-content  .item-complex  .menu-text {color:#11418e}
+.main-menu-content {background:#153751}
+.main-menu-content  .item .menu-text {color:#fff}
+.main-menu-content  .item-complex  .menu-text {color:#fff}
 .main-menu-content  .item {
   background-color: transparent;
-  color:navy !important;
+  color:#fff !important;
 }
+.main-menu-content  * {color:#FFF}
 
 /*Changes the border for the last item*/
-.main-menu-content  .item:last-child {
-  border-bottom: 1px solid #666;
+.main-menu-content  .item  {
+  border: 1px solid #666;
+
 }
 
 .main-menu-content  .item-complex .item-content, .dark .item-radio .item-content {
   background-color: transparent;
+  padding:10px 13px
 }
 .main-menu-content .item .item-content .icon:before { background:#939292}
-
-
 #new_lead {
     font-size:18px;
   }
@@ -948,20 +949,22 @@ body {background-color: #0160a0 !important;}
 
 .grid-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 0px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-gap: 5px;
     grid-auto-rows: minmax(100px, auto);
     grid-auto-flow: dense;
-    padding: 0px;
+    padding: 5px;
 }
-
+.menu-plasma {margin-top:30px}
+.menu-plasma .caption {color:#BA2D7D}
 .grid-item {
-    padding: 1rem;
+    padding: 2px;
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
+    text-align:center;
     color: #929796;
-    border:1px solid  #ccc;
+    border:0px solid  #ccc;
     border-radius: 5px;
     &:nth-child(odd) {
       border:1px solid  #ccc;
@@ -978,7 +981,18 @@ body {background-color: #0160a0 !important;}
     grid-row-end: span 4;
 }
 .plasma {grid-column-end: span 3;
-grid-row-end: span 2;}
+grid-row-end: span 2;background:#DDD;}
+
 .new-menu-2 {grid-column-end: span 3;
 grid-row-end: span 1;}
-.menu3 {margin-top:250px !important}
+.menu3 {margin-top:320px !important}
+.menu3 .grid-item {background:#DDD;}
+.grid-item-image {
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top:5px;
+    bottom: 0;height:60px;width:60px}
+.grid-item .caption {color:#2254a5;font-size:13px}
+.grid-title {padding-right:5px;font-size:13px}
