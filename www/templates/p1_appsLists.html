@@ -5,7 +5,7 @@
     <div class="col col-80">
     </div>
     <div class="ham white col">
-      <button class="button button-icon buttun-large button-clear ion-navicon" menu-toggle="right"></button>
+      <a class="" menu-toggle="right"><img style="height:25px;margin-right:5px" src="img/new_icons/hamburger.png"></a>
     </div>
   </div>
   <div class="grid-layout menu-plasma">
@@ -22,9 +22,9 @@
     <div class="grid-item new-menu-2">
       <div class="pele_rtl text-right caption">קישורים שימושיים </div>
       <ion-scroll has-bouncing="true" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
-        <a ng-click="forwardToApp(category)" ng-repeat="category in feeds_categories.menuItems">
-          <img class="links-image" ng-src="{{category.Image}}" />
-          <div class="caption">{{category.DisplayName}}</div>
+        <a ng-click="forwardToApp(app)" ng-repeat="app in menuItems">
+          <img class="links-image" ng-src="{{app.Image}}" />
+          <div class="caption">{{app.DisplayName}}</div>
         </a>
       </ion-scroll>
     </div>
@@ -34,13 +34,13 @@
     <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
     </ion-refresher>
     <div class="grid-layout">
-      <div ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in menuItems ">
-        <img class="grid-item-image" ng-src="{{category.Image}}" />
-        <div class="caption">{{category.DisplayName}}</div>
+      <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems ">
+        <img class="grid-item-image" ng-src="{{app.Image}}" />
+        <div class="caption">{{app.DisplayName}}</div>
       </div>
-      <div ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in menuItems ">
-        <img class="grid-item-image" ng-src="{{category.Image}}" />
-        <div class="caption">{{category.DisplayName}}</div>
+      <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems ">
+        <img class="grid-item-image" ng-src="{{app.Image}}" />
+        <div class="caption">{{app.DisplayName}}</div>
       </div>
     </div>
   </ion-content>
