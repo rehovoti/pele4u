@@ -64,7 +64,7 @@
         <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
           <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
             <div class="list">
-              <div ng-repeat="action in docDetails.ACTION_HISTORY" class="pele_rtl">
+              <div ng-repeat="action in ACTION_HISTORY" class="pele_rtl">
                 <div ng-click="action.left_icon && toggleActionItem(action)" class="item item-divider item-icon-left item-icon-right text-right action-history-item">
                   <i class="icon pel_icon icon-sm" ng-class="action.left_icon"></i> {{action.APPROVAL_SEQ}}. {{action.USER_NAME}}
                   <small class="string-badge" ng-show="action.ACTION" style="direction: ltr;">{{action.ACTION}}</small>

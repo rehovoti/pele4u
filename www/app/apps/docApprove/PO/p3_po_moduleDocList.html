@@ -38,6 +38,7 @@
 
         <ion-item class="item-doc-list" ng-repeat="item in chat.ORDER_DETAILS.ORDER_DETAILS_ROW | filter:searchText.text" ng-show="isGroupShown(chat.ORG_NAME)" ng-click="forwardToDoc(item.DOC_ID, item.PO_HEADER_ID , chat.ORG_NAME)">
           <img class="doc-redirect" ng-src="img/DocApprove/document_redirect.png">
+          <div style="margin-top: -3%;"><strong><span ng-show="item.EXPLICITLY" class="string-badge-aquamarine">{{item.EXPLICITLY}}</span></strong></div>
           <div>
             <table class="mix-alpha-numeric-table">
               <tr>

@@ -172,7 +172,7 @@ angular.module('pele')
                 if (!$scope.formData.subject) {
                     $scope.hint = "יש להזין שדה - סיבת בירור";
                     return false;
-                } else if (!$scope.formData.forwardUserNameSr[0].key || !$scope.formData.forwardUserName) {
+                } else if (!$scope.formData.forwardUserNameSr[0].key && !$scope.formData.forwardUserName) {
                     $scope.hint = "יש להזין אחד מהשדות הנעמן";
                     return false;
                 } else {
