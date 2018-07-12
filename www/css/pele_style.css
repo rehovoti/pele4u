@@ -984,7 +984,8 @@ grid-row-end: span 2;}
 
 .new-menu-2 {grid-column-end: span 3;
 grid-row-end: span 1;}
-.new-menu-2 a {display:inline-block;    width: 150px;}
+.new-menu-2 a {display:inline-block; min-width: 120px; border:1px solid #CCC;border-radius:4px;margin:10px}
+.new-menu-2 a .caption {background: #CCC;padding:2px 4px}
 .new-menu-2 .links-image {height:50px}
 .menu3 {margin-top:280px !important}
 .menu3 .grid-item { border-width:0px;padding:0;
@@ -1008,7 +1009,7 @@ border-width: 1px;}
 
 .app-p1_appsLists .user-image {height:70%}
 .plasma .profile {margin-top:20px}
-.plasma .profile-caption {color:#FFF;font-size:18px}
+.plasma .profile-caption {color:#FFF;font-size:16px}
 
 .plasma .profile img {  display: inline;
   margin: 0 auto;
@@ -1024,5 +1025,11 @@ border-width: 1px;}
     border: 3px solid #ccc;
 }
 
-.grid-item.new-menu-2 {background:rgba(255, 255,255, 0.2) !important;border-radius:7px}
+.grid-item.new-menu-2 {background:rgba(255, 255,255, 0) !important;border-radius:7px}
 .grid-item.new-menu-2 {color:Navy}
+.new-menu-2 {grid-column-end: span 3;
+grid-row-end: span 1;}
+.new-menu-2 a {display:inline-block; min-width: 100px; border:1px solid rgba(255, 255, 255, 0.2);border-radius:4px;margin:5px;padding-top:10px}
+.new-menu-2 a .caption {background: rgba(255, 255, 255, 0.2);padding:2px 4px;color:#034180;font-size:12px}
+.new-menu-2 .links-image {height:40px}
+.top-menu-buttons {position:absolute;}

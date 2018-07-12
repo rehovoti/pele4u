@@ -6,7 +6,7 @@ var app = angular.module('pele.P1_appsListCtrl', ['ngStorage', 'ngCordova']);
 //==                         PAGE_1                                  ==//
 //=====================================================================//
 app.controller('P1_appsListCtrl',
-  function($scope, $http, $state, $ionicLoading, PelApi, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate) {
+  function($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate) {
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
     PelApi.lagger.checkFile().then(function(logStat) {
@@ -23,6 +23,20 @@ app.controller('P1_appsListCtrl',
       speed: 500,
     }
 
+    $rootScope.timeRange = _.toNumber(moment().format("H"))
+    $scope.wellcome = "";
+
+    if ($rootScope.timeRange >= "05" && $rootScope.timeRange < "11") {
+      $scope.wellcome = "בוקר טוב";
+    } else if ($rootScope.timeRange >= "11" && $rootScope.timeRange < "14") {
+      $scope.wellcome = "צהריים טובים";
+    } else if ($rootScope.timeRange >= "14" && $rootScope.timeRange < "18") {
+      $scope.wellcome = "אחר צהריים טובים";
+    } else if ($rootScope.timeRange >= "18" && $rootScope.timeRange < "22") {
+      $scope.wellcome = "ערב טוב";
+    } else {
+      $scope.wellcome = "לילה טוב";
+    }
 
     $scope.childOf = {};
     //$scope.tilesEnabled = true;
@@ -157,6 +171,18 @@ app.controller('P1_appsListCtrl',
           //--------------------------------------
           $sessionStorage.token = appSettings.config.token;
           $sessionStorage.user = appSettings.config.GetUserMenu.user;
+          var stoterId = _.get($localStorage.profile, "id")
+          if ($sessionStorage.user && !(stoterId || stoterId == $sessionStorage.user)) {
+            ApiGateway.get("public/profile", {
+              id: $sessionStorage.user
+            }).then(function(res) {
+              $localStorage.profile = res.data;
+              $localStorage.profile.id = $sessionStorage.user;
+              $rootScope.profile = $localStorage.profile;
+            })
+          } else {
+            $rootScope.profile = $localStorage.profile;
+          }
           $sessionStorage.userName = appSettings.config.GetUserMenu.userName;
 
           appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
@@ -370,5 +396,6 @@ app.controller('P1_appsListCtrl',
     var btnClass = {};
     btnClass.activ = false;
     $scope.class = "pele-menu-item-on-touch item-icon-right";
-    $scope.doRefresh();
+    if (!($rootScope.menuItems && $rootScope.menuItems.length))
+      $scope.doRefresh();
   })

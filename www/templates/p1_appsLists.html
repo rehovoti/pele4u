@@ -1,16 +1,24 @@
 <ion-view class="feeds-categories-view" cache-view="false" hide-back-button="true">
-
+  <div class="row top-menu-buttons">
+    <div class="col col-20">
+      <img style="width:30px" src="img/circle-pele4u.png" /></div>
+    <div class="ham white col col-20">
+      <button class="button button-icon buttun-large button-clear ion-navicon" menu-toggle="right"></button>
+    </div>
+  </div>
   <div class="grid-layout menu-plasma">
+
+
     <div class="grid-item plasma">
       <div class="text-center profile">
-        <img ng-src="img/avatar.jpg" class="image-cropper">
+        <img ng-show="profile.pic" ng-src="data:image/JPEG;base64,{{profile.pic}}" class="image-cropper">
       </div>
       <div class="profile-caption">
-        בוקר טוב גולן
+        {{wellcome}} , {{profile.firstName}}
       </div>
     </div>
     <div class="grid-item new-menu-2">
-      <div class="pele_rtl text-right caption">קישורים שימושיים: </div>
+      <div class="pele_rtl text-right caption">קישורים שימושיים </div>
       <ion-scroll has-bouncing="true" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
         <a ng-click="forwardToApp(category)" ng-repeat="category in feeds_categories.menuItems">
           <img class="links-image" ng-src="{{category.Image}}" />
@@ -21,12 +29,14 @@
   </div>
 
   <ion-content class="menu3">
+    <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
+    </ion-refresher>
     <div class="grid-layout">
-      <div ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in feeds_categories.menuItems ">
+      <div ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in menuItems ">
         <img class="grid-item-image" ng-src="{{category.Image}}" />
         <div class="caption">{{category.DisplayName}}</div>
       </div>
-      <div ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in feeds_categories.menuItems ">
+      <div ng-click="forwardToApp(category)" class="grid-item" ng-repeat="category in menuItems ">
         <img class="grid-item-image" ng-src="{{category.Image}}" />
         <div class="caption">{{category.DisplayName}}</div>
       </div>
@@ -39,8 +49,7 @@
   </ion-nav-title-->
 
   <!--ion-content class="pele-background">
-    <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
-    </ion-refresher>
+
 
     <ion-list ng-if="tilesEnabled " id="new-main-menu ">
       <ion-item ng-show="latestParent " ng-click="remenu(latestParent) ">
