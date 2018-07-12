@@ -535,11 +535,11 @@ transform: translateY(-50%);
 margin: 0 auto;
 left:15px;
 }
-                        }
+                        
 .apps-front-menu .menu-item.reduce  button img { height:40px;min-height:40px;}
 .apps-front-menu .menu-item.reduce2  button img { height:30px;min-height:30px;}
 
-label.item-search-new {;background: #c4c6c7}
+label.item-search-new {background: #c4c6c7}
 label.item-search-new  {border:1px solid #CCC;background:White;border-radius: 4px;margin:10px !important}
 label.item-search-new i {color:black;font-size:20px;}
 label.item-search-new input {color:black;font-size:20px}
@@ -625,6 +625,40 @@ div#main-apps-menu div.row-bottom {margin-top:15px}
     margin-right:5px;
     color: rgb(255, 255, 255);
 }
+
+.string-badge-aquamarine {
+  display: inline-block;
+  min-width: 20px;
+  min-height: 20px;
+  padding: 4px 4px;
+  font-size:11px;
+  line-height: 1;
+  color:#fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #777;
+  border-radius: 8px;
+  margin-right:5px;
+  color: aquamarine;
+}
+
+.string-badge_round {
+  display: inline-block;
+  min-width: 17px;
+  min-height: 12px;
+  padding: 3px 3px;
+  font: size 8px;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  background-color: black;
+  border-radius: 20px;
+  margin-right:5px;
+  color: rgb(255, 255, 255);
+}
+
 .icon.navy {color:#003366}
 .icon.red {color:#CA002A}
 
@@ -740,7 +774,7 @@ table.init_lines_table thead {background: #f4f4f4;border:1px solid #999999}
 table.init_lines_table thead .info {padding-right:8px}
 
 table.init_lines_table .label {padding-right:5px;white-space:nowrap}
-table.init_lines_table .info {padding-right:5px;width: 99%;padding}
+table.init_lines_table .info {padding-right:5px; width: 99%;}
 
 table.init_lines_table thead .label {font-weight: bold}
 table.init_lines_table {border:1px solid #CCC}
@@ -849,7 +883,7 @@ top:11px;
 
 
 
-.list.lead-form .item-input input  { ;border-bottom: 1px dotted #444;padding-right:5px !important;margin-right:5px; text-align: right;}
+.list.lead-form .item-input input  {border-bottom: 1px dotted #444;padding-right:5px !important;margin-right:5px; text-align: right;}
 .list.lead-form .item-input textarea {border: 1px dotted #444;padding-right:5px;    min-height: 150px;margin-right:5px;
     max-height: 300px;
 }

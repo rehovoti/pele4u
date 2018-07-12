@@ -1,5 +1,5 @@
 /*********************/
-const env = "PD";
+const env = "DV";
 /********************/
 
 const EnvCodes = {
@@ -206,7 +206,7 @@ angular.module('pele.config', [])
         PD: "Mobile_Admins_HR@pelephone.co.il",
         LP: "Mobile_Admins_HR@pelephone.co.il",
         DEFAULT: "ghadad@gmail.com",
-        DV: "ghadad@gmail.com"
+        DV: "mozkin@gmail.com"
       },
       LOG_FILE_MAIL_SUBJECT: "Pele4U Log File",
       LOG_FILE_INFO_TYPE: "I",
@@ -317,6 +317,9 @@ angular.module('pele.config', [])
       },
       "PO": {
         state: "app.ini_list"
+      },      
+      "POWFTASK": {
+        state: "app.chat_list"
       },
       "FIN": {
         state: "app.inv_list"
@@ -349,6 +352,28 @@ angular.module('pele.config', [])
       code: "REJECT",
       note: true,
       action: "REJECT"
+    },
+    DONE: {
+      text: '<i id="DONE" class="icon ion-checkmark-circled text-center"></i> מענה',
+      code: "DONE",
+      note: true,
+      action: "DONE"
+    },
+    CLOSE_DESCRIPTION: {
+      text: '<i id="CLOSE_DESCRIPTION" class="icon ion-checkmark-circled text-center"></i> סגירת בירור',
+      code: "CLOSE_DESCRIPTION",
+      action: "CLOSE_DESCRIPTION"
+    },
+    OPEN_CHAT: {
+      text: '<i id="OPEN_CHAT" class="icon ion-checkmark-circled text-center"></i> פתיחת בירור',
+      code: "OPEN_CHAT",
+      action: "OPEN_CHAT"
+    },
+    SEND_CHAT: {
+      text: '<i id="SEND_CHAT" class="icon ion-checkmark-circled text-center"></i> שליחת בירור',
+      code: "SEND_CHAT",
+      note: true,
+      action: "SEND_CHAT"
     },
     env: env,
     shareFileDirectory: "/My Files &amp; Folders/"
