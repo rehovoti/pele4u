@@ -5,7 +5,7 @@ angular.module('pele.controllers', ['ngStorage'])
       PelApi.hideLoading()
     }
 
-    $scope.menuItems = $sessionStorage.menuItems;
+    //$scope.menuItems = $sessionStorage.menuItems;
     $scope.gateway = function() {
       $scope.gateway_r = "";
       ApiGateway.get("leads/conf").success(function(data) {

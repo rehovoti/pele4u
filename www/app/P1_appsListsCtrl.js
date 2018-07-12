@@ -142,7 +142,7 @@ app.controller('P1_appsListCtrl',
           //$scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
           $scope.visibleParent = "mid_0";
           $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);
-          $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
+          $rootScope.menuItems = $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
           //---------------------------------------------
           //-- Send User Tag for push notifications
           //---------------------------------------------
