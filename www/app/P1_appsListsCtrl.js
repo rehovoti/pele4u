@@ -305,6 +305,7 @@ app.controller('P1_appsListCtrl',
           $scope.$broadcast('scroll.refreshComplete');
         } else {
           if (appSettings.config.IS_TOKEN_VALID !== "Y") {
+            $rootScope.menuItems = [];
             $scope.GetUserMenuMain();
           } else {
             $sessionStorage.token = appSettings.config.token;

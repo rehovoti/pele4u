@@ -949,7 +949,7 @@ body {background-color: #0160a0 !important;}
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     grid-gap: 0px;
-    grid-auto-rows: minmax(100px, auto);
+    grid-auto-rows: minmax(97px, auto);
     grid-auto-flow: dense;
     padding: 5px;
 }
@@ -978,11 +978,11 @@ body {background-color: #0160a0 !important;}
 .plasma {grid-column-end: span 3;
 grid-row-end: span 2;}
 
-.new-menu-2 {grid-column-end: span 3;
+.menu2 {grid-column-end: span 3;
 grid-row-end: span 1;}
-.new-menu-2 a {display:inline-block; min-width: 120px;border-radius:4px;margin:10px}
-.new-menu-2 a .caption {padding:2px 4px}
-.new-menu-2 .links-image {height:50px}
+.menu2 a {display:inline-block; min-width: 120px;border-radius:4px;margin:10px}
+.menu2 a .caption {padding:2px 4px}
+.menu2 .links-image {height:50px}
  
 .menu3 {margin-top:260px !important}
 .menu3 .grid-item { border-width:0px;padding:0;  border-width: 1px;}
@@ -1010,21 +1010,34 @@ grid-row-end: span 1;}
     border-radius: 50%;
 }
 
-.grid-item.new-menu-2 {background:rgba(255, 255,255, 0) !important;border-radius:7px}
-.grid-item.new-menu-2 {color:Navy}
-.new-menu-2 a {display:inline-block; min-width: 100px; border:1px solid rgba(255, 255, 255, 0.2);border-radius:4px;margin:5px;padding-top:10px}
-.new-menu-2 a .caption {background: rgba(255, 255, 255, 0.2);padding:2px 4px;color:#034180;font-size:12px}
-.new-menu-2 .links-image {height:30px}
+.--grid-item.menu2 {background:rgb(255,255,255) }
+
+.menu2 a {display:inline-block; min-width: 100px; border:1px solid rgba(255, 255, 255, 0.2);border-radius:4px;margin:5px;padding-top:10px}
+.menu2 a .caption {background: rgba(255, 255, 255, 0.2);padding:2px 4px;color:#034180;font-size:12px}
+.menu2 .links-image {height:30px}
 .top-menu-buttons {position:absolute;}
-.menu3 .grid-layout {background:#F2E6E6 !important}
-.newlook1 .menu-plasma .caption {color:#FFF ;     font-weight: 300}
-.newlook1 .menu-plasma .caption.useful { display: flex; padding-right:5px}
-  .newlook1 .menu-plasma .caption img {margin-right:10px}
-.newlook1 { background-image: url('../img/bg/bg4.jpg') !important;}
-.newlook1 .image-cropper {border: 3px solid #ccc;}
+.newlook2 .menu3 .grid-layout,.newlook1 .menu3 .grid-layout {background:#F2E6E6 !important}
+.newlook .menu-plasma .caption {color:#FFF ;font-weight: 300}
 .newlook .menu3 {color:#111127;font-weight:100}
 .newlook .tsb-hscroll.scroll-view {margin:0}
-.newlook .caption {font-weight: 500;color:#222235}
+.newlook .menu3 .caption {font-weight: 400}
 .newlook .plasma .profile-caption {
 color:white
 }
+
+.newlook .menu-plasma .caption.useful { display: flex; padding-right:5px}
+.newlook1 .menu-plasma .caption img {margin-right:10px}
+.newlook1 .image-cropper {border: 3px solid #ccc;}
+.newlook1 { background-image: url('../img/bg/bg4.jpg') !important;}
+.newlook1 .menu3 .caption {color:Black}
+.newlook2 .menu-plasma {background-image: url('../img/bg/bg5.jpg') !important;}
+.newlook3  .menu3 {background-image: url('../img/bg/bg5.jpg') !important;}
+.newlook3  .menu3 {background-image: url('../img/bg/bg5.jpg') !important;color:white;background-position-y:-110px }
+.newlook3 .menu3 .caption {color:white}
+.newlook3 .grid-item {border-color:white;border-color:rgb(16, 49, 51,0.2)}
+.newlook3 .grid-item.menu2 {background:rgb(224, 224, 224,1) !important ;border-top:2px solid rgb(124, 124, 124,0.8)}
+.newlook3 .grid-item.menu2 .caption {color:#233a59}
+.newlook3 .grid-layout { padding: 0px; }
+.newlook3 .menu-plasma .plasma {background-image: url('../img/bg/bg5.jpg') !important;}
+
+.newlook .menu2 a {border-color:rgb(0,0,0,0.5) }
