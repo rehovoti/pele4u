@@ -33,7 +33,7 @@
     </ion-refresher>
     <div class="grid-layout" ng-show="menuItems">
       <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems ">
-        <img class="grid-item-image" ng-src="{{app.Image}}" />
+        <img class="grid-item-image circle" ng-src="{{app.Image}}" />
         <div class="caption">{{app.DisplayName}}</div>
       </div>
       <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems ">
@@ -56,14 +56,14 @@
         {{visibleParent}} - latest:{{latestParent}}
       </ion-item>
       <ion-item ng-show="app.parent===visibleParent " ng-repeat="app in feeds_categories.menuItems " ng-click="forwardToApp(app) " class="item-icon-left text-right menu-item " ng-class="app.classes ">
-        <img class="icon " ng-src="{{app.Image}} " /> {{app.DisplayName}}
+        <img class="icon" ng-src="{{app.Image}} " /> {{app.DisplayName}}
       </ion-item>
     </ion-list>
 
     <div ng-if="!tilesEnabled " class="apps-front-menu ">
       <div class="menu-item " ng-repeat="category in feeds_categories.menuItems ">
         <button ng-click="forwardToApp(category) " class="button button-large button-stable button-block text-right ">
-         <img class="menu-item-icon " ng-src="{{category.Image}} " />    {{category.DisplayName}}
+         <img class="menu-item-icon" ng-src="{{category.Image}} " />    {{category.DisplayName}}
         </button>
       </div>
     </div>
