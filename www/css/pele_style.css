@@ -945,7 +945,6 @@ body {background-color: #0160a0 !important;}
 
 .platform-ios  .scroll-content {padding-top:10px}
 
-
 .grid-layout {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -954,15 +953,12 @@ body {background-color: #0160a0 !important;}
     grid-auto-flow: dense;
     padding: 5px;
 }
-.menu-plasma {    }
-.menu-plasma .caption {color:#BA2D7D}
 .grid-item {
     padding: 0px;
     font-size: 14px;
     font-weight: bold;
-    text-transform: uppercase;
+    text-transform: uppercase; 
     text-align:center;
-    color: #929796;
     border:0px solid  #ccc;
     border-radius: 0px;
     &:nth-child(odd) {
@@ -984,15 +980,12 @@ grid-row-end: span 2;}
 
 .new-menu-2 {grid-column-end: span 3;
 grid-row-end: span 1;}
-.new-menu-2 a {display:inline-block; min-width: 120px; border:1px solid #CCC;border-radius:4px;margin:10px}
-.new-menu-2 a .caption {background: #CCC;padding:2px 4px}
+.new-menu-2 a {display:inline-block; min-width: 120px;border-radius:4px;margin:10px}
+.new-menu-2 a .caption {padding:2px 4px}
 .new-menu-2 .links-image {height:50px}
-.menu3 {margin-top:280px !important}
-.menu3 .grid-item { border-width:0px;padding:0;
-  border-color: rgba(28, 37, 120, 0.2);
-border-width: 1px;}
-
-
+ 
+.menu3 {margin-top:260px !important}
+.menu3 .grid-item { border-width:0px;padding:0;  border-width: 1px;}
 .grid-item-image {
     margin: auto;
     top: 0;
@@ -1000,36 +993,38 @@ border-width: 1px;}
     right: 0;
     margin-top:5px;
     bottom: 0;height:60px;width:60px}
-.grid-item .caption {color:#fff;font-size:13px ;    padding-right: 10px;
-}
+.grid-item .caption {font-size:13px ;    padding-right: 10px;}
 .grid-title {padding-right:5px;font-size:13px}
 
 .app-p1_appsLists .bar.app-top-bar {  display:none}
-.app-p1_appsLists .feeds-categories-view {  background-image: url('../img/bg/bg4.jpg') !important;ackground-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover; }
-
+.app-p1_appsLists .feeds-categories-view { background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover; }
 .app-p1_appsLists .user-image {height:70%}
 .plasma .profile {margin-top:20px}
-.plasma .profile-caption {color:#FFF;font-size:16px}
-
-.plasma .profile img {  display: inline;
-  margin: 0 auto;
-  height: 120px;
-  width: auto;}
-
+.plasma .profile-caption {font-size:16px}
+.plasma .profile img { display: inline; margin: 0 auto;height: 120px; width: auto;}
 .image-cropper {
     width: 100px;
     height: 100px;
     position: relative;
-    overflow: hidden;
+     overflow: hidden;
     border-radius: 50%;
-    border: 3px solid #ccc;
 }
 
 .grid-item.new-menu-2 {background:rgba(255, 255,255, 0) !important;border-radius:7px}
 .grid-item.new-menu-2 {color:Navy}
-.new-menu-2 {grid-column-end: span 3;
-grid-row-end: span 1;}
 .new-menu-2 a {display:inline-block; min-width: 100px; border:1px solid rgba(255, 255, 255, 0.2);border-radius:4px;margin:5px;padding-top:10px}
 .new-menu-2 a .caption {background: rgba(255, 255, 255, 0.2);padding:2px 4px;color:#034180;font-size:12px}
-.new-menu-2 .links-image {height:40px}
+.new-menu-2 .links-image {height:30px}
 .top-menu-buttons {position:absolute;}
+.menu3 .grid-layout {background:#F2E6E6 !important}
+.newlook1 .menu-plasma .caption {color:#FFF ;     font-weight: 300}
+.newlook1 .menu-plasma .caption.useful { display: flex; padding-right:5px}
+  .newlook1 .menu-plasma .caption img {margin-right:10px}
+.newlook1 { background-image: url('../img/bg/bg4.jpg') !important;}
+.newlook1 .image-cropper {border: 3px solid #ccc;}
+.newlook .menu3 {color:#111127;font-weight:100}
+.newlook .tsb-hscroll.scroll-view {margin:0}
+.newlook .caption {font-weight: 500;color:#222235}
+.newlook .plasma .profile-caption {
+color:white
+}
