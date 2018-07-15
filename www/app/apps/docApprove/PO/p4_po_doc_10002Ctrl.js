@@ -2,11 +2,18 @@
  * Created by User on 25/08/2016.
  */
 angular.module('pele')
-  .controller('p4_po_doc_10002Ctrl', function($rootScope, $scope, $stateParams, $http, $q, $location, $window, $timeout, $ionicLoading, $ionicActionSheet, $ionicModal, PelApi, $ionicNavBarDelegate, $cordovaNetwork, $ionicPopup, appSettings, $sessionStorage, $cordovaFileTransfer, $cordovaInAppBrowser
+  .controller('p4_po_doc_10002Ctrl', function($rootScope, $scope, ApiService, $stateParams, $state, $http, $q, $location, $window, $timeout, $ionicLoading, $ionicActionSheet, $ionicModal, PelApi, $ionicNavBarDelegate, $cordovaNetwork, $ionicPopup, appSettings, $sessionStorage, $cordovaFileTransfer, $cordovaInAppBrowser
       /* rem by R.W 07/11/2016 , $cordovaFileOpener2 */
     ) {
 
       $scope.appId = $stateParams.AppId;
+
+      $scope.toggleActionItem = function(action) {
+        action.display = !action.display;
+        if (action.display) 
+          action.left_icon = 'ion-chevron-down';
+        else action.left_icon = 'ion-chevron-left';
+      };
 
       //---------------------------------
       //--       goHome
@@ -454,6 +461,7 @@ angular.module('pele')
           return;
         }
 
+        $scope.docDetails = appSettings.config.docDetails;
 
         //----------- Order Header -------------
         $scope.APP_ID = appId;
@@ -478,9 +486,14 @@ angular.module('pele')
         $scope.buttonsArr = appSettings.config.docDetails.BUTTONS;
 
         //----------- Action History -----
-        var actionHistory = $scope.addPushFlagToActionHistory(appSettings.config.docDetails.ACTION_HISTORY);
-        $scope.ACTION_HISTORY = actionHistory;
-        // Show the action sheet
+        // Yanis Shafran 10.07
+        //var actionHistory = $scope.addPushFlagToActionHistory(appSettings.config.docDetails.ACTION_HISTORY);
+        //$scope.ACTION_HISTORY = actionHistory;
+
+        $scope.ACTION_HISTORY = appSettings.config.docDetails.ACTION_HISTORY;
+        PelApi.extendActionHistory(appSettings.config.docDetails);
+
+        // Show the action sheet 
         $scope.approve = appSettings.config.ApprovRejectBtnDisplay;
 
         $ionicLoading.hide();
@@ -898,6 +911,9 @@ angular.module('pele')
 
             } else if (button === appSettings.REJECT) {
               $scope.docReject();
+            } else if (button === appSettings.OPEN_CHAT) {
+              $scope.docDetails.appId = $scope.appId;
+              $state.go('app.open_chat', {obj: $scope.docDetails});
             }
             return true;
           },
