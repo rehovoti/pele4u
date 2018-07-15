@@ -992,11 +992,11 @@ grid-row-end: span 1;}
     left: 0;
     right: 0;
     margin-top:5px;
-    bottom: 0;height:60px;width:60px;
+    bottom: 0;height:50px;width:50px;
+    margin-top:10px
  }
-
  .grid-item-image.circle { background: #ccc;
-  padding:12px;
+  padding:5px;
   border-radius: 50%;
   border:2px solid rgb(76, 87, 117,0.6)
 }

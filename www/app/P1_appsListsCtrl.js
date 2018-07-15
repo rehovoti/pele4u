@@ -61,9 +61,9 @@ app.controller('P1_appsListCtrl',
       var sortedMenu = _.sortBy(items, function(i) {
         idx++;
         i.menuLocation = i.Location || "side";
-        i.side = i.menuLocation.match("side|s") ? true : false;
-        i.menu2 = i.menuLocation.match("menu2|m2") ? true : false;
-        i.menu3 = i.menuLocation.match("menu2|m3") ? true : false;
+        i.side = true || i.menuLocation.match("side|s") ? true : false;
+        i.menu2 = true || i.menuLocation.match("menu2|m2") ? true : false;
+        i.menu3 = true || i.menuLocation.match("menu2|m3") ? true : false;
 
         i.newSorter = (i.Sorter || ("99" + idx).toString()).replace(re, "");
         i.level = (i.newSorter.match(/\./g) || []).length;
@@ -164,11 +164,6 @@ app.controller('P1_appsListCtrl',
 
           //$scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
           $scope.visibleParent = "mid_0";
-          $scope.feeds_categories.menuItems[0].Location = "s menu1";
-          $scope.feeds_categories.menuItems[1].Location = "s menu1";
-          $scope.feeds_categories.menuItems[2].Location = "s m2";
-          $scope.feeds_categories.menuItems[3].Location = "s m2";
-          $scope.feeds_categories.menuItems[4].Location = "s menu1 menu2";
 
           $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);
           $rootScope.menuItems = $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
