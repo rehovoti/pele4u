@@ -1052,7 +1052,7 @@ color:white
 .newlook .plasma .profile img  {border:3px solid #fff}
 .newlook3 .menu3 {background-image: url('../img/bg/bg5.jpg') !important;color:white;background-position-y:-110px }
 .newlook4 { background-image: url('../img/bg/bg4.jpg') !important;}
-.newlook4 .grid-item {border-color:rgb(16, 49, 51,0.2)}
+.newlook4 .grid-item {border-color:rgb(16, 49, 51,0.2) !important;}
 .newlook4 .menu3 .grid-item .caption{color:white}
-.newlook4 .menu2 a .caption {border-top:1px solid rgb(0,0,0,0.2);background:rgba(0,0,0,0.1)}
-.newlook4 .grid-item.menu2 {background:rgb(224, 224, 224,0.1) !important ;border-top:1px solid rgb(124, 124, 124,0.1) }
+.newlook4 .menu2 a .caption {border-top:1px solid rgb(0,0,0,0.2) !important;;background:rgba(0,0,0,0.1) !important;}
+.newlook4 .grid-item.menu2 {background:rgb(224, 224, 224,0.1) !important ;border-top:1px solid rgb(124, 124, 124,0.1) !important;}
