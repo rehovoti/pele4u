@@ -33,7 +33,7 @@
         <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.settings">
           <div>הגדרות</div>
         </ion-item>
-        <ion-item class="item-icon-left" ng-if="menuItems.length" ng-repeat="app in menuItems" nav-clear menu-close ng-click="forwardToApp(app)">
+        <ion-item class="item-icon-left" ng-show="app.Path" ng-if="menuItems.length" ng-repeat="app in menuItems | filter: { side: true}" nav-clear menu-close ng-click="forwardToApp(app) ">
           <div>{{app.DisplayName}}</div>
         </ion-item>
       </ion-list>

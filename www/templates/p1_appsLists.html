@@ -1,42 +1,43 @@
-<ion-view class="feeds-categories-view newlook newlook3" cache-view="false" hide-back-button="true">
+<ion-view class="feeds-categories-view newlook newlook3" cache-view="false" hide-back-button="true" ng-class="{'loading':!menuItems.length}">
   <div class="row top-menu-buttons">
     <div class="col">
       <img style="width:30px" src="img/circle-pele4u.png" />
-      </div>
+    </div>
     <div class="col col-80">
     </div>
     <div class="ham white col">
       <a class="" menu-toggle="right"><img style="height:22px;margin-right:5px" src="img/new_icons/hamburger.png"></a>
     </div>
   </div>
-  <div class="grid-layout menu-plasma" ng-show="menuItems">
+  <div class="grid-layout menu-plasma" ng-show="menuItems.length">
     <div class="grid-item plasma">
       <div class="text-center profile">
         <img ng-show="profile.pic" ng-src="data:image/JPEG;base64,{{profile.pic}}" class="image-cropper">
+        <img ng-show="!profile.pic" ng-src="img/new_icons/blue_avatar.png" class="image-cropper">
       </div>
       <div class="profile-caption">
-        {{wellcome}} , {{profile.firstName}}
+        {{wellcome}} , {{profile.firstName}} {{timeRange2}}
       </div>
     </div>
     <div class="grid-item menu2">
-      <div class="pele_rtl text-right useful caption ">קישורים שימושיים  <img style="height:20px" src="img/new_icons/h-scroll.png"></div>
+      <div class="pele_rtl text-right useful caption ">קישורים שימושיים <img style="height:20px" src="img/new_icons/h-scroll.png"></div>
       <ion-scroll has-bouncing="true" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
-        <a ng-click="forwardToApp(app)" ng-repeat="app in menuItems">
+        <a ng-click="forwardToApp(app)" ng-repeat="app in menuItems  | filter: { menu2: true }">
           <img class="links-image" ng-src="{{app.Image}}" />
           <div class="caption">{{app.DisplayName}}</div>
         </a>
       </ion-scroll>
     </div>
   </div>
-  <ion-content class="menu3">
+  <ion-content class="menu3" ng-show="menuItems.length">
     <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
     </ion-refresher>
     <div class="grid-layout" ng-show="menuItems">
-      <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems ">
+      <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu3: true }">
         <img class="grid-item-image circle" ng-src="{{app.Image}}" />
         <div class="caption">{{app.DisplayName}}</div>
       </div>
-      <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems ">
+      <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu3: true }">
         <img class="grid-item-image" ng-src="{{app.Image}}" />
         <div class="caption">{{app.DisplayName}}</div>
       </div>

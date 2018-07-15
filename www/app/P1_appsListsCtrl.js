@@ -16,27 +16,31 @@ app.controller('P1_appsListCtrl',
         })
       }
     })
-
+    $rootScope.menuItems = [];
     $scope.options = {
       loop: true,
       effect: 'fade',
       speed: 500,
     }
 
-    $rootScope.timeRange = _.toNumber(moment().format("H"))
     $scope.wellcome = "";
-
-    if ($rootScope.timeRange >= "05" && $rootScope.timeRange < "11") {
-      $scope.wellcome = "בוקר טוב";
-    } else if ($rootScope.timeRange >= "11" && $rootScope.timeRange < "14") {
-      $scope.wellcome = "צהריים טובים";
-    } else if ($rootScope.timeRange >= "14" && $rootScope.timeRange < "18") {
-      $scope.wellcome = "אחר צהריים טובים";
-    } else if ($rootScope.timeRange >= "18" && $rootScope.timeRange < "22") {
-      $scope.wellcome = "ערב טוב";
-    } else {
-      $scope.wellcome = "לילה טוב";
+    $scope.getWellcomeString = function() {
+      $scope.timeRange = _.toNumber(moment().format("H"))
+      if ($scope.timeRange >= "05" && $scope.timeRange < "11") {
+        $scope.wellcome = "בוקר טוב";
+      } else if ($scope.timeRange >= "11" && $scope.timeRange < "14") {
+        $scope.wellcome = "צהריים טובים";
+      } else if ($scope.timeRange >= "14" && $scope.timeRange < "18") {
+        $scope.wellcome = "אחר צהריים טובים";
+      } else if ($scope.timeRange >= "18" && $scope.timeRange < "22") {
+        $scope.wellcome = "ערב טוב";
+      } else {
+        $scope.wellcome = "לילה טוב";
+      }
     }
+    setInterval(function() {
+      $scope.getWellcomeString();
+    }, 60)
 
     $scope.childOf = {};
     //$scope.tilesEnabled = true;
@@ -56,6 +60,11 @@ app.controller('P1_appsListCtrl',
       var idx = 0;
       var sortedMenu = _.sortBy(items, function(i) {
         idx++;
+        i.menuLocation = i.Location || "side";
+        i.side = i.menuLocation.match("side|s") ? true : false;
+        i.menu2 = i.menuLocation.match("menu2|m2") ? true : false;
+        i.menu3 = i.menuLocation.match("menu2|m3") ? true : false;
+
         i.newSorter = (i.Sorter || ("99" + idx).toString()).replace(re, "");
         i.level = (i.newSorter.match(/\./g) || []).length;
         i.parent = "mid_" + (i.newSorter.replace(/\.?\w+$/, "") || "0");
@@ -110,7 +119,7 @@ app.controller('P1_appsListCtrl',
      * ==========================================================
      */
     $scope.GetUserMenuMain = function() {
-
+      $rootScope.menuItems = [];
       var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
       try {
@@ -155,6 +164,12 @@ app.controller('P1_appsListCtrl',
 
           //$scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
           $scope.visibleParent = "mid_0";
+          $scope.feeds_categories.menuItems[0].Location = "s menu1";
+          $scope.feeds_categories.menuItems[1].Location = "s menu1";
+          $scope.feeds_categories.menuItems[2].Location = "s m2";
+          $scope.feeds_categories.menuItems[3].Location = "s m2";
+          $scope.feeds_categories.menuItems[4].Location = "s menu1 menu2";
+
           $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);
           $rootScope.menuItems = $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
           //---------------------------------------------
@@ -305,7 +320,6 @@ app.controller('P1_appsListCtrl',
           $scope.$broadcast('scroll.refreshComplete');
         } else {
           if (appSettings.config.IS_TOKEN_VALID !== "Y") {
-            $rootScope.menuItems = [];
             $scope.GetUserMenuMain();
           } else {
             $sessionStorage.token = appSettings.config.token;
