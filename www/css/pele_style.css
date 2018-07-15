@@ -1042,11 +1042,17 @@ color:white
 .newlook3 .menu3 {background-image: url('../img/bg/bg5.jpg') !important;color:white;background-position-y:-110px }
 .newlook3 .menu3 .caption {color:white}
 .newlook3 .grid-item {border-color:white;border-color:rgb(16, 49, 51,0.2)}
-.newlook3 .grid-item.menu2 {background:rgb(224, 224, 224,1) !important ;border-top:2px solid rgb(124, 124, 124,0.8)}
-.newlook3 .grid-item.menu2 .caption {color:#233a59}
+.newlook3 .grid-item.menu2 {background:rgb(224, 224, 224,1) !important ;border-top:2px solid rgb(124, 124, 124,0.8) }
+.newlook4 .grid-item.menu2 .caption , .newlook3 .grid-item.menu2 .caption {color:#233a59}
 .newlook3 .grid-layout { padding: 0px; }
 .newlook3 .menu-plasma .plasma {background-image: url('../img/bg/bg5.jpg') !important;}
 
 .newlook .menu2 a {border-color:rgb(0,0,0,0.5) }
 .newlook.newlook3 .menu3 .grid-layout {padding-top: 10px}
-.newlook3 .plasma .profile img  {border:3px solid #fff}
+.newlook .plasma .profile img  {border:3px solid #fff}
+.newlook3 .menu3 {background-image: url('../img/bg/bg5.jpg') !important;color:white;background-position-y:-110px }
+.newlook4 { background-image: url('../img/bg/bg4.jpg') !important;}
+.newlook4 .grid-item {border-color:rgb(16, 49, 51,0.2)}
+.newlook4 .menu3 .grid-item .caption{color:white}
+.newlook4 .menu2 a .caption {border-top:1px solid rgb(0,0,0,0.2);background:rgba(0,0,0,0.1)}
+.newlook4 .grid-item.menu2 {background:rgb(224, 224, 224,0.1) !important ;border-top:1px solid rgb(124, 124, 124,0.1) }
