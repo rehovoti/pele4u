@@ -70,8 +70,19 @@ angular.module('pele', [
 
       $ionicPlatform.ready(function() {
         var model = ionic.Platform.device().model;
-        window.iphoneX = _.includes(_.toUpper(model), 'IPHONE10');
         window.deviceModel = model;
+        if (ionic.Platform.isIOS()) {
+          var ratio = window.devicePixelRatio || 1;
+          var screen = {
+            width: window.screen.width * ratio,
+            height: window.screen.height * ratio
+          };
+
+          if (screen.width == 1125 && screen.height === 2436) {
+            window.iphoneX = true;
+          }
+        }
+
         //----------------------------------------
         //--    Get Version from config.xml
         //----------------------------------------
