@@ -101,10 +101,16 @@ angular.module('pele', [
         }
         if (window.StatusBar) {
           // org.apache.cordova.statusbar required
+
           StatusBar.styleDefault();
           if (cordova.platformId == 'android') {
             StatusBar.backgroundColorByHexString("#1d3f84");
           }
+          if (window.iphonex) {
+            StatusBar.hide();
+          }
+
+
         }
         //----------------------------------
         //--    Go To Application List
