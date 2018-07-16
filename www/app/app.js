@@ -79,7 +79,7 @@ angular.module('pele', [
           };
 
           if (screen.width == 1125 && screen.height === 2436) {
-            window.iphoneX = true;
+            window.iphonex = true;
           }
         }
 
