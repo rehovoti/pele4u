@@ -69,6 +69,19 @@ angular.module('pele', [
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
       $ionicPlatform.ready(function() {
+        if ($ionicPlatform.isIOS()) {
+          var ratio = window.devicePixelRatio || 1;
+          var screen = {
+            width: window.screen.width * ratio,
+            height: window.screen.height * ratio
+          };
+
+          // iPhone X Detection
+          if (screen.width == 1125 && screen.height === 2436) {
+            window.iphoneX = true;
+          }
+        }
+
         //----------------------------------------
         //--    Get Version from config.xml
         //----------------------------------------
@@ -88,6 +101,9 @@ angular.module('pele', [
         if (window.StatusBar) {
           // org.apache.cordova.statusbar required
           StatusBar.styleDefault();
+          if (cordova.platformId == 'android') {
+            StatusBar.backgroundColorByHexString("#1d3f84");
+          }
         }
         //----------------------------------
         //--    Go To Application List

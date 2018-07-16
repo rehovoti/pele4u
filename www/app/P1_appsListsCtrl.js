@@ -23,6 +23,8 @@ app.controller('P1_appsListCtrl',
       speed: 500,
     }
 
+    $scope.iphonex = window.iphonex;
+
     $scope.wellcome = "";
     $scope.getWellcomeString = function() {
       $scope.timeRange = _.toNumber(moment().format("H"))

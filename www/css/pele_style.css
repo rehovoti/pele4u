@@ -1006,7 +1006,7 @@ grid-row-end: span 1;}
 .app-p1_appsLists .bar.app-top-bar {  display:none}
 .app-p1_appsLists .feeds-categories-view { background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover; }
 .app-p1_appsLists .user-image {height:70%}
-.plasma .profile {margin-top:20px}
+.plasma .profile {margin-top:30px}
 .plasma .profile-caption {font-size:16px}
 .plasma .profile img { display: inline; margin: 0 auto;height: 120px; width: auto;}
 .image-cropper {
@@ -1057,3 +1057,6 @@ color:white
 .newlook4 .menu2 .caption {color:white !important}
 .newlook4 .menu2 a .caption {border-top:1px solid rgba(0,0,0,0.2) !important;;background:rgba(0,0,0,0.1) !important;}
 .newlook4 .grid-item.menu2 {background:rgba(224, 224, 224,0.2) !important ;border-top:1px solid rgba(124, 124, 124,0.1) !important;}
+.newlook .ham img {height:20px;margin-right:5px}
+.newlook .pele4u-logo img {width:35px}
+.newlook.iphonex .top-menu-buttons {margin-top:10px}
