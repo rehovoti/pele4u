@@ -69,18 +69,8 @@ angular.module('pele', [
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
       $ionicPlatform.ready(function() {
-        if (ionic.Platform.isIOS()) {
-          var ratio = window.devicePixelRatio || 1;
-          var screen = {
-            width: window.screen.width * ratio,
-            height: window.screen.height * ratio
-          };
-
-          // iPhone X Detection
-          if (screen.width == 1125 && screen.height === 2436) {
-            window.iphoneX = true;
-          }
-        }
+        var model = ionic.Platform.device().model;
+        $scope.iphoneX = model.includes('iPhone10');
 
         //----------------------------------------
         //--    Get Version from config.xml
