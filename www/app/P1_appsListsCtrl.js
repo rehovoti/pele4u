@@ -24,6 +24,7 @@ app.controller('P1_appsListCtrl',
     }
 
     $scope.iphonex = window.iphonex;
+    $scope.deviceModel = window.deviceModel;
 
     $scope.wellcome = "";
     $scope.getWellcomeString = function() {
