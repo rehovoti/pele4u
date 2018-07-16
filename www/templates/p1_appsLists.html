@@ -1,4 +1,4 @@
-<ion-view class="feeds-categories-view newlook newlook4" cache-view="false" hide-back-button="true" ng-class="{'loading':!menuItems.length,'iphonex':iphonex}">
+<ion-view class="feeds-categories-view newlook newlook4 {{deviceModel}}" cache-view="false" hide-back-button="true" ng-class="{'loading':!menuItems.length,'iphonex':iphonex}">
   <div class="row top-menu-buttons">
     <div class="col pele4u-logo">
       <img src="img/new_icons/transparent-pele4u.png" />
@@ -16,7 +16,7 @@
         <img ng-show="!profile.pic" ng-src="img/new_icons/blue_avatar.png" class="image-cropper">
       </div>
       <div class="profile-caption">
-        {{wellcome}} , {{profile.firstName}}
+        {{wellcome}} , {{profile.firstName}} model :{{deviceModel}} , isIphonex: {{iphoneX}}
       </div>
     </div>
     <div class="grid-item menu2">
