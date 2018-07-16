@@ -69,7 +69,7 @@ angular.module('pele', [
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
       $ionicPlatform.ready(function() {
-        if ($ionicPlatform.isIOS()) {
+        if (ionic.Platform.isIOS()) {
           var ratio = window.devicePixelRatio || 1;
           var screen = {
             width: window.screen.width * ratio,
