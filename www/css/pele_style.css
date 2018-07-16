@@ -608,7 +608,7 @@ div#main-apps-menu div.row-bottom {margin-top:15px}
     background-color: #777;
     border-radius: 50%;
     margin-right:5px;
-    color: rgb(255, 255, 255);
+    color: rgba(255, 255, 255);
 }
 .string-badge {
     display: inline-block;
@@ -624,13 +624,13 @@ div#main-apps-menu div.row-bottom {margin-top:15px}
     background-color: #777;
     border-radius: 8px;
     margin-right:5px;
-    color: rgb(255, 255, 255);
+    color: rgba(255, 255, 255);
 }
 .icon.navy {color:#003366}
 .icon.red {color:#CA002A}
 
 .pel-badge.pink {
-  background-color: rgb(255, 64, 129);
+  background-color: rgba(255, 64, 129);
 }
 
 .pel-badge.blue {
@@ -998,7 +998,7 @@ grid-row-end: span 1;}
  .grid-item-image.circle { background: #ccc;
   padding:5px;
   border-radius: 50%;
-  border:2px solid rgb(76, 87, 117,0.6)
+  border:2px solid rgba(76, 87, 117,0.6)
 }
 .grid-item .caption {font-size:13px ;    padding-right: 10px;}
 .grid-title {padding-right:5px;font-size:13px}
@@ -1017,7 +1017,7 @@ grid-row-end: span 1;}
     border-radius: 50%;
 }
 
-.--grid-item.menu2 {background:rgb(255,255,255) }
+.--grid-item.menu2 {background:rgba(255,255,255) }
 
 .menu2 a {display:inline-block; min-width: 100px; border:1px solid rgba(255, 255, 255, 0.2);border-radius:4px;margin:5px;padding-top:10px;background: rgba(255,255,255,0.2)}
 .menu2 a .caption {background: rgba(255, 255, 255, 0.2);padding:2px 4px;color:#034180;font-size:12px}
@@ -1041,18 +1041,19 @@ color:white
 .newlook3.loading {background-image: url('../img/bg/bg5.jpg') !important;}
 .newlook3 .menu3 {background-image: url('../img/bg/bg5.jpg') !important;color:white;background-position-y:-110px }
 .newlook3 .menu3 .caption {color:white}
-.newlook3 .grid-item {border-color:white;border-color:rgb(16, 49, 51,0.2)}
-.newlook3 .grid-item.menu2 {background:rgb(224, 224, 224,1) !important ;border-top:2px solid rgb(124, 124, 124,0.8) }
+.newlook3 .grid-item {border-color:white;border-color:rgba(16, 49, 51,0.2)}
+.newlook3 .grid-item.menu2 {background:rgba(224, 224, 224,1) !important ;border-top:2px solid rgba(124, 124, 124,0.8) }
 .newlook4 .grid-item.menu2 .caption , .newlook3 .grid-item.menu2 .caption {color:#233a59}
 .newlook3 .grid-layout { padding: 0px; }
 .newlook3 .menu-plasma .plasma {background-image: url('../img/bg/bg5.jpg') !important;}
 
-.newlook .menu2 a {border-color:rgb(0,0,0,0.5) }
+.newlook .menu2 a {border-color:rgba(0,0,0,0.5) }
 .newlook.newlook3 .menu3 .grid-layout {padding-top: 10px}
 .newlook .plasma .profile img  {border:3px solid #fff}
 .newlook3 .menu3 {background-image: url('../img/bg/bg5.jpg') !important;color:white;background-position-y:-110px }
 .newlook4 { background-image: url('../img/bg/bg4.jpg') !important;}
-.newlook4 .grid-item {border-color:rgb(16, 49, 51,0.2) !important;}
+.newlook4 .grid-item {border-color:rgba(16, 49, 51,0.2) !important;}
 .newlook4 .menu3 .grid-item .caption{color:white}
-.newlook4 .menu2 a .caption {border-top:1px solid rgb(0,0,0,0.2) !important;;background:rgba(0,0,0,0.1) !important;}
-.newlook4 .grid-item.menu2 {background:rgb(224, 224, 224,0.1) !important ;border-top:1px solid rgb(124, 124, 124,0.1) !important;}
+.newlook4 .menu2 .caption {color:white !important}
+.newlook4 .menu2 a .caption {border-top:1px solid rgba(0,0,0,0.2) !important;;background:rgba(0,0,0,0.1) !important;}
+.newlook4 .grid-item.menu2 {background:rgba(224, 224, 224,0.2) !important ;border-top:1px solid rgba(124, 124, 124,0.1) !important;}
