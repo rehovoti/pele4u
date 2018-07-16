@@ -70,7 +70,7 @@ angular.module('pele', [
 
       $ionicPlatform.ready(function() {
         var model = ionic.Platform.device().model;
-        $scope.iphoneX = model.includes('iPhone10');
+        window.iphoneX = _.includes(model, 'iPhone10');
 
         //----------------------------------------
         //--    Get Version from config.xml
