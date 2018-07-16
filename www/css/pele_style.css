@@ -987,19 +987,23 @@ grid-row-end: span 1;}
 .menu3 {margin-top:260px !important}
 .menu3 .grid-item { border-width:0px;padding:0;  border-width: 1px;}
 .grid-item-image {
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin-top:5px;
-    bottom: 0;height:50px;width:50px;
-    margin-top:10px
+   height:45px;width:45px;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top:10px;
+
+
  }
- .grid-item-image.circle { background: #ccc;
-  padding:5px;
-  border-radius: 50%;
-  border:2px solid rgba(76, 87, 117,0.6)
+ .grid-item i.circle { background: #EEE;
+   display: inline-block;
+   height: 65px;
+   width: 65px;
+   border-radius: 50%;
+   border: 2px solid #CCC;
+   margin-top:10px;
 }
+
 .grid-item .caption {font-size:13px ;    padding-right: 10px;}
 .grid-title {padding-right:5px;font-size:13px}
 
