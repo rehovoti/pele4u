@@ -188,7 +188,9 @@ angular.module('pele.states', [])
     }, {
       state: 'app.chat_po_details',
       url: "/chat_details",
-      params: {obj: null},
+      params: {
+        obj: null
+      },
       views: {
         'menuContent': {
           templateUrl: function() {
@@ -198,10 +200,12 @@ angular.module('pele.states', [])
         }
       },
       src: ["app/apps/docApprove/CHAT/chatPoDetailsCtrl.js"]
-    },{
+    }, {
       state: 'app.open_chat',
       url: "/open_chat",
-      params: {obj: null},
+      params: {
+        obj: null
+      },
       views: {
         'menuContent': {
           templateUrl: function() {
@@ -211,7 +215,7 @@ angular.module('pele.states', [])
         }
       },
       src: ["app/apps/docApprove/CHAT/openChatCtrl.js"]
-    },{
+    }, {
       state: 'app.ini_list',
       url: "/ini_list/:AppId/:FormType/:Pin",
       views: {
@@ -402,8 +406,8 @@ angular.module('pele.states', [])
       views: {
         'menuContent@app': {
           templateUrl: function($stateParams) {
-            if($stateParams.task && $stateParams.task.TASK_NUMBER)
-              return  'app/apps/leads/task.html';
+            if ($stateParams.task && $stateParams.task.TASK_NUMBER)
+              return 'app/apps/leads/task.html';
             return 'app/apps/leads/lead.html';
           },
           controller: 'leadCtrl'

@@ -320,7 +320,10 @@ angular.module('pele.config', [])
       },
       "FIN": {
         state: "app.inv_list"
-      }
+      },
+      "CHAT": {
+        state: "app.chat_list"
+      },
     },
     ACTION_HISTORY: {
       "FORWARD": "אישור",
