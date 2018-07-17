@@ -162,6 +162,60 @@ angular.module('pele.states', [])
       },
       src: ["app/apps/docApprove/INV/invDetailsCtrl.js"]
     }, {
+      state: 'app.chat_list',
+      url: "/chat_list/:AppId/:FormType/:Pin",
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/CHAT/chatList.html";
+          },
+          controller: 'chatListCtrl',
+        }
+      },
+      src: ["app/apps/docApprove/CHAT/chatListCtrl.js"]
+    }, {
+      state: 'app.chat_details',
+      url: "/chat_details/:formType/:AppId/:docId/:docInitId",
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/CHAT/chatDetails.html";
+          },
+          controller: 'chatDetailsCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/CHAT/chatDetailsCtrl.js"]
+    }, {
+      state: 'app.chat_po_details',
+      url: "/chat_details",
+      params: {
+        obj: null
+      },
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/CHAT/chatPoDetails.html";
+          },
+          controller: 'chatPoDetailsCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/CHAT/chatPoDetailsCtrl.js"]
+    }, {
+      state: 'app.open_chat',
+      url: "/open_chat",
+      params: {
+        obj: null
+      },
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/CHAT/openChat.html";
+          },
+          controller: 'openChatCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/CHAT/openChatCtrl.js"]
+    }, {
       state: 'app.ini_list',
       url: "/ini_list/:AppId/:FormType/:Pin",
       views: {
