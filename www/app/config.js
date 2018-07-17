@@ -321,7 +321,7 @@ angular.module('pele.config', [])
       "FIN": {
         state: "app.inv_list"
       },
-      "CHAT": {
+      "POWFTASK": {
         state: "app.chat_list"
       },
     },
