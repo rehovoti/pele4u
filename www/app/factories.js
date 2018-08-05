@@ -87,6 +87,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return true;
       },
       init: function() {
+        console.log("device ready - init")
         this.global.set('debugFlag', appSettings.debug, true)
         this.cordovaNetwork = {
           getNetwork: function() {
@@ -1361,6 +1362,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             }
           }
           if (action.ACTION_CODE === "FORWARD" || action.ACTION_CODE === "APPROVE") {
+            action.display = false;
             action.left_icon = 'ion-chevron-left';
             action.right_icon = 'ion-checkmark-circled'
           }
@@ -1371,6 +1373,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if (action.ACTION_CODE === "WAITING") {
             action.short_text = 'ממתין';
             action.right_icon = 'ion-clock navy';
+          }
+          if (action.ACTION_CODE === "NOTE" && action.NOTE) {
+            action.left_icon = "";
+            action.right_icon = 'ion-help-circled';
           }
           if (!action.ACTION_CODE && action.NOTE) {
             action.display = false;
@@ -1407,6 +1413,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       showBtnActions: function(scope, butttons) {
         var self = this;
         var buttons = self.getButtons(butttons);
+
         var hideSheet = $ionicActionSheet.show({
           buttons: buttons,
           titleText: 'רשימת פעולות עבור טופס',
@@ -1619,7 +1626,96 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if ((btn.note && res) || (!btn.note))
             scope.submitUpdateInfo(btn, res);
         });
+      },
+
+      displayNotePopupChat: function(scope, btn) {
+        var self = this;
+        if (typeof scope.actionNote === "undefined") {
+          self.showPopup("Missing scope.actionNote def ", "");
+        }
+        var noteModal = $ionicPopup.show({
+          template: '<div class="list pele-note-background pele_rtl">' +
+            '<label class="item item-input"><textarea rows="8" ng-model="actionNote.text" type="text">{{actionNote.text}}</textarea></label>' +
+            '</div>',
+          title: '<strong class="float-right">מענה</strong>',
+          subTitle: '',
+          scope: scope,
+          buttons: [{
+              text: '<a class="pele-popup-positive-text-collot">שלח</a>',
+              type: 'button-positive',
+              onTap: function(e) {
+                if (!self.isValidNote(scope.actionNote.text)) {
+                  e.preventDefault();
+                  self.showPopup("יש להזין מענה", "יש להזין לפחות 2 אותיות");
+                } else {
+                  return scope.actionNote.text;
+                }
+              }
+            },
+            {
+              text: 'ביטול',
+              type: 'button-assertive',
+              onTap: function(e) {
+                scope.actionNote.text = '';
+                return scope.actionNote.text;
+              }
+            },
+          ]
+        });
+        noteModal.then(function(res) {
+          scope.actionNote.text = res;
+          if (typeof btn === "undefined")
+            return true;
+
+          if ((btn.note && res) || (!btn.note))
+            scope.submitUpdateInfo(btn, res);
+        });
+      },
+
+      displayNotePopupChatQues: function(scope, btn) {
+        var self = this;
+        if (typeof scope.actionNote === "undefined") {
+          self.showPopup("Missing scope.actionNote def ", "");
+        }
+        var noteModal = $ionicPopup.show({
+          template: '<div class="list pele-note-background pele_rtl">' +
+            '<label class="item item-input"><textarea rows="8" ng-model="actionNote.text" type="text">{{actionNote.text}}</textarea></label>' +
+            '</div>',
+          title: '<strong class="float-right">שאלה</strong>',
+          subTitle: '',
+          scope: scope,
+          buttons: [{
+              text: '<a class="pele-popup-positive-text-collot">שלח</a>',
+              type: 'button-positive',
+              onTap: function(e) {
+                if (!self.isValidNote(scope.actionNote.text)) {
+                  e.preventDefault();
+                  self.showPopup("יש להזין מענה", "יש להזין לפחות 2 אותיות");
+                } else {
+                  return scope.actionNote.text;
+                }
+              }
+            },
+            {
+              text: 'ביטול',
+              type: 'button-assertive',
+              onTap: function(e) {
+                scope.actionNote.text = '';
+                return scope.actionNote.text;
+              }
+            },
+          ]
+        });
+        noteModal.then(function(res) {
+          scope.actionNote.text = res;
+          if (typeof btn === "undefined")
+            return true;
+
+          if ((btn.note && res) || (!btn.note))
+            scope.submitUpdateInfo(btn, res);
+        });
       }
+
     };
 
   })

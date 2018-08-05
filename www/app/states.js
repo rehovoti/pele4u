@@ -162,6 +162,60 @@ angular.module('pele.states', [])
       },
       src: ["app/apps/docApprove/INV/invDetailsCtrl.js"]
     }, {
+      state: 'app.chat_list',
+      url: "/chat_list/:AppId/:FormType/:Pin",
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/CHAT/chatList.html";
+          },
+          controller: 'chatListCtrl',
+        }
+      },
+      src: ["app/apps/docApprove/CHAT/chatListCtrl.js"]
+    }, {
+      state: 'app.chat_details',
+      url: "/chat_details/:formType/:AppId/:docId/:docInitId",
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/CHAT/chatDetails.html";
+          },
+          controller: 'chatDetailsCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/CHAT/chatDetailsCtrl.js"]
+    }, {
+      state: 'app.chat_po_details',
+      url: "/chat_details",
+      params: {
+        obj: null
+      },
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/CHAT/chatPoDetails.html";
+          },
+          controller: 'chatPoDetailsCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/CHAT/chatPoDetailsCtrl.js"]
+    }, {
+      state: 'app.open_chat',
+      url: "/open_chat",
+      params: {
+        obj: null
+      },
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/CHAT/openChat.html";
+          },
+          controller: 'openChatCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/CHAT/openChatCtrl.js"]
+    }, {
       state: 'app.ini_list',
       url: "/ini_list/:AppId/:FormType/:Pin",
       views: {
@@ -185,6 +239,30 @@ angular.module('pele.states', [])
         }
       },
       src: ["app/apps/docApprove/INI/iniDetailsCtrl.js"]
+    }, {
+      state: 'app.travel_list',
+      url: "/travel_list/:AppId/:FormType/:Pin",
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/TRAVEL/travelList.html";
+          },
+          controller: 'travelListCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/TRAVEL/travelListCtrl.js"]
+    }, {
+      state: 'app.travel_details',
+      url: "/travel_details/:formType/:AppId/:docId/:docInitId",
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/TRAVEL/travelDetails.html";
+          },
+          controller: 'travelDetailsCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/TRAVEL/travelDetailsCtrl.js"]
     }, {
       state: 'app.doc_10002',
       url: "/doc_10002/:AppId/:DocId/:DocInitId",
@@ -297,7 +375,7 @@ angular.module('pele.states', [])
       src: ["app/apps/scanPrint/p2_scan_printCtrl.js"]
     }, {
       state: 'app.leads.all',
-      url: '/leads',
+      url: '/leads/:Title/',
       views: {
         'menuContent@app': {
           templateUrl: function() {
@@ -311,11 +389,11 @@ angular.module('pele.states', [])
       ]
     }, {
       state: 'app.leads',
-      url: '/leads',
+      url: '/leads/:Title/',
       abstract: true,
     }, {
       state: 'app.leads.task',
-      url: '/leads',
+      url: '/leads/:Title/',
       views: {
         'menuContent@app': {
           templateUrl: function() {
@@ -330,7 +408,7 @@ angular.module('pele.states', [])
     },
     {
       state: 'app.leads.self',
-      url: '/leads',
+      url: '/leads/:Title/',
       views: {
         'menuContent@app': {
           templateUrl: function() {
@@ -344,7 +422,7 @@ angular.module('pele.states', [])
       ]
     }, {
       state: 'app.leads.lead',
-      url: '/lead/:type',
+      url: '/lead/:type/:Title/',
       params: {
         lead: {},
         task: {}
@@ -352,8 +430,8 @@ angular.module('pele.states', [])
       views: {
         'menuContent@app': {
           templateUrl: function($stateParams) {
-            if($stateParams.task && $stateParams.task.TASK_NUMBER)
-              return  'app/apps/leads/task.html';
+            if ($stateParams.task && $stateParams.task.TASK_NUMBER)
+              return 'app/apps/leads/task.html';
             return 'app/apps/leads/lead.html';
           },
           controller: 'leadCtrl'
@@ -366,7 +444,7 @@ angular.module('pele.states', [])
     },
     {
       state: 'app.leads.report',
-      url: '/report/:type/',
+      url: '/report/:type/:Title/',
       views: {
         'menuContent@app': {
           templateUrl: function() {

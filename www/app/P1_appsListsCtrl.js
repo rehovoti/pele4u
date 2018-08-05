@@ -6,7 +6,7 @@ var app = angular.module('pele.P1_appsListCtrl', ['ngStorage', 'ngCordova']);
 //==                         PAGE_1                                  ==//
 //=====================================================================//
 app.controller('P1_appsListCtrl',
-  function($scope, $http, $state, $ionicLoading, PelApi, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate) {
+  function($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate) {
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
     PelApi.lagger.checkFile().then(function(logStat) {
@@ -16,18 +16,47 @@ app.controller('P1_appsListCtrl',
         })
       }
     })
+    //$ionicScrollDelegate.$getByHandle('menu1-handle').scrollTo('300px');
+
+    $rootScope.menuItems = [];
+    $scope.options = {
+      loop: true,
+      effect: 'fade',
+      speed: 500,
+    }
+
+    $scope.iphonex = window.iphonex;
+    $scope.deviceModel = window.deviceModel;
+
+    $scope.wellcome = "";
+    $scope.getWellcomeString = function() {
+      $scope.timeRange = _.toNumber(moment().format("H"))
+      if ($scope.timeRange >= "05" && $scope.timeRange < "11") {
+        $scope.wellcome = "בוקר טוב";
+      } else if ($scope.timeRange >= "11" && $scope.timeRange < "14") {
+        $scope.wellcome = "צהריים טובים";
+      } else if ($scope.timeRange >= "14" && $scope.timeRange < "18") {
+        $scope.wellcome = "אחר צהריים טובים";
+      } else if ($scope.timeRange >= "18" && $scope.timeRange < "22") {
+        $scope.wellcome = "ערב טוב";
+      } else {
+        $scope.wellcome = "לילה טוב";
+      }
+    }
+    setInterval(function() {
+      $scope.getWellcomeString();
+    }, 60)
 
     $scope.childOf = {};
     //$scope.tilesEnabled = true;
     $scope.sort = function(items) {
 
-      /*     items[0].Sorter = "1@cls1 dsds ddssd";
+      /*  items[0].Sorter = "1@cls1 dsds ddssd";
       items[1].Sorter = "2@cls3";
       items[2].Sorter = "4.1@cls3";
       items[2].Path = null;
       items[3].Sorter = "4.1@wide";
       //items[3].Path = null;
-
       items[4].Sorter = "4";
       items[4].Path = null;
       */
@@ -35,6 +64,10 @@ app.controller('P1_appsListCtrl',
       var idx = 0;
       var sortedMenu = _.sortBy(items, function(i) {
         idx++;
+        i.menuLocation = i.Location || "side";
+        i.side = i.menuLocation.match("side|s") ? true : false;
+        i.menu1 = i.menuLocation.match("menu1|m1") ? true : false;
+        i.menu2 = i.menuLocation.match("menu2|m2") ? true : false;
         i.newSorter = (i.Sorter || ("99" + idx).toString()).replace(re, "");
         i.level = (i.newSorter.match(/\./g) || []).length;
         i.parent = "mid_" + (i.newSorter.replace(/\.?\w+$/, "") || "0");
@@ -89,7 +122,7 @@ app.controller('P1_appsListCtrl',
      * ==========================================================
      */
     $scope.GetUserMenuMain = function() {
-
+      $rootScope.menuItems = [];
       var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
       try {
@@ -121,6 +154,7 @@ app.controller('P1_appsListCtrl',
         //$scope.setMSISDN(appSettings.config.MSISDN_VALUE);
 
         var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
+        PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
         if ("Valid" === pinCodeStatus) {
 
           appSettings.config.token = data.token;
@@ -134,7 +168,9 @@ app.controller('P1_appsListCtrl',
 
           //$scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
           $scope.visibleParent = "mid_0";
+
           $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);
+          $rootScope.menuItems = $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
           //---------------------------------------------
           //-- Send User Tag for push notifications
           //---------------------------------------------
@@ -149,6 +185,19 @@ app.controller('P1_appsListCtrl',
           //--------------------------------------
           $sessionStorage.token = appSettings.config.token;
           $sessionStorage.user = appSettings.config.GetUserMenu.user;
+          var UserId = _.get($localStorage.profile, "id")
+          $rootScope.profile = $localStorage.profile;
+
+          //  if ($sessionStorage.user && !(UserId || UserId == $sessionStorage.user)) {
+          if (!UserId || (UserId && UserId != $sessionStorage.user)) {
+            ApiGateway.get("public/profile", {
+              id: $sessionStorage.user
+            }).then(function(res) {
+              $localStorage.profile = res.data;
+              $localStorage.profile.id = $sessionStorage.user;
+              $rootScope.profile = $localStorage.profile;
+            })
+          }
           $sessionStorage.userName = appSettings.config.GetUserMenu.userName;
 
           appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
@@ -277,6 +326,9 @@ app.controller('P1_appsListCtrl',
             $sessionStorage.user = appSettings.config.GetUserMenu.user;
             $sessionStorage.userName = appSettings.config.GetUserMenu.userName;
             $scope.feeds_categories = appSettings.config.GetUserMenu;
+
+            $scope.visibleParent = "mid_0";
+            $rootScope.menuItems = $sessionStorage.menuItems;
             $ionicLoading.hide();
             $scope.$broadcast('scroll.refreshComplete');
           }
@@ -317,7 +369,6 @@ app.controller('P1_appsListCtrl',
         //$state.go("app.p2_test");
 
       }
-
     };
     //-----------------------------------------------------------//
     //--                 forwardToApp
@@ -327,7 +378,6 @@ app.controller('P1_appsListCtrl',
       $scope.visibleParent = parent;
     }
     $scope.forwardToApp = function(appConfig) {
-
       if (!appConfig.Path) {
         $scope.latestParent = appConfig.parent;
         $scope.visibleParent = appConfig.menuId;
@@ -364,5 +414,6 @@ app.controller('P1_appsListCtrl',
     var btnClass = {};
     btnClass.activ = false;
     $scope.class = "pele-menu-item-on-touch item-icon-right";
-    $scope.doRefresh();
+    if (!($rootScope.menuItems && $rootScope.menuItems.length))
+      $scope.doRefresh();
   })

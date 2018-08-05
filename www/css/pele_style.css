@@ -1,4 +1,4 @@
- html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, i, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, fieldset, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+.menu2 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, i, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, fieldset, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
@@ -608,7 +608,7 @@ div#main-apps-menu div.row-bottom {margin-top:15px}
     background-color: #777;
     border-radius: 50%;
     margin-right:5px;
-    color: rgb(255, 255, 255);
+    color: rgba(255, 255, 255);
 }
 .string-badge {
     display: inline-block;
@@ -624,13 +624,31 @@ div#main-apps-menu div.row-bottom {margin-top:15px}
     background-color: #777;
     border-radius: 8px;
     margin-right:5px;
-    color: rgb(255, 255, 255);
+    color: rgba(255, 255, 255);
 }
+
+.string-badge-aquamarine {
+  display: inline-block;
+  min-width: 20px;
+  min-height: 20px;
+  padding: 4px 4px;
+  font-size:11px;
+  line-height: 1;
+  color:#fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #777;
+  border-radius: 8px;
+  margin-right:5px;
+  color: aquamarine;
+}
+
 .icon.navy {color:#003366}
 .icon.red {color:#CA002A}
 
 .pel-badge.pink {
-  background-color: rgb(255, 64, 129);
+  background-color: rgba(255, 64, 129);
 }
 
 .pel-badge.blue {
@@ -813,25 +831,26 @@ top:11px;
 .phonebook-form .col-input {margin:10px 30px}
 .phonebook-footer.bar-footer {height:50px}
 
-.main-menu-content {background:#fff}
-.main-menu-content  .item .menu-text {color:#11418e}
-.main-menu-content  .item-complex  .menu-text {color:#11418e}
+.main-menu-content {background:#153751}
+.main-menu-content  .item .menu-text {color:#fff}
+.main-menu-content  .item-complex  .menu-text {color:#fff}
 .main-menu-content  .item {
   background-color: transparent;
-  color:navy !important;
+  color:#fff !important;
 }
+.main-menu-content  * {color:#FFF}
 
 /*Changes the border for the last item*/
-.main-menu-content  .item:last-child {
-  border-bottom: 1px solid #666;
+.main-menu-content  .item  {
+  border: 1px solid #666;
+
 }
 
 .main-menu-content  .item-complex .item-content, .dark .item-radio .item-content {
   background-color: transparent;
+  padding:10px 13px
 }
 .main-menu-content .item .item-content .icon:before { background:#939292}
-
-
 #new_lead {
     font-size:18px;
   }
@@ -937,9 +956,168 @@ body {background-color: #0160a0 !important;}
 /*    padding-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
 /*    padding-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
 /*}*/
-.platform-ios .bar .app-top-bar.bar-header {
+.__platform-ios .bar .app-top-bar.bar-header {
     height: calc( 10px+constant(safe-area-inset-top));
     margin-top: 10px;
 }
+.__platform-ios  .scroll-content {padding-top:10px}
 
-.platform-ios  .scroll-content {padding-top:10px}
+ .grid-layout {
+   margin:0px 2px;
+ }
+ .grid-item {
+   text-align:center;
+   min-height:97px;
+ }
+
+
+ .newlook .plasma .profile-caption {
+   line-height:30px;
+ }
+
+.newlook .menu2 {top:280px !important }
+.platform-android .newlook   .menu2 {top:280px !important;}
+/* becouse we dont have statusBar */
+.platform-ios .newlook .menu2 {top:279px !important}
+.platform-ios .newlook.iphonex  .menu2 {top:280px !important;}
+
+@supports not (display:grid) {
+  .grid-item {
+     width:50%;
+     display: inline-block;
+     font-size: 14px;
+     box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     -webkit-box-sizing: border-box;
+     font-weight: bold;
+     text-transform: uppercase;
+     text-align:center;
+     float: right;
+     border:1px solid  #ccc;
+     border-radius: 0px;
+     &:nth-child(odd) {
+       border:0px solid  #ccc;
+     }
+  }
+}
+
+@supports (display:grid) {
+   .grid-layout {
+      display: grid;
+      margin:0px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-gap: 0px;
+      grid-auto-rows: minmax(97px, auto);
+      grid-auto-flow: row;
+      padding: 5px;
+      direction:rtl;
+   }
+    .menu2 .grid-item {
+      padding: 0px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align:center;
+      border:1px solid  #ccc;
+      border-radius: 0px;
+      &:nth-child(odd) {
+        border:0px solid  #ccc;
+      }
+   }
+}
+
+.span-2 {
+    grid-column-end: span 2;
+    grid-row-end: span 2;
+}
+
+.span-3 {
+    grid-column-end: span 3;
+    grid-row-end: span 4;
+}
+.plasma {grid-column-end: span 3;
+grid-row-end: span 2;}
+
+.menu1 {grid-column-end: span 3;
+grid-row-end: span 1;}
+.menu1 a {display:inline-block; min-width: 31%;border-radius:4px;}
+.menu1 a .caption {padding:2px 4px}
+.menu1 .links-image {height:50px}
+
+.grid-item-image {
+   height:38px;width:38px;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top:10px;
+
+
+ }
+ .grid-item i.circle { background: #EEE;
+   display: inline-block;
+   height: 65px;
+   width: 65px;
+   border-radius: 50%;
+   border: 2px solid #498394;
+   margin-top:10px;
+}
+
+.grid-item .caption {font-size:13px }
+.grid-title {padding-right:5px;font-size:13px}
+
+.app-p1_appsLists .bar.app-top-bar {  display:none}
+.app-p1_appsLists .feeds-categories-view { background-size: cover; -ms-background-size: cover; -o-background-size: cover; -moz-background-size: cover; -webkit-background-size: cover; }
+.app-p1_appsLists .user-image {height:70%}
+.plasma .profile {margin-top:40px}
+.plasma .profile-caption {font-size:16px}
+.plasma .profile img.image-cropper {
+    width: 95px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    object-position:top ;
+}
+
+
+.menu1 a {display:inline-block;  border:1px solid rgba(255, 255, 255, 0.2);border-radius:4px;margin:5px 1%;padding-top:10px;background: rgba(255,255,255,0.2)}
+.menu1 a .caption {background: rgba(255, 255, 255, 0.2);padding:2px 4px;color:#034180;font-size:12px}
+.menu1 .links-image {height:30px}
+.top-menu-buttons {position:absolute;}
+.newlook2 .menu2 .grid-layout,.newlook1 .menu2 .grid-layout {background:#F2E6E6 !important}
+.newlook .menu-plasma .caption {color:#FFF ;font-weight: 300}
+.newlook .menu2 {color:#111127;font-weight:100}
+.newlook .tsb-hscroll.scroll-view {margin:0}
+.newlook .menu2 .caption {font-weight: 400}
+.newlook .plasma .profile-caption {
+  color:white;
+}
+
+.newlook .menu-plasma .caption.useful { display: flex; padding-right:5px}
+.newlook1 .menu-plasma .caption img {margin-right:10px}
+.newlook1 .image-cropper {border: 3px solid #ccc;}
+.newlook1 { background-image: url('../img/bg/bg4.jpg') !important;}
+.newlook1 .menu2 .caption {color:Black}
+.newlook2 .menu-plasma {background-image: url('../img/bg/bg5.jpg') !important;}
+.newlook3.loading {background-image: url('../img/bg/bg5.jpg') !important;}
+.newlook3 .menu2 {background-image: url('../img/bg/bg5.jpg') !important;color:white;background-position-y:-110px }
+.newlook3 .menu2 .caption {color:white}
+.newlook3 .grid-item {border-color:white;border-color:rgba(16, 49, 51,0.2)}
+.newlook3 .grid-item.menu1 {background:rgba(224, 224, 224,1) !important ;border-top:2px solid rgba(124, 124, 124,0.8) }
+.newlook4 .grid-item.menu1 .caption , .newlook3 .grid-item.menu1 .caption {color:#233a59}
+.newlook3 .grid-layout { padding: 0px; }
+.newlook3 .menu-plasma .plasma {background-image: url('../img/bg/bg5.jpg') !important;}
+
+.newlook .menu1 a {border-color:rgba(0,0,0,0.5) ;text-align:center}
+.newlook.newlook3 .menu2 .grid-layout {padding-top: 10px}
+.newlook .plasma .profile img  {border:3px solid rgba(124, 124, 124,0.6)}
+.newlook3 .menu2 {background-image: url('../img/bg/bg5.jpg') !important;color:white;background-position-y:-110px }
+.newlook4 { background-image: url('../img/bg/bg4.jpg') !important;}
+.newlook4 .grid-item {border-color:rgba(16, 49, 51,0.2) !important;}
+.newlook4 .menu2 .grid-item .caption{color:white}
+.newlook4 .menu1 .caption {color:white !important}
+.newlook4 .menu1 a .caption {border-top:1px solid rgba(0,0,0,0.2) !important;background:rgba(0,0,0,0.1) !important;}
+.newlook4 .menu1 {background:rgba(224, 224, 224,0.2) !important ;border-top:1px solid rgba(124, 124, 124,0.1) !important;}
+.newlook .ham img {height:20px;margin-right:5px}
+.newlook .pele4u-logo img {width:35px}
+.newlook.iphonex .top-menu-buttons .col {padding:5px 15px}
+.__newlook.iphonex .menu-plasma  {margin-top:22px}

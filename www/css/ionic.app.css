@@ -8032,21 +8032,6 @@ ion-side-menu .heading-item .message {
     .bookmarks-view .bookmark-item .post-time {
       color: rgba(43, 43, 43, 0.9); }
 
-.category-feeds-view {
-  background-color: #EAEAEA !important; }
-  .category-feeds-view .category-feeds .item {
-    padding-left: 60px; }
-  .category-feeds-view .category-feeds .item .thumbnail-outer {
-    position: absolute;
-    left: 10px;
-    width: 40px; }
-    .category-feeds-view .category-feeds .item .thumbnail-outer .thumbnail {
-      width: 100%; }
-  .category-feeds-view .category-feeds .item .title {
-    font-weight: 500; }
-  .category-feeds-view .category-feeds .item .description {
-    color: #9d9d9d; }
-
 .feed-entries-view {
   background-color: #EAEAEA !important; }
   .feed-entries-view .entry-heading {

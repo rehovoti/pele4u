@@ -34,6 +34,7 @@ angular.module('pele', [
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {
           // Idle.watch();
+          $rootScope.currentState = toState.name.replace(".", "-");
           if (PelApi.global.get('debugFlag')) {
             PelApi.lagger.info("start StateChange ->  from :  " + fromState.name + " to: ", toState.name);
             PelApi.lagger.info(" new State params :  ", toParams);
@@ -68,6 +69,20 @@ angular.module('pele', [
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
       $ionicPlatform.ready(function() {
+        var model = ionic.Platform.device().model;
+        window.deviceModel = model;
+        if (ionic.Platform.isIOS()) {
+          var ratio = window.devicePixelRatio || 1;
+          var screen = {
+            width: window.screen.width * ratio,
+            height: window.screen.height * ratio
+          };
+
+          if (screen.width == 1125 && screen.height === 2436) {
+            window.iphonex = true;
+          }
+        }
+
         //----------------------------------------
         //--    Get Version from config.xml
         //----------------------------------------
@@ -86,7 +101,16 @@ angular.module('pele', [
         }
         if (window.StatusBar) {
           // org.apache.cordova.statusbar required
+
           StatusBar.styleDefault();
+          if (cordova.platformId == 'android') {
+            StatusBar.backgroundColorByHexString("#1d3f84");
+          }
+          if (cordova.platformId != 'android') {
+            StatusBar.hide();
+          }
+
+
         }
         //----------------------------------
         //--    Go To Application List

@@ -1,9 +1,5 @@
 <ion-view class="feed-entries-view">
-  <ion-nav-buttons side="right">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon">
-    </button>
-  </ion-nav-buttons>
-  <ion-nav-title>
+   <ion-nav-title>
     <div class="bar bar-header bar-positive">
       <div class="title" id="logo">
         {{PO_ORDER_NUMBER}} הזמנות רכש
@@ -27,16 +23,11 @@
       </div>
       <ion-slide-box show-pager="false" on-drag-right="alert(1)" on-slide-changed="enable();slideHasChanged(index)">
 
-        <!-------------------------------------------------------------------------------->
-        <!----------------------------- Approve List Slide ------------------------------->
-        <!-------------------------------------------------------------------------------->
-        <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
+        <!-- Approve List Slide -->
+        <!-- <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
           <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
             <div ng-repeat="detail in ACTION_HISTORY" type="item-text-wrap" dir="RTL">
-              <!--<div class="item item-divider "> -->
               <a class="item item-divider item-icon-right pele-item-icon-left" ng-hide="pelHideShow2( detail.DISPLAY_FLAG )" ng-click="detail.SHOW_FLAG = !detail.SHOW_FLAG; detail.PUSH_COUNT = PUSH_COUNT +1; ">
-                <!-- <i class="icon pel_icon icon-left {{getApproveListActionIcon(detail.ACTION_CODE)}}"></i> -->
-                <!--<i ng-class="detail.SHOW_FLAG ? 'icon-collapse' : 'icon-expand'"></i>-->
                 <i ng-class="showIconCollapseInAcctionHistory(detail.SHOW_FLAG , detail.HIDEN_FLAG)"></i>
                 <p class="text-right pele_rtl">{{detail.SEQUENCE_NUM}}. {{detail.EMPLOYEE_NAME}}</p>
                 <i class="icon pel_icon icon-left {{getApproveListActionIcon(detail.ACTION_CODE , detail.CHAR_ACTION_DATE , detail.NOTE)}}"></i>
@@ -53,20 +44,48 @@
                   <div class="col col-75 text-right pele_rtl">{{detail.CHAR_ACTION_DATE}}</div>
                 </div>
 
-                <div class="row">
-                  <!--<textarea class="col col-75 text-right" readonly="true">{{detail.NOTE}}</textarea>-->
+                <div class="row">          
                   <div class="col text-right pele_rtl">הערות:</div>
                   <div class="col col-75 pele-item item-text-wrap text-right pele_rtl">
                     {{detail.NOTE}}
                   </div>
                 </div>
+
               </label>
             </div>
           </ion-scroll>
+        </ion-slide> -->
+
+        <!-- Approve List Slide -->
+        <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
+          <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+            <div class="list">
+              <div ng-repeat="action in ACTION_HISTORY" class="pele_rtl">
+                <div ng-click="action.left_icon && toggleActionItem(action)" class="item item-divider item-icon-left item-icon-right text-right action-history-item">
+                  <i class="icon pel_icon icon-sm" ng-class="action.left_icon"></i> {{action.APPROVAL_SEQ}}. {{action.USER_NAME}}
+                  <small class="string-badge" ng-show="action.ACTION" style="direction: ltr;">{{action.ACTION}}</small>
+                  <i class="icon pel_icon icon-sm" ng-class="action.right_icon"></i>
+                </div>
+                <div class="item bo-border pele_rtl text-right item-icon-left item-icon-right text-right" ng-show="action.display">
+                  <div class="row">
+                    <div class="col">פעולה:</div>
+                    <div class="col col-75">{{action.ACTION}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col">תאריך:</div>
+                    <div class="col col-75">{{action.ACTION_DATE | date : 'dd-MM-yyyy hh:ss'}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col">הערות:</div>
+                    <div class="col col-75 pele-item item-text-wrap">{{action.NOTE}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ion-scroll>
         </ion-slide>
-        <!------------------------------------------------------------------------------->
-        <!----------------------------- Doc Details Slide ------------------------------->
-        <!------------------------------------------------------------------------------->
+
+        <!-- Doc Details Slide -->
         <ion-slide on-drag-left="disable('drag')" on-drag-right="enable('drag')">
           <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
             <!-- Refresh to get the new posts -->
@@ -78,7 +97,7 @@
             </label>
             -->
             <ul class="list text-right">
-              <!---------------------------- 10002 --------------------------------->
+              <!-- 10002 -->
               <li class="item item-info no-border">
                 <div class="item item-divider item-icon-right item-icon-left" ng-init="info_elm=true" ng-click="info_elm=!info_elm">
                   <i class="icon pel_icon icon-sm" ng-class="info_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
@@ -192,7 +211,7 @@
                 </div>
               </li>
             </ul>
-            <!------------------------------------------------>
+            <!-- -->
 
           </ion-scroll>
         </ion-slide>
