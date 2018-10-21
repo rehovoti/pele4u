@@ -167,6 +167,7 @@ app.controller('P1_appsListCtrl',
           $scope.feeds_categories = appSettings.config.GetUserMenu;
 
           //$scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
+          $scope.feeds_categories.menuItems.push({AppId:"123",ApplicationType:"INT",DisplayName:"MAF",Path:"app.maf"})
           $scope.visibleParent = "mid_0";
 
           $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);

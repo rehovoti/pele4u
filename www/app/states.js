@@ -506,5 +506,18 @@ angular.module('pele.states', [])
         }
       },
       src: ["app/apps/cc/packagedetailsCtrl.js"]
-    }
+    },
+    {
+      state: 'app.maf',
+      url: '/mafApp',
+      views: {
+        'menuContent@app': {
+          templateUrl: function() {
+            return 'app/apps/maf/mafMain.html';
+          },
+          controller: 'mafMainCtrl'
+        }
+      },
+      src: ["app/apps/maf/mafMain.js"]
+    },
   ]);
