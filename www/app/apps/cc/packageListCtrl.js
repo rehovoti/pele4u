@@ -36,9 +36,9 @@ angular.module('pele')
             state: state.state
           }).success(function(pdata) {
             packages = _.filter(pdata.PackageList, (e) => (e) && (e.Package != null));
-            state.packages = packages;
+            state.packages = _.sortBy(packages, o => o.Package);
             //$scope.states.push({state: state, packages: packages, visible: false});
-            //console.log(JSON.stringify($scope.states));
+            //console.log(JSON.stringify(state.packages));
           }).error(function(error, httpStatus, headers, config) {
             ApiGateway.throwError(httpStatus, "CC get Packages List", config);
           }).finally(function() {

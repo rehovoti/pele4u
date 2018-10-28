@@ -9,15 +9,19 @@
             </div>
         </ion-nav-title>
             <ion-content scroll="true" padding="true" id="cc-packagedetails">
-                <button class="button-block button-positive">
-                    <h1>{{package}}</h1>
-                </button>
-                <button ng-click="promote()" ng-show="state != 'Production'" class="button button-block button-calm icon-right ion-chevron-right">
-                    Promote
-                </button>
-                <button ng-click="demote()" ng-show="state != 'Development'" class="button button-block button-calm icon-right ion-chevron-left">
-                        Demote
-                </button>
+                <div class="card">
+                    <div class="item item-text-wrap">
+                        <h2>{{package}}</h2>
+                    </div>
+                    <div class="item item-body">
+                        <button ng-click="promote()" ng-show="state != 'Production'" class="button button-block button-calm icon-right ion-chevron-right">
+                            Promote
+                        </button>
+                        <button ng-click="demote()" ng-show="state != 'Development'" class="button button-block button-calm icon-right ion-chevron-left">
+                                Demote
+                        </button>
+                    </div>
+            </div>
         </ion-content>
     </ion-view>
     
